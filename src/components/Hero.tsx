@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { HGButton } from "./TiltCard";
 
 const STATS = [
   { value: "99.7%", label: "Uptime garanti" },
@@ -129,20 +130,8 @@ export function Hero() {
           className="anim-load anim-load-5"
           style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
         >
-          <a href="#demo" className="btn-hg" style={{ textDecoration: "none" }}>
-            <span className="arr">→</span> Obtenir une démo
-          </a>
-          <a
-            href="#features"
-            className="btn-hg"
-            style={{
-              textDecoration: "none",
-              borderColor: "rgba(255,255,255,0.06)",
-              color: "var(--muted)",
-            }}
-          >
-            <span className="arr">→</span> Voir la plateforme
-          </a>
+          <HGButton href="#demo">Obtenir une démo</HGButton>
+          <HGButton href="#features" ghost>Voir la plateforme</HGButton>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 "use client";
 import { AnimateIn } from "./AnimateIn";
+import { HGButton } from "./TiltCard";
 
 const PROFILES = [
   {
@@ -79,9 +80,7 @@ export function ForWho() {
 
         <div style={{ paddingTop: "2rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
           <p style={{ fontSize: 15.875, color: "var(--muted)", fontWeight: 500 }}>Votre profil n&apos;est pas listé ?</p>
-          <a href="#demo" className="btn-hg" style={{ textDecoration: "none" }}>
-            <span className="arr">→</span> Parlons-en
-          </a>
+          <HGButton href="#demo">Parlons-en</HGButton>
         </div>
       </section>
 

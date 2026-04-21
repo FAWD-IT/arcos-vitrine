@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, MouseEvent } from "react";
 import Link from "next/link";
+import { HGArrow } from "./TiltCard";
 
 const NAV = [
   { href: "#features",     label: "Fonctionnalités" },
@@ -13,6 +14,23 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
+  const btnRef = useRef<HTMLAnchorElement>(null);
+
+  const onBtnMove = (e: MouseEvent<HTMLAnchorElement>) => {
+    const el = btnRef.current; if (!el) return;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const x = (e.clientX - left - width  / 2) / (width  / 2);
+    const y = (e.clientY - top  - height / 2) / (height / 2);
+    el.style.transform  = `perspective(400px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+    el.style.borderColor = scrolled ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)";
+    el.style.transition = "border-color 0.1s";
+  };
+  const onBtnLeave = () => {
+    const el = btnRef.current; if (!el) return;
+    el.style.transform  = "";
+    el.style.borderColor = "";
+    el.style.transition = "transform 0.45s cubic-bezier(0.23,1,0.32,1), border-color 0.2s, color 0.35s";
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -41,16 +59,16 @@ export function Navbar() {
       <div
         style={{
           width: "100%",
-          maxWidth: scrolled ? "1080px" : "1280px",
+          maxWidth: scrolled ? "1080px" : "1300px",
           background: scrolled ? "#EAEAEA" : "rgb(21,22,21)",
           border: scrolled
             ? "1.5px solid #E3E3E3"
-            : "1.5px solid rgba(255,255,255,0.06)",
+            : "1.5px solid rgba(255,255,255,0.07)",
           borderRadius: 8,
           display: "flex",
           alignItems: "center",
-          height: 52,
-          padding: "0 20px 0 28px",
+          height: 62,
+          padding: "0 20px 0 32px",
           transform: scrolled ? "scaleY(0.94)" : "scaleY(0.98)",
           transition:
             "max-width 0.45s cubic-bezier(0.4,0,0.2,1), background 0.45s cubic-bezier(0.4,0,0.2,1), border-color 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1)",
@@ -143,35 +161,32 @@ export function Navbar() {
           </span>
 
           <a
+            ref={btnRef}
             href="#demo"
+            onMouseMove={onBtnMove}
+            onMouseLeave={onBtnLeave}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 6,
+              gap: 8,
               fontSize: 14,
               fontWeight: 500,
               color: scrolled ? "#131514" : "#f1f1f1",
+              background: scrolled ? "#f1f1f1" : "rgb(21,22,21)",
               border: scrolled
-                ? "1.5px solid rgba(0,0,0,0.18)"
-                : "1.5px solid rgba(255,255,255,0.18)",
-              borderRadius: 5,
-              padding: "6px 14px",
+                ? "1.5px solid #d4d4d4"
+                : "1.5px solid rgb(36,38,36)",
+              borderRadius: 3,
+              padding: "10px 14px",
               textDecoration: "none",
               whiteSpace: "nowrap",
-              transition: "all 0.35s ease",
-              background: "transparent",
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.background = scrolled
-                ? "rgba(0,0,0,0.06)"
-                : "rgba(255,255,255,0.06)";
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.background = "transparent";
+              transition: "color 0.35s ease, background 0.35s ease, border-color 0.2s ease",
+              transformStyle: "preserve-3d",
+              willChange: "transform",
             }}
           >
-            <span style={{ opacity: 0.6, fontSize: 12 }}>→</span>
             Parler à l&apos;équipe
+            <HGArrow size={11} color={scrolled ? "#131514" : "#f1f1f1"} />
           </a>
         </div>
 

@@ -1,5 +1,6 @@
 "use client";
 import { AnimateIn } from "./AnimateIn";
+import { HGButton } from "./TiltCard";
 
 const PLANS = [
   {
@@ -132,9 +133,7 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <a href="#demo" className="btn-hg" style={{ textDecoration: "none", display: "inline-flex", alignSelf: "flex-start" }}>
-                <span className="arr">→</span> {plan.cta}
-              </a>
+              <HGButton href="#demo" style={{ alignSelf: "flex-start" }}>{plan.cta}</HGButton>
             </div>
           ))}
           {/* Last item right border off */}

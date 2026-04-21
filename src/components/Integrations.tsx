@@ -1,5 +1,6 @@
 "use client";
 import { AnimateIn } from "./AnimateIn";
+import { HGButton } from "./TiltCard";
 
 const PROTOCOLS = [
   { name: "MQTT",      desc: "Broker natif, QoS 0/1/2, retain, wildcards" },
@@ -32,9 +33,7 @@ export function Integrations() {
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "1.5rem", fontWeight: 500 }}>
               Arcos s&apos;intègre à votre infrastructure existante sans aucune réécriture. Branchez, configurez en quelques clics, les données arrivent.
             </p>
-            <a href="#demo" className="btn-hg" style={{ marginTop: "2rem", textDecoration: "none", display: "inline-flex" }}>
-              <span className="arr">→</span> Voir toutes les intégrations
-            </a>
+            <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir toutes les intégrations</HGButton>
           </AnimateIn>
 
           {/* Right: protocol list */}

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { AnimateIn } from "./AnimateIn";
+import { HGButton, TiltCard } from "./TiltCard";
 
 const ACCORDION = [
   {
@@ -63,18 +64,23 @@ export function Problem() {
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "2rem", fontWeight: 500 }}>
               Sans Arcos, vos données restent dispersées entre machines, protocoles et feuilles Excel. Avec Arcos, tout remonte en temps réel dans une interface unique — de l&apos;atelier au comité de direction.
             </p>
-            <a href="#demo" className="btn-hg" style={{ marginTop: "2rem", textDecoration: "none", display: "inline-flex" }}>
-              <span className="arr">→</span> Voir la démo
-            </a>
+            <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir la démo</HGButton>
           </AnimateIn>
 
           {/* Right: accordion */}
           <AnimateIn delay={120}>
             {ACCORDION.map(item => (
-              <div
+              <TiltCard
                 key={item.key}
+                intensity={3}
                 className="hg-card"
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: "pointer",
+                  background: "rgb(21,22,21)",
+                  border: "1.5px solid rgb(28,30,28)",
+                  borderRadius: 3,
+                  paddingInline: "1rem",
+                }}
                 onClick={() => setOpen(open === item.key ? null : item.key)}
               >
                 <div
@@ -104,7 +110,7 @@ export function Problem() {
                     {item.body}
                   </p>
                 )}
-              </div>
+              </TiltCard>
             ))}
             <div className="line" style={{ marginTop: 0 }} />
           </AnimateIn>

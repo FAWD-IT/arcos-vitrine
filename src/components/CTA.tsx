@@ -1,5 +1,6 @@
 "use client";
 import { AnimateIn } from "./AnimateIn";
+import { HGButton } from "./TiltCard";
 export function CTA() {
   return (
     <>
@@ -21,12 +22,8 @@ export function CTA() {
               Montrez-nous votre infrastructure, on vous montre Arcos en live — en moins de 30 minutes.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: "2rem", flexWrap: "wrap" }}>
-              <a href="mailto:contact@fawd.be" className="btn-hg" style={{ textDecoration: "none" }}>
-                <span className="arr">→</span> Écrire à l&apos;équipe
-              </a>
-              <a href="tel:+32" className="btn-hg" style={{ textDecoration: "none", borderColor: "rgba(255,255,255,0.06)", color: "var(--muted)" }}>
-                <span className="arr">→</span> Planifier un appel
-              </a>
+              <HGButton href="mailto:contact@fawd.be">Écrire à l&apos;équipe</HGButton>
+              <HGButton href="tel:+32" ghost>Planifier un appel</HGButton>
             </div>
           </AnimateIn>
 
