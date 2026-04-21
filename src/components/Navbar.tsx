@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, type CSSProperties } from "react";
 import Link from "next/link";
 import { HGArrow } from "./TiltCard";
 
@@ -29,6 +29,17 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <nav
       aria-label="Navigation principale"
@@ -44,9 +55,21 @@ export function Navbar() {
         pointerEvents: "none",
       }}
     >
+      {/* Fond assombri mobile (sous la pill, au-dessus du contenu) */}
+      <button
+        type="button"
+        className={`mobile-nav-backdrop${open ? " is-open" : ""}`}
+        aria-hidden={!open}
+        aria-label="Fermer le menu"
+        tabIndex={open ? 0 : -1}
+        onClick={() => setOpen(false)}
+      />
+
       {/* Pill container — exactement comme HG */}
       <div
         style={{
+          position: "relative",
+          zIndex: 2,
           width: "100%",
           maxWidth: scrolled ? "1080px" : "1300px",
           background: scrolled ? "#EAEAEA" : "rgb(21,22,21)",
@@ -227,63 +250,57 @@ export function Navbar() {
             )}
           </svg>
         </button>
-      </div>
 
-      {/* Mobile dropdown */}
-      {open && (
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(100% + 4px)",
-            left: 20,
-            right: 20,
-            background: "rgb(21,22,21)",
-            border: "1.5px solid rgba(255,255,255,0.08)",
-            borderRadius: 8,
-            padding: "1rem 20px 1.5rem",
-            pointerEvents: "auto",
-          }}
-        >
-          {NAV.map(l => (
+        {/* Mobile menu — dans la pill pour ancrage + transitions CSS */}
+        <div className={`mobile-nav-panel${open ? " is-open" : ""}`} aria-hidden={!open}>
+          {NAV.map((l, i) => (
             <a
               key={l.href}
+              className="mobile-nav-link"
               href={l.href}
               onClick={() => setOpen(false)}
-              style={{
-                display: "block",
-                padding: "10px 0",
-                fontSize: 15,
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.7)",
-                textDecoration: "none",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-              }}
+              style={
+                {
+                  "--mobile-nav-stagger": `${0.08 + i * 0.055}s`,
+                  display: "block",
+                  padding: "10px 0",
+                  fontSize: 15,
+                  fontWeight: 500,
+                  color: "rgba(255,255,255,0.78)",
+                  textDecoration: "none",
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                } as CSSProperties
+              }
             >
               {l.label}
             </a>
           ))}
           <a
+            className="mobile-nav-link"
             href="#demo"
             onClick={() => setOpen(false)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              marginTop: 16,
-              fontSize: 14,
-              fontWeight: 500,
-              color: "#f1f1f1",
-              border: "1.5px solid rgba(255,255,255,0.18)",
-              borderRadius: 5,
-              padding: "8px 16px",
-              textDecoration: "none",
-            }}
+            style={
+              {
+                "--mobile-nav-stagger": `${0.08 + NAV.length * 0.055}s`,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                marginTop: 16,
+                fontSize: 14,
+                fontWeight: 500,
+                color: "#f1f1f1",
+                border: "1.5px solid rgba(255,255,255,0.18)",
+                borderRadius: 5,
+                padding: "8px 16px",
+                textDecoration: "none",
+              } as CSSProperties
+            }
           >
             <span style={{ opacity: 0.6, fontSize: 12 }}>→</span>
             Parler à l&apos;équipe
           </a>
         </div>
-      )}
+      </div>
 
       <style>{`
         @media (max-width: 768px) {

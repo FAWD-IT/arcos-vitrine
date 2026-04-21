@@ -99,7 +99,7 @@ export function Problem() {
                   <span
                     style={{
                       fontSize: 20, color: "var(--muted)",
-                      transition: "transform 0.2s",
+                      transition: "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)",
                       transform: open === item.key ? "rotate(45deg)" : "none",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       width: 24, height: 24, flexShrink: 0,
@@ -108,14 +108,25 @@ export function Problem() {
                     +
                   </span>
                 </div>
-                {open === item.key && (
-                  <p style={{
-                    fontSize: 14, color: "var(--text)", lineHeight: 1.65,
-                    marginTop: "0.85rem", fontWeight: 500,
-                  }}>
-                    {item.body}
-                  </p>
-                )}
+                <div
+                  className="accordion-body-outer"
+                  data-open={open === item.key ? "true" : "false"}
+                  aria-hidden={open !== item.key}
+                >
+                  <div className="accordion-body-inner">
+                    <div className="accordion-body-content">
+                      <p
+                        style={{
+                          fontSize: 14, color: "var(--text)", lineHeight: 1.65,
+                          paddingTop: "0.85rem", paddingBottom: "0.15rem", fontWeight: 500,
+                          margin: 0,
+                        }}
+                      >
+                        {item.body}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </TiltCard>
             ))}
             <div className="line" style={{ marginTop: 0 }} />
