@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 
 const LINKS = [
   { href: "#features",      label: "Fonctionnalités" },
@@ -12,19 +11,7 @@ const LINKS = [
 ];
 
 export function Footer() {
-  const [time, setTime] = useState("");
   const year = new Date().getFullYear();
-
-  useEffect(() => {
-    const fmt = () =>
-      new Intl.DateTimeFormat("fr-FR", {
-        hour: "2-digit", minute: "2-digit", second: "2-digit",
-        timeZone: "Europe/Brussels",
-      }).format(new Date());
-    setTime(fmt());
-    const id = setInterval(() => setTime(fmt()), 1000);
-    return () => clearInterval(id);
-  }, []);
 
   return (
     <footer style={{ position: "relative", overflow: "hidden" }}>
@@ -88,10 +75,6 @@ export function Footer() {
         }}
       >
         <div>
-          <p style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500, marginBottom: 4 }}>
-            <span className="status-dot" />
-            (En ligne) &nbsp;{time} CET
-          </p>
           <p style={{ fontSize: 12, color: "rgba(255,255,255,0.12)", fontWeight: 500, lineHeight: 1.6 }}>
             Lun–Ven, 9h – 18h<br />
             Week-end sur RDV

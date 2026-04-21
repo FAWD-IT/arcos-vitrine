@@ -155,23 +155,8 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* Right: status + CTA */}
+        {/* Right: CTA */}
         <div className="nav-right" style={{ display: "flex", alignItems: "center", gap: 14, marginLeft: "auto" }}>
-          <span
-            style={{
-              fontSize: 12,
-              color: scrolled ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)",
-              display: "flex",
-              alignItems: "center",
-              gap: 5,
-              fontWeight: 500,
-              transition: "color 0.35s ease",
-            }}
-          >
-            <span className="status-dot" />
-            Disponible
-          </span>
-
           <a
             href="#demo"
             style={{

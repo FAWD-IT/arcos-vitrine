@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { HGButton } from "./TiltCard";
 
 const STATS = [
@@ -10,19 +9,6 @@ const STATS = [
 ];
 
 export function Hero() {
-  const [time, setTime] = useState("");
-
-  useEffect(() => {
-    const fmt = () =>
-      new Intl.DateTimeFormat("fr-FR", {
-        hour: "2-digit", minute: "2-digit", second: "2-digit",
-        timeZone: "Europe/Brussels",
-      }).format(new Date());
-    setTime(fmt());
-    const id = setInterval(() => setTime(fmt()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <section
       style={{
@@ -99,17 +85,6 @@ export function Hero() {
         className="hero-bottom"
       >
         <div className="anim-load anim-load-4">
-          <p
-            style={{
-              fontSize: 12,
-              color: "var(--muted)",
-              marginBottom: "1rem",
-              fontWeight: 500,
-            }}
-          >
-            <span className="status-dot" />
-            (En ligne)&nbsp;&nbsp;{time} CET
-          </p>
           <p
             style={{
               fontSize: 15.875,
