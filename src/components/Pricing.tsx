@@ -95,13 +95,12 @@ export default function Pricing() {
               }`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg shadow-black/50"
-                  style={{ clipPath: "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))" }}>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-[3px] bg-accent px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg shadow-black/50">
                   Recommandé
                 </div>
               )}
 
-              <h3 className="font-display text-[19px] font-700 tracking-tight text-white/95">{plan.name}</h3>
+              <h3 className="font-display text-[19px] font-bold tracking-tight text-white/95">{plan.name}</h3>
               <p className="mt-1 text-[13px] text-white/28">{plan.description}</p>
 
               <div className="my-7 border-b border-[var(--border-dim)] pb-7">

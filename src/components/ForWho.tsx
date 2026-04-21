@@ -76,7 +76,7 @@ export default function ForWho() {
               <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent ${p.accent ? "via-accent/35" : "via-white/[0.05]"} to-transparent`} />
 
               <div>
-                <p className="text-data text-[10px] font-600 uppercase tracking-[0.18em] text-white/22">{p.code}</p>
+                <p className="text-data text-[10px] font-semibold uppercase tracking-[0.18em] text-white/22">{p.code}</p>
                 <p className="mt-1 text-[12px] text-white/32">{p.role}</p>
               </div>
 

@@ -165,7 +165,7 @@ export default function Navbar() {
                 >
                   <button
                     type="button"
-                    className={`flex cursor-pointer items-center gap-1 px-4 py-2.5 font-display text-[12px] font-600 uppercase tracking-[0.08em] transition-colors duration-150 ${
+                    className={`flex cursor-pointer items-center gap-1 px-4 py-2.5 font-display text-[12px] font-semibold uppercase tracking-[0.08em] transition-colors duration-150 ${
                       mega === link.id ? "text-accent-light" : "text-white/38 hover:text-white/80"
                     }`}
                     aria-expanded={mega === link.id}
@@ -180,7 +180,7 @@ export default function Navbar() {
                 <a
                   key={link.id}
                   href={link.href}
-                  className="cursor-pointer px-4 py-2.5 font-display text-[12px] font-600 uppercase tracking-[0.08em] text-white/38 transition-colors duration-150 hover:text-white/80"
+                  className="cursor-pointer px-4 py-2.5 font-display text-[12px] font-semibold uppercase tracking-[0.08em] text-white/38 transition-colors duration-150 hover:text-white/80"
                 >
                   {link.label}
                 </a>
@@ -230,7 +230,7 @@ export default function Navbar() {
                       <div className="mb-3 overflow-hidden rounded-lg border border-white/[0.05] bg-black/40">
                         {item.illu}
                       </div>
-                      <div className="font-display text-[13px] font-700 tracking-tight text-white/85 transition-colors duration-150 group-hover:text-white">
+                      <div className="font-display text-[13px] font-bold tracking-tight text-white/85 transition-colors duration-150 group-hover:text-white">
                         {item.title}
                       </div>
                       <p className="mt-1.5 text-[11px] leading-relaxed text-white/32">{item.desc}</p>

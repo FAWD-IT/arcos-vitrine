@@ -30,7 +30,7 @@
   /* Fonts */
   --font-display:  var(--font-syne), system-ui, sans-serif;
   --font-body:     var(--font-inter), system-ui, sans-serif;
-  --font-mono:     var(--font-mono, 'JetBrains Mono'), 'Courier New', monospace;
+  --font-mono-stack: var(--font-mono), 'JetBrains Mono', 'Courier New', monospace;
 
   /* Radius — signature : angles mixtes, pas full-pill partout */
   --r-sm:   4px;
@@ -58,7 +58,7 @@
   --color-muted:         var(--text-muted);
   --font-sans:           var(--font-body);
   --font-display:        var(--font-display);
-  --font-mono:           var(--font-mono);
+  --font-mono:           var(--font-mono-stack);
 }
 
 /* ── Reset */
@@ -111,7 +111,7 @@ body {
 
 /* Mono data */
 .text-data {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono-stack);
   font-feature-settings: "tnum", "ss01";
   letter-spacing: -0.02em;
 }
@@ -190,9 +190,8 @@ body::after {
   flex-shrink: 0;
 }
 
-/* ── Boutons signature Arcos (non-pill) */
+/* ── Boutons Arcos — nets, angulaires, sans clip-path */
 
-/* Bouton primaire — fond cyan, clip-path angulaire */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -201,36 +200,37 @@ body::after {
   color: #fff;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  padding: 12px 28px;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 12px 26px;
+  border-radius: 3px;
+  border: none;
   transition: background var(--dur-fast) ease-out, box-shadow var(--dur-mid) ease-out;
   cursor: pointer;
-  border: none;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .btn-primary:hover {
   background: var(--accent-light);
-  box-shadow: 0 0 36px rgba(20,169,207,0.38);
+  box-shadow: 0 0 28px rgba(20,169,207,0.32);
 }
 
-/* Bouton ghost — bordure simple */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: rgba(226,237,245,0.55);
+  color: rgba(226,237,245,0.5);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
   padding: 11px 24px;
+  border-radius: 3px;
   border: 1px solid rgba(255,255,255,0.1);
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
   transition: border-color var(--dur-fast) ease-out, color var(--dur-fast) ease-out, background var(--dur-fast) ease-out;
   cursor: pointer;
   text-decoration: none;
@@ -238,9 +238,9 @@ body::after {
 }
 
 .btn-ghost:hover {
-  border-color: rgba(20,169,207,0.35);
-  color: rgba(226,237,245,0.9);
-  background: rgba(20,169,207,0.06);
+  border-color: rgba(20,169,207,0.32);
+  color: rgba(226,237,245,0.85);
+  background: rgba(20,169,207,0.05);
 }
 
 /* Lien texte flèche */
