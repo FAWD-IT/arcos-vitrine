@@ -1,110 +1,91 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const PROFILES = [
   {
-    code: "TECH",
-    role: "Technicien terrain",
-    headline: "Ce qui se passe, maintenant.",
-    body: "Accès live aux tags, aux alertes et aux historiques récents. Plus besoin de demander un export.",
-    accent: true,
-  },
-  {
-    code: "MAINT",
-    role: "Responsable maintenance",
-    headline: "Planifier avant la panne.",
-    body: "Tendances comportementales, seuils personnalisés, rapports automatiques par machine.",
+    code: "Terrain",
+    role: "Technicien / Opérateur",
+    headline: "Tout voir, sans fouiller.",
+    body: "Une vue configurée pour votre poste. Indicateurs en temps réel, alarmes actives, historique récent — sur téléphone ou écran de supervision.",
     accent: false,
   },
   {
-    code: "DIR",
-    role: "Direction technique",
-    headline: "Visibilité globale. Décisions rapides.",
-    body: "Uptime par site, KPIs agrégés, synthèse IA. La même donnée terrain, condensée.",
+    code: "Maintenance",
+    role: "Responsable maintenance",
+    headline: "Anticiper, pas subir.",
+    body: "Tendances longue durée, détection de dérive avant la panne, rapports automatiques. Votre planification change quand vous avez les bonnes données.",
+    accent: true,
+  },
+  {
+    code: "Direction",
+    role: "Direction technique / RSSI",
+    headline: "KPIs consolidés, rien de plus.",
+    body: "Un tableau de bord de direction avec les métriques qui comptent : OEE, TRS, disponibilité, coût énergétique — sans intervention IT.",
     accent: false,
   },
 ];
 
 const SECTORS = [
-  "Eau & traitement",
-  "Agroalimentaire",
-  "Énergie & utilities",
-  "Métallurgie",
-  "Plasturgie",
-  "Pharmaceutique",
+  "Agroalimentaire", "Eau & traitement", "Energie", "Pharmacie",
+  "Métallurgie", "Logistique", "Bâtiment industriel",
 ];
 
 export default function ForWho() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="for-who" className="relative overflow-hidden border-t border-white/[0.06] px-6 py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0 bg-section-lift" />
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.22]" />
-
-      <div className="relative z-10 mx-auto max-w-[1280px]">
-        {/* Header */}
+    <section className="bg-white">
+      <div className="container-arcos section-pad">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
-          className="mb-16"
+          transition={{ duration: 0.5 }}
+          className="mb-12"
         >
-          <span className="tag-tech mb-6 block w-fit">Pour qui</span>
-          <h2 className="text-display text-[clamp(2.2rem,5vw,4rem)] text-white">
+          <p className="section-label">Pour qui</p>
+          <h2 className="max-w-[480px]">
             Pensé pour ceux
             <br />
-            <span className="text-white/28">qui font tourner l&apos;usine.</span>
+            <span className="text-[#6B7280]">qui font tourner l&apos;usine.</span>
           </h2>
         </motion.div>
 
         {/* Profils */}
-        <div className="grid gap-[1px] overflow-hidden rounded-[var(--r-xl)] border border-[var(--border-dim)] bg-[var(--border-dim)] lg:grid-cols-3">
+        <div className="grid gap-4 lg:grid-cols-3">
           {PROFILES.map((p, i) => (
             <motion.div
               key={p.code}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
-              className={`group relative flex flex-col gap-5 p-8 transition-colors duration-200 sm:p-10 ${p.accent ? "bg-[var(--surface-2)]" : "bg-[var(--surface-1)]"} hover:bg-[var(--surface-3)]`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
+              className={`card p-8 cursor-default ${p.accent ? "border-[#0A0A0A] shadow-none" : ""}`}
             >
-              <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent ${p.accent ? "via-accent/35" : "via-white/[0.05]"} to-transparent`} />
-
-              <div>
-                <p className="text-data text-[10px] font-semibold uppercase tracking-[0.18em] text-white/22">{p.code}</p>
-                <p className="mt-1 text-[12px] text-white/32">{p.role}</p>
-              </div>
-
-              <h3 className="text-section text-[clamp(1.4rem,2.8vw,2rem)] text-white/90 transition-colors group-hover:text-white">
+              <span className="badge mb-4 inline-flex">{p.code}</span>
+              <p className="text-[13px] text-[#9CA3AF]">{p.role}</p>
+              <h3 className="mt-3 text-[22px] font-semibold leading-[1.25] text-[#0A0A0A]">
                 {p.headline}
               </h3>
-
-              <p className="text-[14px] leading-relaxed text-white/30">{p.body}</p>
-
-              <div className="mt-auto h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+              <p className="mt-3 text-[14px] leading-relaxed text-[#6B7280]">{p.body}</p>
             </motion.div>
           ))}
         </div>
 
         {/* Secteurs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
-          className="mt-16"
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.28 }}
+          className="mt-12"
         >
-          <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/22">Secteurs d&apos;application</p>
-          <div className="flex flex-wrap gap-3">
+          <p className="section-label mb-4">Secteurs d&apos;application</p>
+          <div className="flex flex-wrap gap-2">
             {SECTORS.map((s) => (
               <span
                 key={s}
-                className="rounded-[var(--r-sm)] border border-[var(--border-dim)] bg-[var(--surface-1)] px-4 py-2 text-[12px] text-white/38 transition-colors duration-150 hover:border-[var(--border-mid)] hover:text-white/55"
+                className="rounded-full border border-[#E5E7EB] bg-[#F9FAFB] px-4 py-2 text-[13px] text-[#6B7280] transition-colors hover:border-[#9CA3AF] hover:text-[#0A0A0A]"
               >
                 {s}
               </span>
@@ -112,20 +93,18 @@ export default function ForWho() {
           </div>
         </motion.div>
 
-        {/* Quote signature */}
+        {/* Quote */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55, delay: 0.1 }}
-          className="mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-[var(--r-2xl)] border border-[var(--border-mid)] bg-[var(--surface-2)] px-8 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-14"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.36 }}
+          className="mt-12 flex flex-col gap-6 rounded-[var(--r-xl)] border border-[#E5E7EB] bg-[#F7F7F5] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
         >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_5%_50%,rgba(20,169,207,0.09),transparent_55%)]" />
-          <p className="font-display relative max-w-[580px] text-[clamp(1.15rem,2.4vw,1.55rem)] font-semibold leading-[1.4] text-white/70">
+          <p className="max-w-[560px] text-[18px] font-medium leading-[1.5] text-[#0A0A0A]">
             &ldquo;Le même flux MQTT — exposé différemment selon qui regarde.
-            <span className="text-accent-light/80"> Technicien, maintenance ou direction.</span>&rdquo;
+            <span className="text-[#6B7280]"> Technicien, maintenance ou direction.</span>&rdquo;
           </p>
-          <a href="#demo" className="btn-ghost shrink-0">
+          <a href="#demo" className="btn-outline shrink-0">
             Parler à l&apos;équipe →
           </a>
         </motion.div>

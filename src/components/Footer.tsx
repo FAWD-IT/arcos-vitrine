@@ -2,55 +2,53 @@ import { ExternalLink } from "lucide-react";
 
 const footerLinks = {
   Produit: [
-    { label: "Dashboard", href: "#features" },
-    { label: "Agent IA", href: "#features" },
-    { label: "Alertes", href: "#features" },
-    { label: "Multi-sites", href: "#features" },
+    { label: "Dashboard",        href: "#features" },
+    { label: "Agent IA",         href: "#features" },
+    { label: "Alertes",          href: "#features" },
+    { label: "Multi-sites",      href: "#features" },
     { label: "Intégrations MQTT", href: "#integrations" },
   ],
   Entreprise: [
-    { label: "À propos", href: "#" },
-    { label: "Contact", href: "mailto:contact@fawd.be" },
-    { label: "FAWD SRL", href: "https://fawd.be", external: true },
+    { label: "À propos",  href: "#" },
+    { label: "Contact",   href: "mailto:contact@fawd.be" },
+    { label: "FAWD SRL",  href: "https://fawd.be", external: true },
   ],
   Légal: [
     { label: "Mentions légales", href: "#" },
-    { label: "Confidentialité", href: "#" },
-    { label: "CGV", href: "#" },
+    { label: "Confidentialité",  href: "#" },
+    { label: "CGV",              href: "#" },
   ],
 };
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/[0.06] bg-[#040911]">
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.1]" />
-      {/* Filet cyan haut */}
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
-
-      <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-20 lg:px-10">
+    <footer className="border-t border-[#E5E7EB] bg-white">
+      <div className="container-arcos py-16">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5">
+          {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#" className="inline-flex items-center">
               <img
                 src="/logo-arcos.svg"
                 alt="Arcos"
-                className="h-9 w-auto max-w-[180px] object-contain object-left brightness-0 invert opacity-80"
+                className="h-8 w-auto max-w-[140px] object-contain object-left"
               />
               <span className="sr-only">Arcos</span>
             </a>
-            <p className="mt-6 max-w-[320px] text-[13px] leading-relaxed text-white/25">
+            <p className="mt-4 max-w-[280px] text-[14px] leading-relaxed text-[#6B7280]">
               Supervision industrielle via MQTT. Dashboard, alertes et IA
               sur les données terrain.
             </p>
-            <div className="mt-6 space-y-1 text-[11px] text-white/15">
+            <div className="mt-4 space-y-1 text-[12px] text-[#9CA3AF]">
               <p>FAWD SRL · Charleroi, Belgique</p>
               <p>Testé sur équipements réels</p>
             </div>
           </div>
 
+          {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="mb-5 text-data text-[10px] font-semibold uppercase tracking-[0.2em] text-white/20">
+              <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9CA3AF]">
                 {category}
               </h4>
               <ul className="space-y-3">
@@ -58,7 +56,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="flex cursor-pointer items-center gap-1.5 text-[13px] text-white/28 transition-colors duration-150 hover:text-white/55"
+                      className="flex cursor-pointer items-center gap-1.5 text-[14px] text-[#6B7280] transition-colors hover:text-[#0A0A0A]"
                       {...("external" in link && link.external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
@@ -76,26 +74,29 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.05] pt-8 sm:flex-row">
-          <p className="text-data text-[10px] text-white/15">
-            &copy; {new Date().getFullYear()} FAWD SRL — Charleroi, Belgique
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#E5E7EB] pt-8 sm:flex-row">
+          <p className="text-[12px] text-[#9CA3AF]">
+            &copy; {new Date().getFullYear()} FAWD SRL. Tous droits réservés.
           </p>
-          <div className="flex gap-6">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="cursor-pointer text-data text-[10px] text-white/18 transition-colors duration-150 hover:text-white/42">
+          <div className="flex gap-5">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer text-[12px] text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
+            >
               LinkedIn
             </a>
-            <a href="https://github.com/FAWD-IT" target="_blank" rel="noopener noreferrer" className="cursor-pointer text-data text-[10px] text-white/18 transition-colors duration-150 hover:text-white/42">
+            <a
+              href="https://github.com/FAWD-IT"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer text-[12px] text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
+            >
               GitHub
             </a>
           </div>
         </div>
-      </div>
-
-      {/* Watermark géant — font Syne pour identité */}
-      <div className="pointer-events-none select-none overflow-hidden">
-        <p className="font-display text-center text-[clamp(6rem,20vw,16rem)] font-black leading-none tracking-[-0.06em] text-white/[0.015]">
-          ARCOS
-        </p>
       </div>
     </footer>
   );

@@ -1,64 +1,58 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────
-   DESIGN SYSTEM ARCOS
-   Skill: ui-ux-pro-max → Dark Mode OLED + Syne editorial
+   DESIGN SYSTEM ARCOS — style grafit.agency
+   Fond blanc · Inter · Editorial · Minimaliste
    ───────────────────────────────────────────────────── */
 
 :root {
-  /* Brand */
-  --brand-navy:    #082d44;
-  --accent:        #14a9cf;
-  --accent-light:  #4dc8eb;
-
-  /* Surface OLED — vraies teintes noires (pas juste sombre) */
-  --background:    #06080b;
-  --surface-1:     #0a0e14;
-  --surface-2:     #0e1520;
-  --surface-3:     #131d2a;
+  /* Fond */
+  --bg:          #FFFFFF;
+  --bg-alt:      #F7F7F5;
+  --bg-dark:     #0A0A0A;
 
   /* Texte */
-  --foreground:    #e2edf5;
-  --text-muted:    #5a7a90;
-  --text-dimmed:   #2e4a5e;
+  --text:        #0A0A0A;
+  --text-2:      #6B7280;
+  --text-3:      #9CA3AF;
 
   /* Bordures */
-  --border-dim:    rgba(20,169,207,0.08);
-  --border-mid:    rgba(20,169,207,0.14);
-  --border-hi:     rgba(20,169,207,0.28);
+  --border:      #E5E7EB;
+  --border-dark: #1F1F1F;
 
-  /* Fonts */
-  --font-display:  var(--font-syne), system-ui, sans-serif;
-  --font-body:     var(--font-inter), system-ui, sans-serif;
-  --font-mono-stack: var(--font-mono), 'JetBrains Mono', 'Courier New', monospace;
+  /* UI */
+  --badge-bg:    #F3F4F6;
+  --badge-text:  #6B7280;
 
-  /* Radius — signature : angles mixtes, pas full-pill partout */
+  /* Accent data — réservé aux graphiques internes */
+  --data-teal:   #14a9cf;
+
+  /* Radius */
   --r-sm:   4px;
   --r-md:   8px;
   --r-lg:   12px;
-  --r-xl:   18px;
+  --r-xl:   16px;
   --r-2xl:  24px;
 
-  /* Timing */
-  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast:  150ms;
-  --dur-mid:   250ms;
-  --dur-slow:  500ms;
+  /* Shadow */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
+  --shadow-raise: 0 8px 40px rgba(0,0,0,0.08);
+  --shadow-screen: 0 8px 40px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+
+  /* Transitions */
+  --dur: 200ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background:    var(--background);
-  --color-foreground:    var(--foreground);
-  --color-accent:        var(--accent);
-  --color-accent-light:  var(--accent-light);
-  --color-brand-navy:    var(--brand-navy);
-  --color-surface-1:     var(--surface-1);
-  --color-surface-2:     var(--surface-2);
-  --color-surface-3:     var(--surface-3);
-  --color-muted:         var(--text-muted);
-  --font-sans:           var(--font-body);
-  --font-display:        var(--font-display);
-  --font-mono:           var(--font-mono-stack);
+  --color-background:  var(--bg);
+  --color-foreground:  var(--text);
+  --color-text-2:      var(--text-2);
+  --color-border-col:  var(--border);
+  --color-bg-alt:      var(--bg-alt);
+  --color-bg-dark:     var(--bg-dark);
+  --color-badge-bg:    var(--badge-bg);
+  --color-data-teal:   var(--data-teal);
 }
 
 /* ── Reset */
@@ -67,274 +61,210 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  max-width: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   max-width: 100%;
   overflow-x: hidden;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body);
-  font-feature-settings: "ss01", "ss03", "kern";
-  font-size: 15px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-::selection {
-  background: rgba(20, 169, 207, 0.28);
-  color: #fff;
+/* ── Typographie — strict spec grafit.agency */
+h1 { font-size: 64px; font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; color: var(--text); }
+h2 { font-size: 40px; font-weight: 700; line-height: 1.18; letter-spacing: -0.02em; color: var(--text); }
+h3 { font-size: 24px; font-weight: 600; line-height: 1.3;  letter-spacing: -0.015em; color: var(--text); }
+
+@media (max-width: 768px) {
+  h1 { font-size: 42px; }
+  h2 { font-size: 30px; }
 }
 
-/* ── Typographie : classes utilitaires Syne */
-
-.font-display {
-  font-family: var(--font-display);
-}
-
-/* Titres hero/éditoriaux */
-.text-display {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 0.92;
-}
-
-/* Sous-titres sections */
-.text-section {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-}
-
-/* Mono data */
-.text-data {
-  font-family: var(--font-mono-stack);
-  font-feature-settings: "tnum", "ss01";
-  letter-spacing: -0.02em;
-}
-
-/* ── Scan lines OLED subtiles */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0, 0, 0, 0.018) 3px,
-    rgba(0, 0, 0, 0.018) 4px
-  );
-}
-
-/* ── Noise */
-.noise-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.038;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-}
-
-/* ── Grille points */
-.bg-dot-grid {
-  background-image: radial-gradient(rgba(20, 169, 207, 0.065) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-
-/* ── Fonds sections */
-.bg-section-lift {
-  background:
-    radial-gradient(ellipse 130% 55% at 50% 0%, rgba(20,169,207,0.065) 0%, transparent 60%),
-    linear-gradient(180deg, var(--surface-1) 0%, var(--background) 60%);
-}
-
-.bg-section-slab {
-  background: linear-gradient(180deg, var(--surface-1) 0%, var(--background) 100%);
-}
-
-/* ── Étiquette technique signature (cornet coupé = forme non-template) */
-.tag-tech {
+/* ── Badge/pill */
+.badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgba(20,169,207,0.22);
-  background: rgba(20,169,207,0.05);
-  padding: 3px 10px 3px 7px;
-  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
-  font-family: var(--font-mono);
-  font-size: 10px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-light);
-  cursor: default;
+  padding: 5px 12px;
+  border-radius: 100px;
 }
 
-.tag-tech::before {
-  content: "";
-  display: block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  flex-shrink: 0;
-}
-
-/* ── Boutons Arcos — nets, angulaires, sans clip-path */
-
+/* ── Boutons */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--accent);
+  background: var(--text);
   color: #fff;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 12px 26px;
-  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: var(--r-md);
   border: none;
-  transition: background var(--dur-fast) ease-out, box-shadow var(--dur-mid) ease-out;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
+  transition: opacity var(--dur) ease;
 }
+.btn-primary:hover { opacity: 0.82; }
 
-.btn-primary:hover {
-  background: var(--accent-light);
-  box-shadow: 0 0 28px rgba(20,169,207,0.32);
-}
-
-.btn-ghost {
+.btn-outline {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: rgba(226,237,245,0.5);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 11px 24px;
-  border-radius: 3px;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: border-color var(--dur-fast) ease-out, color var(--dur-fast) ease-out, background var(--dur-fast) ease-out;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
+  transition: border-color var(--dur) ease, background var(--dur) ease;
+}
+.btn-outline:hover {
+  border-color: #9CA3AF;
+  background: var(--badge-bg);
 }
 
-.btn-ghost:hover {
-  border-color: rgba(20,169,207,0.32);
-  color: rgba(226,237,245,0.85);
-  background: rgba(20,169,207,0.05);
-}
-
-/* Lien texte flèche */
-.btn-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: rgba(226,237,245,0.35);
-  text-decoration: none;
-  cursor: pointer;
-  transition: color var(--dur-fast) ease-out;
-}
-
-.btn-link:hover {
-  color: rgba(226,237,245,0.7);
-}
-
-/* ── Cards signature */
-
-.card-arcos {
-  border: 1px solid var(--border-dim);
-  background: var(--surface-1);
-  transition: border-color var(--dur-mid) ease-out, box-shadow var(--dur-mid) ease-out, transform var(--dur-mid) var(--ease-out);
+/* ── Cards */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
   cursor: default;
 }
-
-.card-arcos:hover {
-  border-color: var(--border-mid);
-  box-shadow: 0 0 0 1px rgba(20,169,207,0.08), 0 24px 60px -20px rgba(0,0,0,0.9);
+.card:hover {
+  box-shadow: var(--shadow-raise);
   transform: translateY(-2px);
 }
 
-.card-arcos-interactive {
-  cursor: pointer;
+/* ── Section padding */
+.section-pad { padding: 96px 0; }
+.section-pad-lg { padding: 128px 0; }
+
+/* ── Container */
+.container-arcos {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
-.card-inset {
-  box-shadow: inset 0 1px 0 rgba(20,169,207,0.06), 0 24px 64px -32px rgba(0,0,0,0.9);
+/* ── Divider */
+.divider { height: 1px; background: var(--border); }
+
+/* ── Device frame (browser chrome) */
+.device-frame {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-screen);
+  overflow: hidden;
 }
 
-/* Filet cyan haut sur cards */
-.card-top-line::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0;
-  transition: opacity var(--dur-mid) ease-out;
-}
-.card-top-line:hover::before { opacity: 0.5; }
-
-/* ── Ligne décorative cyan */
-.arcos-line-h {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.16;
+.device-frame-bar {
+  background: #F9FAFB;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.arcos-line-v {
-  width: 1px;
-  background: linear-gradient(180deg, transparent, var(--accent), transparent);
-  opacity: 0.22;
+.device-frame-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E5E7EB;
 }
 
-/* ── Animations */
-
-@keyframes ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* ── Stat card */
+.stat-item {
+  text-align: center;
 }
-.ticker-track { animation: ticker 30s linear infinite; }
-
-@keyframes pulse-ring {
-  0%   { transform: scale(1); opacity: 0.7; }
-  100% { transform: scale(2.6); opacity: 0; }
+.stat-num {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1;
 }
-.pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+.stat-label {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 6px;
+}
 
-/* ── Prefers-reduced-motion — obligatoire (skill UX rule: HIGH severity) */
+/* ── Section label (petit titre de section) */
+.section-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* ── Placeholder visuels */
+.img-placeholder {
+  background: var(--bg-alt);
+  border: 1px dashed var(--border);
+  border-radius: var(--r-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ── Metric badge (flottant sur les screenshots) */
+.metric-badge {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 10px 16px;
+  box-shadow: var(--shadow-card);
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-badge-num {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.metric-badge-label {
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+/* ── Prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .ticker-track { animation: none; }
 }

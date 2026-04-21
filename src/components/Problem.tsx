@@ -1,127 +1,95 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
-const LINES = [
+const PROBLEMS = [
   {
-    n: "01",
-    big: "Données",
-    rest: " manuelles.",
-    body: "Les techniciens exportent encore des CSV à la main. La data stagne dans des silos.",
-    tag: "Productivité",
+    title: "Données manuelles",
+    desc: "Vos opérateurs notent encore sur papier ou dans des fichiers Excel. Aucune centralisation, aucune traçabilité automatique.",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+    ),
   },
   {
-    n: "02",
-    big: "Aveugle",
-    rest: " en temps réel.",
-    body: "Sans supervision live, la panne est découverte après l'arrêt.",
-    tag: "Visibilité",
+    title: "Aveugle en temps réel",
+    desc: "Sans flux continu, vous découvrez les anomalies après coup — en analysant des logs de la veille ou en recevant un appel du terrain.",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>
+      </svg>
+    ),
   },
   {
-    n: "03",
-    big: "Alertes",
-    rest: " trop tard.",
-    body: "Le signal existait. La règle manquait. La ligne s'est arrêtée.",
-    tag: "Réactivité",
+    title: "Alertes trop tard",
+    desc: "Les seuils sont définis dans des PLCs. Quand un technicien reçoit le SMS d'alerte, la machine est souvent déjà arrêtée depuis plusieurs minutes.",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Silos de données",
+    desc: "Chaque machine parle son propre protocole. L'intégration est un projet en soi, qui mobilise des ressources IT pendant des mois.",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+      </svg>
+    ),
   },
 ];
 
-function EditorialLine({ n, big, rest, body, tag, i }: typeof LINES[number] & { i: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 border-b border-white/[0.06] py-10 first:pt-0 lg:grid-cols-[56px_1fr_auto] lg:items-end lg:gap-x-10 lg:py-12"
-    >
-      {/* Numéro */}
-      <span className="mt-1 font-mono text-[11px] text-white/18 lg:mt-0 lg:mb-1">{n}</span>
-
-      {/* Texte oversized */}
-      <div className="col-span-1">
-        <p className="text-display text-[clamp(2.6rem,6.5vw,5.5rem)] text-white">
-          {big}
-          <span className="text-white/25">{rest}</span>
-        </p>
-        <p className="mt-4 max-w-[480px] text-[15px] leading-relaxed text-white/35">{body}</p>
-      </div>
-
-      {/* Tag + ligne déco droite */}
-      <div className="col-span-2 flex items-center gap-4 lg:col-span-1 lg:flex-col lg:items-end lg:gap-3">
-        <span className="tag-tech">{tag}</span>
-        <div className="arcos-line-h h-px w-12 lg:hidden" />
-      </div>
-
-      {/* Ligne accent verticale hover */}
-      <div className="pointer-events-none absolute left-0 top-0 h-0 w-[2px] bg-accent transition-all duration-500 group-hover:h-full" />
-    </motion.div>
-  );
-}
-
 export default function Problem() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section className="relative overflow-x-hidden border-t border-white/[0.06] bg-section-slab px-6 py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.3]" />
-
-      <div className="relative z-10 mx-auto max-w-[1280px]">
-        {/* Header éditorial */}
+    <section className="bg-[#F7F7F5]">
+      <div className="container-arcos section-pad">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
-          className="mb-16 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
+          transition={{ duration: 0.5 }}
+          className="mb-14"
         >
-          <div>
-            <span className="tag-tech mb-5 block w-fit">Le terrain</span>
-        <p className="text-section text-[clamp(1.6rem,3.5vw,2.5rem)] text-white">
+          <p className="section-label">Le problème</p>
+          <h2 className="max-w-[480px]">
             Ce que l&apos;industrie vit
             <br />
-            <span className="text-white/28">sans couche temps réel.</span>
-          </p>
-          </div>
-          <p className="max-w-[340px] text-[14px] leading-relaxed text-white/30">
-            Chaque ligne ci-dessous est un pattern terrain récurrent.
-            Pas une hypothèse.
-          </p>
+            <span className="text-[#6B7280]">sans couche temps réel.</span>
+          </h2>
         </motion.div>
 
-        {/* Lignes éditoriales */}
-        <div>
-          {LINES.map((l, i) => (
-            <EditorialLine key={l.n} {...l} i={i} />
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {PROBLEMS.map((p, i) => (
+            <motion.div
+              key={p.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
+              className="card bg-white p-6"
+            >
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-[8px] bg-[#F3F4F6] text-[#6B7280]">
+                {p.icon}
+              </div>
+              <h3 className="text-[17px] font-semibold text-[#0A0A0A]">{p.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-[#6B7280]">{p.desc}</p>
+            </motion.div>
           ))}
         </div>
-
-        {/* Réponse Arcos — bande horizontale */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55 }}
-          className="mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-2xl border border-accent/20 bg-[#081522] px-8 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-12 sm:py-10"
-        >
-          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_0%_50%,rgba(20,169,207,0.1),transparent_55%)]" />
-          <div className="relative">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent/60">La réponse Arcos</p>
-            <p className="mt-2 text-[clamp(1.25rem,2.5vw,1.7rem)] font-bold leading-[1.1] tracking-[-0.03em] text-white/90">
-              MQTT centralisé. Alertes. IA.
-              <br />
-              <span className="text-white/35">Déployé en jours.</span>
-            </p>
-          </div>
-            <a href="#features" className="btn-primary shrink-0">
-            Voir la plateforme →
-          </a>
-        </motion.div>
       </div>
     </section>
   );

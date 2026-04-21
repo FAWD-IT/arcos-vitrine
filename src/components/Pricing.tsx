@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
+import { useInView } from "react-intersection-observer";
+import { Check } from "lucide-react";
 
 const plans = [
   {
@@ -52,31 +53,27 @@ const plans = [
 ];
 
 export default function Pricing() {
-  return (
-    <section
-      id="pricing"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-section-slab px-6 py-24 sm:py-32"
-    >
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.2]" />
-      <div className="pointer-events-none absolute bottom-0 left-1/2 h-[280px] w-[90%] max-w-[800px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(20,169,207,0.08)_0%,transparent_70%)]" />
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
-      <div className="relative z-10 mx-auto max-w-[1280px]">
+  return (
+    <section id="pricing" className="bg-[#F7F7F5]">
+      <div className="container-arcos section-pad">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="mx-auto mb-14 max-w-[640px] text-center"
+          className="mx-auto mb-12 max-w-[560px] text-center"
         >
-          <span className="tag-tech mb-6 inline-block">Pricing</span>
-          <h2 className="text-display text-[clamp(1.85rem,3.8vw,3rem)] text-white">
+          <p className="section-label">Tarifs</p>
+          <h2>
             Offres par périmètre
             <br />
-            <span className="text-white/28">site &amp; volume.</span>
+            <span className="text-[#6B7280]">site &amp; volume.</span>
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-white/36">
-            Facturation alignée sur le nombre de sites supervisés et la charge
-            mesurée — devis selon votre contexte (périmètre technique, pas au siège).
+          <p className="mx-auto mt-4 text-[16px] leading-relaxed text-[#6B7280]">
+            Facturation alignée sur le nombre de sites supervisés.
+            Devis selon votre contexte technique.
           </p>
         </motion.div>
 
@@ -84,58 +81,50 @@ export default function Pricing() {
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: i * 0.08 }}
-              className={`card-inset relative flex flex-col rounded-[var(--r-2xl)] border p-8 sm:p-9 ${
+              className={`relative flex flex-col rounded-[var(--r-xl)] bg-white p-8 ${
                 plan.highlighted
-                  ? "border-accent/35 bg-gradient-to-b from-accent/[0.1] via-[var(--surface-2)] to-[var(--surface-1)] shadow-[0_0_0_1px_rgba(20,169,207,0.18)_inset]"
-                  : "border-[var(--border-dim)] bg-[var(--surface-1)]"
+                  ? "border-2 border-[#0A0A0A] shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+                  : "border border-[#E5E7EB]"
               }`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-[3px] bg-accent px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg shadow-black/50">
+                <span className="badge absolute -top-3 left-1/2 -translate-x-1/2">
                   Recommandé
-                </div>
+                </span>
               )}
 
-              <h3 className="font-display text-[19px] font-bold tracking-tight text-white/95">{plan.name}</h3>
-              <p className="mt-1 text-[13px] text-white/28">{plan.description}</p>
+              <div>
+                <h3 className="text-[20px] font-semibold text-[#0A0A0A]">{plan.name}</h3>
+                <p className="mt-1 text-[14px] text-[#6B7280]">{plan.description}</p>
+              </div>
 
-              <div className="my-7 border-b border-[var(--border-dim)] pb-7">
-                <span className="text-data text-[28px] font-bold text-white/88">
-                  {plan.price}
-                </span>
+              <div className="my-6 border-t border-[#E5E7EB] pt-6">
+                <span className="text-[28px] font-bold text-[#0A0A0A]">{plan.price}</span>
               </div>
 
               <ul className="mb-8 flex-1 space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
-                    <span
-                      className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${
-                        plan.highlighted
-                          ? "border-accent/25 bg-accent/10 text-accent-light"
-                          : "border-white/[0.08] bg-white/[0.03] text-white/40"
-                      }`}
-                    >
-                      <Check className="h-3 w-3" strokeWidth={2.5} />
-                    </span>
-                    <span className="text-[13px] leading-snug text-white/38">
-                      {feature}
-                    </span>
+                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F3F4F6]">
+                      <Check className="h-3 w-3 text-[#6B7280]" strokeWidth={2.5} />
+                    </div>
+                    <span className="text-[14px] text-[#6B7280]">{feature}</span>
                   </li>
                 ))}
               </ul>
 
               <a
                 href="#demo"
-                className={`mt-auto flex w-full cursor-pointer items-center justify-center gap-2 text-[13px] ${
-                  plan.highlighted ? "btn-primary" : "btn-ghost"
+                className={`mt-auto flex w-full cursor-pointer items-center justify-center gap-2 rounded-[var(--r-md)] px-6 py-3 text-[14px] font-semibold transition-all duration-150 ${
+                  plan.highlighted
+                    ? "bg-[#0A0A0A] text-white hover:opacity-80"
+                    : "border border-[#E5E7EB] text-[#0A0A0A] hover:bg-[#F3F4F6]"
                 }`}
               >
                 {plan.cta}
-                <ArrowRight className="h-4 w-4" />
               </a>
             </motion.div>
           ))}
