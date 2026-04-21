@@ -176,17 +176,15 @@ export function Navbar() {
               const el = e.currentTarget;
               const s = scrolledRef.current;
               if (s) {
-                /* pill claire → hover bouton blanc avec teinte teal subtile */
-                el.style.background  = "#d6eff5";
-                el.style.color       = "#131514";
-                el.style.borderColor = "rgba(20,169,207,0.45)";
-                el.style.boxShadow   = "0 0 0 2px rgba(20,169,207,0.15)";
+                /* pill claire → bouton blanc → inversion gris sombre */
+                el.style.background  = "#2e2e2c";
+                el.style.color       = "#f1f1f1";
+                el.style.borderColor = "#2e2e2c";
               } else {
-                /* pill sombre → hover ghost legèrement plus visible */
+                /* pill sombre → ghost → légèrement plus visible */
                 el.style.background  = "rgba(255,255,255,0.1)";
                 el.style.color       = "#ffffff";
                 el.style.borderColor = "rgba(255,255,255,0.6)";
-                el.style.boxShadow   = "none";
               }
             }}
             onMouseLeave={e => {
@@ -195,7 +193,6 @@ export function Navbar() {
               el.style.background  = s ? "#f1f1f1" : "transparent";
               el.style.color       = s ? "#131514" : "rgba(255,255,255,0.9)";
               el.style.borderColor = s ? "#f1f1f1" : "rgba(255,255,255,0.35)";
-              el.style.boxShadow   = "none";
             }}
           >
             Parler à l&apos;équipe

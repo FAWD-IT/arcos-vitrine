@@ -122,14 +122,13 @@ body {
   padding: 11px 16px;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   white-space: nowrap;
 }
 .btn-hg:hover {
-  background: #d6eff5;
-  color: #131514;
-  border-color: rgba(20,169,207,0.45);
-  box-shadow: 0 0 0 2px rgba(20,169,207,0.15);
+  background: #2e2e2c;
+  color: #f1f1f1;
+  border-color: #2e2e2c;
 }
 
 /* Variante ghost (outline discret, texte muted → hover blanc) */
