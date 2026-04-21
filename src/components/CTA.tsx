@@ -49,6 +49,7 @@ export function CTA() {
 
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim().toLowerCase();
+    const phone = String(fd.get("phone") ?? "").trim();
     const company = String(fd.get("company") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
 
@@ -62,6 +63,7 @@ export function CTA() {
         body: JSON.stringify({
           name,
           email,
+          phone,
           company,
           message,
           website: String(fd.get("website") ?? "").trim(),
@@ -118,7 +120,20 @@ export function CTA() {
             </label>
             <label style={labelStyle}>
               E-mail professionnel *
-              <input name="email" type="email" required placeholder="vous@entreprise.com" style={inputStyle} disabled={status === "loading"} />
+              <input name="email" type="email" required placeholder="vous@entreprise.com" style={inputStyle} disabled={status === "loading"} autoComplete="email" />
+            </label>
+            <label style={labelStyle}>
+              Téléphone *
+              <input
+                name="phone"
+                type="tel"
+                required
+                placeholder="+32 470 12 34 56"
+                inputMode="tel"
+                autoComplete="tel"
+                style={inputStyle}
+                disabled={status === "loading"}
+              />
             </label>
             <label style={labelStyle}>
               Entreprise
@@ -150,12 +165,17 @@ export function CTA() {
             <div style={{ marginTop: "1.5rem" }}>
               <button
                 type="submit"
-                className="btn-hg"
+                className="btn-hg cta-submit-btn"
                 style={{ border: "none", font: "inherit", width: "auto" }}
                 disabled={status === "loading"}
+                aria-busy={status === "loading"}
               >
                 {status === "loading" ? "Envoi en cours…" : "Envoyer le message"}
-                <HGArrow size={12} color="currentColor" />
+                {status === "loading" ? (
+                  <span className="cta-submit-loader" aria-hidden />
+                ) : (
+                  <HGArrow size={12} color="currentColor" />
+                )}
               </button>
             </div>
           </form>
@@ -169,6 +189,24 @@ export function CTA() {
         #contact input:focus,
         #contact textarea:focus {
           border-color: rgba(255,255,255,0.28);
+        }
+        @keyframes cta-submit-spin {
+          to { transform: rotate(360deg); }
+        }
+        .cta-submit-loader {
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          box-sizing: border-box;
+          border: 2px solid rgba(19, 21, 20, 0.2);
+          border-top-color: #131514;
+          border-radius: 50%;
+          animation: cta-submit-spin 0.65s linear infinite;
+          flex-shrink: 0;
+          vertical-align: middle;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cta-submit-loader { animation: none; border-color: rgba(19, 21, 20, 0.35); }
         }
       `}</style>
     </>

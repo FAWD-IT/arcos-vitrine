@@ -24,15 +24,27 @@ function rateLimit(ip: string): boolean {
 const EMAIL_RE =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
+const PHONE_CHARS_RE = /^[\d\s+()./-]+$/;
+
+function validPhone(raw: string): boolean {
+  const t = raw.trim();
+  if (t.length < 8 || t.length > 28) return false;
+  if (!PHONE_CHARS_RE.test(t)) return false;
+  const digits = t.replace(/\D/g, "");
+  return digits.length >= 8 && digits.length <= 15;
+}
+
 function validPayload(body: unknown): body is ContactPayload & { website?: string } {
   if (!body || typeof body !== "object") return false;
   const o = body as Record<string, unknown>;
   const name = typeof o.name === "string" ? o.name.trim() : "";
   const email = typeof o.email === "string" ? o.email.trim().toLowerCase() : "";
+  const phone = typeof o.phone === "string" ? o.phone.trim() : "";
   const company = typeof o.company === "string" ? o.company.trim() : "";
   const message = typeof o.message === "string" ? o.message.trim() : "";
   if (name.length < 2 || name.length > 120) return false;
   if (!EMAIL_RE.test(email) || email.length > 254) return false;
+  if (!validPhone(phone)) return false;
   if (company.length > 200) return false;
   if (message.length < 10 || message.length > 5000) return false;
   return true;
@@ -54,7 +66,7 @@ export async function POST(req: Request) {
 
   if (!validPayload(json)) {
     return NextResponse.json(
-      { ok: false, error: "Vérifiez les champs obligatoires (nom, e-mail valide, message 10–5000 caractères)." },
+      { ok: false, error: "Vérifiez les champs (nom, e-mail, téléphone valide, message 10–5000 caractères)." },
       { status: 400 }
     );
   }
@@ -67,6 +79,7 @@ export async function POST(req: Request) {
   const payload: ContactPayload = {
     name: (json as ContactPayload).name.trim(),
     email: (json as ContactPayload).email.trim().toLowerCase(),
+    phone: (json as ContactPayload).phone.trim(),
     company: (json as ContactPayload).company.trim(),
     message: (json as ContactPayload).message.trim(),
   };

@@ -1,5 +1,15 @@
 import { escapeHtml } from "./escape";
 
+/** `tel:` — uniquement chiffres et un éventuel + en tête (évite caractères invalides dans l’URL). */
+function telUriForHref(phone: string): string {
+  let out = "";
+  for (const c of phone.trim()) {
+    if (c >= "0" && c <= "9") out += c;
+    else if (c === "+" && out.length === 0) out += c;
+  }
+  return out || phone.replace(/\D/g, "");
+}
+
 /**
  * Tokens alignés sur `src/app/globals.css` (:root + .btn-hg).
  * Bordures / fonds en hex (pas de rgba) pour limiter les dérives
@@ -21,6 +31,7 @@ const BTN_BORDER = "#f1f1f1";
 export type ContactPayload = {
   name: string;
   email: string;
+  phone: string;
   company: string;
   message: string;
 };
@@ -211,6 +222,7 @@ export function teamNotificationHtml(
     </h1>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ${BORDER};border-radius:8px;overflow:hidden;">
       ${fieldTableRow("E-mail", `<a href="mailto:${escapeHtml(p.email)}" style="color:${TEAL};text-decoration:none;">${escapeHtml(p.email)}</a>`, false)}
+      ${fieldTableRow("Téléphone", `<a href="tel:${escapeHtml(telUriForHref(p.phone))}" style="color:${TEAL};text-decoration:none;">${escapeHtml(p.phone)}</a>`, true)}
       ${fieldTableRow("Entreprise", p.company ? escapeHtml(p.company) : `<span style="color:${MUTED};">—</span>`, true)}
       <tr>
         <td colspan="2" bgcolor="${PANEL}" style="padding:12px 16px;border-top:1px solid ${BORDER};background-color:${PANEL} !important;${fontInline(500)}font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:${MUTED};">Message</td>
@@ -228,7 +240,7 @@ export function teamNotificationHtml(
 
   return emailShell({
     title: "Arcos — nouvelle demande",
-    preheader: `Message de ${p.name} (${p.email})`,
+    preheader: `Message de ${p.name} · ${p.phone}`,
     innerHtml: inner,
     siteUrl,
   });
@@ -257,6 +269,11 @@ export function userConfirmationHtml(p: ContactPayload, siteUrl: string): string
         <td style="padding:14px 18px;${fontInline(500)}font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:${MUTED};">Récapitulatif</td>
       </tr>
       <tr>
+        <td style="padding:0 18px 12px;${fontInline(500)}font-size:14px;color:${MUTED};background-color:${BG} !important;" bgcolor="${BG}">
+          Téléphone · <a href="tel:${escapeHtml(telUriForHref(p.phone))}" style="color:${TEAL};text-decoration:none;">${escapeHtml(p.phone)}</a>
+        </td>
+      </tr>
+      <tr>
         <td style="padding:0 18px 18px;${fontInline(500)}font-size:15px;color:${TEXT};white-space:pre-wrap;background-color:${BG} !important;" bgcolor="${BG}">${escapeHtml(p.message)}</td>
       </tr>
     </table>
@@ -281,6 +298,7 @@ export function teamNotificationText(p: ContactPayload, siteUrl: string, submitt
     "",
     `Nom : ${p.name}`,
     `E-mail : ${p.email}`,
+    `Téléphone : ${p.phone}`,
     `Entreprise : ${p.company || "—"}`,
     "",
     "Message :",
@@ -301,6 +319,8 @@ export function userConfirmationText(p: ContactPayload, siteUrl: string): string
     `Bonjour ${first},`,
     "",
     "Nous avons bien reçu votre message. L'équipe Arcos vous recontactera sous 24 heures ouvrées.",
+    "",
+    `Téléphone : ${p.phone}`,
     "",
     "Récapitulatif de votre message :",
     p.message,

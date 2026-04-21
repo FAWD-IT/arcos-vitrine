@@ -41,7 +41,7 @@ arcos-vitrine/
 ```
 
 ## Formulaire contact & SMTP
-- Le formulaire appelle `POST /api/contact` (JSON : `name`, `email`, `company`, `message` ; honeypot `website` côté HTML, vide côté honnête).
+- Le formulaire appelle `POST /api/contact` (JSON : `name`, `email`, `phone`, `company`, `message` ; honeypot `website` côté HTML, vide côté honnête).
 - Variables d’environnement : voir `.env.example` (`SMTP_*`, `CONTACT_TEAM_TO`, `NEXT_PUBLIC_SITE_URL`).
 - **Ne jamais committer** les secrets : utiliser `.env.local` en dev et les secrets de la plateforme en prod.
 - Deux e-mails par envoi : notification équipe (`CONTACT_TEAM_TO`, `Reply-To` = e-mail visiteur) et accusé de réception HTML + texte brut au visiteur (multipart, en-têtes sobres, pré-en-tête masqué).
