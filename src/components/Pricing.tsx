@@ -106,7 +106,7 @@ export function Pricing() {
                     color: "var(--white)",
                     letterSpacing: "-0.02em",
                     lineHeight: 1,
-                    fontFamily: "'Aeonikpro', Arial, sans-serif",
+                    fontFamily: "'PP Neue Montreal', Arial, sans-serif",
                   }}
                 >
                   {plan.price}

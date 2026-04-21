@@ -80,7 +80,7 @@ export function Features() {
               </p>
               <h3
                 style={{
-                  fontFamily: "'Aeonikpro', Arial, sans-serif",
+                  fontFamily: "'PP Neue Montreal', Arial, sans-serif",
                   fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)",
                   fontWeight: 500,
                   color: "var(--white)",

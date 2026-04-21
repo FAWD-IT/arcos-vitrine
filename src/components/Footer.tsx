@@ -113,7 +113,7 @@ export function Footer() {
         style={{
           textAlign: "center",
           fontSize: "clamp(8rem, 22vw, 18rem)",
-          fontFamily: "'Aeonikpro', Arial, sans-serif",
+          fontFamily: "'PP Neue Montreal', Arial, sans-serif",
           fontWeight: 500,
           color: "var(--white)",
           opacity: 0.045,

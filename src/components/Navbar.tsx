@@ -44,7 +44,7 @@ export function Navbar() {
         <Link
           href="/"
           style={{
-            fontFamily: "'Aeonikpro', Arial, sans-serif",
+            fontFamily: "'PP Neue Montreal', Arial, sans-serif",
             fontWeight: 500,
             fontSize: 15.875,
             color: "var(--white)",
