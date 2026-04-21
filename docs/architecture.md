@@ -49,6 +49,7 @@ arcos-vitrine/
 ## Déploiement
 - `next build` : pages statiques + route API dynamique (`/api/contact` nécessite un runtime Node avec variables SMTP).
 - Compatible Vercel / Node hébergé ; **pas** d’export statique seul si le formulaire doit fonctionner sans backend tiers.
+- **Node** : minimum **20.19+** (contrainte transitive `eslint-visitor-keys`). Fichiers `nixpacks.toml` + `.node-version` pour Nixpacks (Coolify / Railway) afin d’éviter l’image par défaut en 22.11 sans `^22.13.0`.
 
 ## Choix techniques
 - **App Router** : Routing moderne Next.js, Server Components par défaut

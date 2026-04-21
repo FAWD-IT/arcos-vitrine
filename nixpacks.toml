@@ -1,0 +1,4 @@
+# Coolify / Railway (Nixpacks) — aligner Node sur les engines d’eslint-config-next / eslint-visitor-keys
+# (évite EBADENGINE avec Node 22.11 par défaut)
+[variables]
+NIXPACKS_NODE_VERSION = "20.19"
