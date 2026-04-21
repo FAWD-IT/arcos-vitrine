@@ -1,4 +1,5 @@
 "use client";
+import { AnimateIn } from "./AnimateIn";
 
 const PROTOCOLS = [
   { name: "MQTT",      desc: "Broker natif, QoS 0/1/2, retain, wildcards" },
@@ -21,7 +22,7 @@ export function Integrations() {
           className="integ-grid"
         >
           {/* Left: text */}
-          <div>
+          <AnimateIn>
             <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: "1.5rem", fontWeight: 500 }}>
               Connectivité
             </p>
@@ -34,7 +35,7 @@ export function Integrations() {
             <a href="#demo" className="btn-hg" style={{ marginTop: "2rem", textDecoration: "none", display: "inline-flex" }}>
               <span className="arr">→</span> Voir toutes les intégrations
             </a>
-          </div>
+          </AnimateIn>
 
           {/* Right: protocol list */}
           <div>

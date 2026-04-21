@@ -1,4 +1,5 @@
 "use client";
+import { AnimateIn } from "./AnimateIn";
 
 const PROFILES = [
   {
@@ -24,7 +25,7 @@ export function ForWho() {
       <div className="line" />
       <section id="for-who" className="c sp">
         {/* Header */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="forwho-header">
+        <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="forwho-header">
           <h2 className="h-statement">
             Pensé pour ceux <span className="dim">qui font tourner l&apos;usine.</span>
           </h2>
@@ -33,7 +34,7 @@ export function ForWho() {
               Qu&apos;il s&apos;agisse d&apos;un opérateur terrain ou d&apos;un DSI, Arcos adapte son niveau de détail et ses accès à chaque profil.
             </p>
           </div>
-        </div>
+        </AnimateIn>
 
         {/* Profiles: row layout */}
         {PROFILES.map(p => (

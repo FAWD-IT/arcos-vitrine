@@ -1,4 +1,5 @@
 "use client";
+import { AnimateIn } from "./AnimateIn";
 
 const SERVICES = [
   {
@@ -41,7 +42,7 @@ export function Features() {
       <div className="line" />
       <section id="features-detail" className="c sp">
         {/* Header row */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="feat-header">
+        <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="feat-header">
           <h2 className="h-statement">
             La plateforme <span className="dim">qui s&apos;adapte à votre infrastructure.</span>
           </h2>
@@ -50,12 +51,14 @@ export function Features() {
               Arcos couvre l&apos;ensemble du cycle — de la collecte brute des données MQTT à l&apos;analyse intelligente, en passant par les alertes terrain et les rapports dirigeants.
             </p>
           </div>
-        </div>
+        </AnimateIn>
 
         {/* Services list */}
-        {SERVICES.map(svc => (
-          <div
+        {SERVICES.map((svc, i) => (
+          <AnimateIn
             key={svc.id}
+            delay={i * 60}
+            as="div"
             id={svc.id}
             style={{
               display: "grid",
@@ -106,7 +109,7 @@ export function Features() {
                 ))}
               </div>
             </div>
-          </div>
+          </AnimateIn>
         ))}
         <div className="line" />
       </section>

@@ -1,4 +1,5 @@
 "use client";
+import { AnimateIn } from "./AnimateIn";
 export function CTA() {
   return (
     <>
@@ -9,7 +10,7 @@ export function CTA() {
           className="cta-grid"
         >
           {/* Left */}
-          <div>
+          <AnimateIn>
             <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: "1.5rem", fontWeight: 500 }}>
               Contact
             </p>
@@ -27,7 +28,7 @@ export function CTA() {
                 <span className="arr">→</span> Planifier un appel
               </a>
             </div>
-          </div>
+          </AnimateIn>
 
           {/* Right: info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>

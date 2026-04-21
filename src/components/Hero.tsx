@@ -43,15 +43,16 @@ export function Hero() {
           gridTemplateColumns: "1fr 1fr",
           gap: 40,
           alignItems: "flex-start",
-          paddingTop: "6rem",
+          paddingTop: "5.5rem",
         }}
         className="hero-top"
       >
         {/* H1 top-left */}
-        <h1 className="h-hero">
+        <h1 className="h-hero anim-load anim-load-2">
           Supervision industrielle<br />
           temps réel. Vos machines<br />
-          parlent. <span style={{ color: "var(--muted)" }}>Vous écoutez.</span>
+          parlent.{" "}
+          <span style={{ color: "var(--muted)" }}>Vous écoutez.</span>
         </h1>
 
         {/* Stats grid top-right */}
@@ -59,6 +60,7 @@ export function Hero() {
           {STATS.map((s, i) => (
             <div
               key={s.value}
+              className={`anim-load anim-load-${i + 2}`}
               style={{
                 borderTop: "1px solid var(--border)",
                 borderLeft: i % 2 === 1 ? "1px solid var(--border)" : "none",
@@ -66,7 +68,16 @@ export function Hero() {
               }}
             >
               <p className="stat-giant">{s.value}</p>
-              <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, fontWeight: 500, letterSpacing: "0.04em" }}>
+              <p
+                style={{
+                  fontSize: 11,
+                  color: "var(--muted)",
+                  marginTop: 6,
+                  fontWeight: 500,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                }}
+              >
                 {s.label}
               </p>
             </div>
@@ -87,23 +98,49 @@ export function Hero() {
         }}
         className="hero-bottom"
       >
-        {/* Left: status + description */}
-        <div>
-          <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: "1rem", fontWeight: 500 }}>
+        <div className="anim-load anim-load-4">
+          <p
+            style={{
+              fontSize: 12,
+              color: "var(--muted)",
+              marginBottom: "1rem",
+              fontWeight: 500,
+            }}
+          >
             <span className="status-dot" />
-            (En ligne) &nbsp;{time} CET
+            (En ligne)&nbsp;&nbsp;{time} CET
           </p>
-          <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.55, maxWidth: 420, fontWeight: 500 }}>
-            Arcos centralise vos données MQTT en temps réel — alertes, historique et IA — dans une seule interface pensée pour les équipes terrain.
+          <p
+            style={{
+              fontSize: 15.875,
+              color: "var(--text)",
+              lineHeight: 1.6,
+              maxWidth: 400,
+              fontWeight: 500,
+            }}
+          >
+            Arcos centralise vos données MQTT en temps réel — alertes,
+            historique et IA — dans une seule interface pensée pour les
+            équipes terrain.
           </p>
         </div>
 
-        {/* Right: CTAs */}
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <div
+          className="anim-load anim-load-5"
+          style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
+        >
           <a href="#demo" className="btn-hg" style={{ textDecoration: "none" }}>
             <span className="arr">→</span> Obtenir une démo
           </a>
-          <a href="#features" className="btn-hg" style={{ textDecoration: "none", borderColor: "rgba(255,255,255,0.06)", color: "var(--muted)" }}>
+          <a
+            href="#features"
+            className="btn-hg"
+            style={{
+              textDecoration: "none",
+              borderColor: "rgba(255,255,255,0.06)",
+              color: "var(--muted)",
+            }}
+          >
             <span className="arr">→</span> Voir la plateforme
           </a>
         </div>
@@ -111,12 +148,10 @@ export function Hero() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-top { grid-template-columns: 1fr !important; padding-top: 5rem !important; }
+          .hero-top    { grid-template-columns: 1fr !important; padding-top: 5rem !important; }
           .hero-bottom { grid-template-columns: 1fr !important; gap: 2rem !important; }
         }
-        @media (max-width: 480px) {
-          section { padding-inline: 20px !important; }
-        }
+        @media (max-width: 480px) { section { padding-inline: 20px !important; } }
       `}</style>
     </section>
   );

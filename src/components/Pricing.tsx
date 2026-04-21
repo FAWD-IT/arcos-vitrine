@@ -1,4 +1,5 @@
 "use client";
+import { AnimateIn } from "./AnimateIn";
 
 const PLANS = [
   {
@@ -54,7 +55,7 @@ export function Pricing() {
       <div className="line" />
       <section id="pricing" className="c sp">
         {/* Header */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="pricing-header">
+        <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="pricing-header">
           <h2 className="h-statement">
             Offres alignées <span className="dim">sur votre périmètre.</span>
           </h2>
@@ -63,7 +64,7 @@ export function Pricing() {
               Du pilote terrain à la supervision multi-sites — chaque plan inclut un déploiement accompagné et un support réactif.
             </p>
           </div>
-        </div>
+        </AnimateIn>
 
         {/* Plans: 3 col row */}
         <div

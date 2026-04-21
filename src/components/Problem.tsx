@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { AnimateIn } from "./AnimateIn";
 
 const ACCORDION = [
   {
@@ -55,7 +56,7 @@ export function Problem() {
           className="stmt-grid"
         >
           {/* Left: big statement */}
-          <div>
+          <AnimateIn>
             <h2 className="h-statement">
               Une couche temps réel <span className="dim">qui connecte vos machines,</span> vos équipes, <span className="dim">et vos décisions.</span>
             </h2>
@@ -65,10 +66,10 @@ export function Problem() {
             <a href="#demo" className="btn-hg" style={{ marginTop: "2rem", textDecoration: "none", display: "inline-flex" }}>
               <span className="arr">→</span> Voir la démo
             </a>
-          </div>
+          </AnimateIn>
 
           {/* Right: accordion */}
-          <div>
+          <AnimateIn delay={120}>
             {ACCORDION.map(item => (
               <div
                 key={item.key}
@@ -106,7 +107,7 @@ export function Problem() {
               </div>
             ))}
             <div className="line" style={{ marginTop: 0 }} />
-          </div>
+          </AnimateIn>
         </div>
       </section>
 

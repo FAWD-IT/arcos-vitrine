@@ -11,10 +11,12 @@ const NAV = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 60);
+    setMounted(true);
+    const h = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", h, { passive: true });
     h();
     return () => window.removeEventListener("scroll", h);
@@ -22,66 +24,100 @@ export function Navbar() {
 
   return (
     <nav
+      aria-label="Navigation principale"
       style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        background: scrolled ? "rgba(19,21,20,0.92)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        transition: "background 0.3s ease",
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        display: "flex",
+        justifyContent: "center",
+        padding: "12px 20px",
+        pointerEvents: "none",
       }}
     >
+      {/* Pill container — exactement comme HG */}
       <div
-        className="c"
         style={{
-          height: 56,
+          width: "100%",
+          maxWidth: scrolled ? "1080px" : "1280px",
+          background: scrolled ? "#EAEAEA" : "rgb(21,22,21)",
+          border: scrolled
+            ? "1.5px solid #E3E3E3"
+            : "1.5px solid rgba(255,255,255,0.06)",
+          borderRadius: 8,
           display: "flex",
           alignItems: "center",
-          gap: 32,
+          height: 52,
+          padding: "0 20px 0 28px",
+          transform: scrolled ? "scaleY(0.94)" : "scaleY(0.98)",
+          transition:
+            "max-width 0.45s cubic-bezier(0.4,0,0.2,1), background 0.45s cubic-bezier(0.4,0,0.2,1), border-color 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1)",
+          pointerEvents: "auto",
         }}
       >
-        {/* Logo text */}
+        {/* Logo */}
         <Link
           href="/"
           style={{
             fontFamily: "'PP Neue Montreal', Arial, sans-serif",
             fontWeight: 500,
-            fontSize: 15.875,
-            color: "var(--white)",
+            fontSize: 15,
+            color: scrolled ? "#131514" : "#f1f1f1",
             textDecoration: "none",
-            letterSpacing: "0.04em",
+            letterSpacing: "0.06em",
             flexShrink: 0,
+            transition: "color 0.35s ease",
           }}
         >
           ARCOS
         </Link>
 
-        {/* Nav links desktop */}
+        {/* Links desktop */}
         <div
-          className="nav-desktop"
+          className="nav-links"
           style={{
             display: "flex",
             alignItems: "center",
             gap: 0,
+            marginLeft: 32,
             flex: 1,
           }}
         >
           {NAV.map((l, i) => (
             <span key={l.href} style={{ display: "flex", alignItems: "center" }}>
               {i > 0 && (
-                <span style={{ color: "rgba(255,255,255,0.12)", marginInline: 14, fontSize: 12 }}>|</span>
+                <span
+                  style={{
+                    color: scrolled ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.10)",
+                    marginInline: 14,
+                    fontSize: 11,
+                    transition: "color 0.35s ease",
+                  }}
+                >
+                  |
+                </span>
               )}
               <a
                 href={l.href}
                 style={{
-                  fontSize: 15.875,
+                  fontSize: 14,
                   fontWeight: 500,
-                  color: "var(--muted)",
+                  color: scrolled ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.45)",
                   textDecoration: "none",
-                  transition: "color 0.2s",
+                  transition: "color 0.2s ease",
+                  opacity: mounted ? 1 : 0,
+                  transform: mounted ? "none" : "translateY(6px)",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "var(--white)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+                onMouseEnter={e =>
+                  (e.currentTarget.style.color = scrolled ? "#131514" : "#f1f1f1")
+                }
+                onMouseLeave={e =>
+                  (e.currentTarget.style.color = scrolled
+                    ? "rgba(0,0,0,0.45)"
+                    : "rgba(255,255,255,0.45)")
+                }
               >
                 {l.label}
               </a>
@@ -89,26 +125,53 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* Right: CTA + status */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginLeft: "auto" }}>
-          {/* Status: Online */}
+        {/* Right: status + CTA */}
+        <div className="nav-right" style={{ display: "flex", alignItems: "center", gap: 14, marginLeft: "auto" }}>
           <span
-            className="status-desktop"
             style={{
               fontSize: 12,
-              color: "var(--muted)",
+              color: scrolled ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)",
               display: "flex",
               alignItems: "center",
               gap: 5,
               fontWeight: 500,
+              transition: "color 0.35s ease",
             }}
           >
             <span className="status-dot" />
             Disponible
           </span>
 
-          <a href="#demo" className="btn-hg" style={{ textDecoration: "none" }}>
-            <span className="arr">→</span> Parler à l&apos;équipe
+          <a
+            href="#demo"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 14,
+              fontWeight: 500,
+              color: scrolled ? "#131514" : "#f1f1f1",
+              border: scrolled
+                ? "1.5px solid rgba(0,0,0,0.18)"
+                : "1.5px solid rgba(255,255,255,0.18)",
+              borderRadius: 5,
+              padding: "6px 14px",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              transition: "all 0.35s ease",
+              background: "transparent",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.background = scrolled
+                ? "rgba(0,0,0,0.06)"
+                : "rgba(255,255,255,0.06)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.background = "transparent";
+            }}
+          >
+            <span style={{ opacity: 0.6, fontSize: 12 }}>→</span>
+            Parler à l&apos;équipe
           </a>
         </div>
 
@@ -117,35 +180,56 @@ export function Navbar() {
           className="burger"
           onClick={() => setOpen(o => !o)}
           style={{
-            display: "none", background: "none", border: "none",
-            color: "var(--white)", cursor: "pointer", padding: 4,
+            display: "none",
+            background: "none",
+            border: "none",
+            color: scrolled ? "#131514" : "#f1f1f1",
+            cursor: "pointer",
+            padding: 4,
+            marginLeft: "auto",
           }}
           aria-label="Menu"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            {open
-              ? <path d="M3 3l14 14M17 3L3 17" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-              : <>
-                  <line x1="2" y1="6"  x2="18" y2="6"  stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                  <line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                  <line x1="2" y1="14" x2="18" y2="14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                </>
-            }
+            {open ? (
+              <path d="M3 3l14 14M17 3L3 17" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+            ) : (
+              <>
+                <line x1="2" y1="6"  x2="18" y2="6"  stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                <line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                <line x1="2" y1="14" x2="18" y2="14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+              </>
+            )}
           </svg>
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown */}
       {open && (
-        <div style={{ background: "rgba(19,21,20,0.97)", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "1rem 20px 1.5rem" }}>
+        <div
+          style={{
+            position: "absolute",
+            top: "calc(100% + 4px)",
+            left: 20,
+            right: 20,
+            background: "rgb(21,22,21)",
+            border: "1.5px solid rgba(255,255,255,0.08)",
+            borderRadius: 8,
+            padding: "1rem 20px 1.5rem",
+            pointerEvents: "auto",
+          }}
+        >
           {NAV.map(l => (
             <a
-              key={l.href} href={l.href}
+              key={l.href}
+              href={l.href}
               onClick={() => setOpen(false)}
               style={{
-                display: "block", padding: "10px 0",
-                fontSize: 15.875, fontWeight: 500,
-                color: "var(--text)",
+                display: "block",
+                padding: "10px 0",
+                fontSize: 15,
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.7)",
                 textDecoration: "none",
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
               }}
@@ -153,16 +237,33 @@ export function Navbar() {
               {l.label}
             </a>
           ))}
-          <a href="#demo" onClick={() => setOpen(false)} className="btn-hg" style={{ marginTop: 16, textDecoration: "none", display: "inline-flex" }}>
-            <span className="arr">→</span> Parler à l&apos;équipe
+          <a
+            href="#demo"
+            onClick={() => setOpen(false)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              marginTop: 16,
+              fontSize: 14,
+              fontWeight: 500,
+              color: "#f1f1f1",
+              border: "1.5px solid rgba(255,255,255,0.18)",
+              borderRadius: 5,
+              padding: "8px 16px",
+              textDecoration: "none",
+            }}
+          >
+            <span style={{ opacity: 0.6, fontSize: 12 }}>→</span>
+            Parler à l&apos;équipe
           </a>
         </div>
       )}
 
       <style>{`
         @media (max-width: 768px) {
-          .nav-desktop { display: none !important; }
-          .status-desktop { display: none !important; }
+          .nav-links { display: none !important; }
+          .nav-right { display: none !important; }
           .burger { display: flex !important; }
         }
       `}</style>
