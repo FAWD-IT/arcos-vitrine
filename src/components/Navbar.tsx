@@ -180,7 +180,7 @@ export function Navbar() {
         {/* Right: CTA */}
         <div className="nav-right" style={{ display: "flex", alignItems: "center", gap: 14, marginLeft: "auto" }}>
           <a
-            href="#demo"
+            href="#contact"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -284,7 +284,7 @@ export function Navbar() {
           ))}
           <a
             className="mobile-nav-link"
-            href="#demo"
+            href="#contact"
             onClick={() => setOpen(false)}
             style={
               {

@@ -104,8 +104,8 @@ export function Hero() {
           className="anim-load anim-load-5"
           style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
         >
-          <HGButton href="#demo">Obtenir une démo</HGButton>
-          <HGButton href="#features" ghost>Voir la plateforme</HGButton>
+          <HGButton href="#contact">Obtenir une démo</HGButton>
+          <HGButton href="#contact" ghost>Voir la plateforme</HGButton>
         </div>
       </div>
 

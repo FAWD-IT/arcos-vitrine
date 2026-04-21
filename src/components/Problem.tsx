@@ -71,7 +71,7 @@ export function Problem() {
               <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "2rem", fontWeight: 500 }}>
                 Sans plateforme adaptée, les mesures restent dispersées entre automates, feuilles Excel et rapports manuels. Arcos centralise tout — tableau de bord, alarmes, historique et IA — dans une interface unique accessible depuis n&apos;importe où.
               </p>
-              <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir la démo</HGButton>
+              <HGButton href="#contact" style={{ marginTop: "2rem" }}>Voir la démo</HGButton>
             </AnimateIn>
           </div>
 

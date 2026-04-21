@@ -33,7 +33,7 @@ export function Integrations() {
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "1.5rem", fontWeight: 500 }}>
               Arcos fonctionne avec les passerelles industrielles que vous utilisez déjà — Ewon Flexy en tête. Pas de réécriture d&apos;infrastructure : branchez, suivez l&apos;onboarding guidé, les données arrivent.
             </p>
-            <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir toutes les connexions</HGButton>
+            <HGButton href="#contact" style={{ marginTop: "2rem" }}>Voir toutes les connexions</HGButton>
           </AnimateIn>
 
           {/* Right: protocol list */}

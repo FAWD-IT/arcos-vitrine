@@ -80,7 +80,7 @@ export function ForWho() {
 
         <div style={{ paddingTop: "2rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
           <p style={{ fontSize: 15.875, color: "var(--muted)", fontWeight: 500 }}>Votre profil n&apos;est pas listé ?</p>
-          <HGButton href="#demo">Parlons-en</HGButton>
+          <HGButton href="#contact">Parlons-en</HGButton>
         </div>
       </section>
 

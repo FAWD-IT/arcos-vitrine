@@ -133,7 +133,7 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <HGButton href="#demo" style={{ alignSelf: "flex-start" }}>{plan.cta}</HGButton>
+              <HGButton href="#contact" style={{ alignSelf: "flex-start" }}>{plan.cta}</HGButton>
             </div>
           ))}
           {/* Last item right border off */}

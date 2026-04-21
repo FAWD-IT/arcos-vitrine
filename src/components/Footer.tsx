@@ -5,9 +5,8 @@ const LINKS = [
   { href: "#integrations",  label: "Connectivité" },
   { href: "#for-who",       label: "Pour qui" },
   { href: "#pricing",       label: "Tarifs" },
-  { href: "#demo",          label: "Contact" },
-  { href: "https://fawd.be",label: "FAWD Studio" },
-  { href: "https://github.com/FAWD-IT", label: "GitHub" },
+  { href: "#contact",       label: "Contact" },
+  { href: "https://fawd.be", label: "FAWD Studio" },
 ];
 
 export function Footer() {
