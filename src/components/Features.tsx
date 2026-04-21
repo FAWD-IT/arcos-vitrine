@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { DevicesMockup, HistoryMockup, AgentMockup } from "./DashboardMockups";
 
 /* ── Feature cards (grille 3 colonnes) */
 const FEATURE_CARDS = [
@@ -65,27 +66,27 @@ const FEATURE_CARDS = [
 /* ── Sections alternées détaillées */
 const CHAPTERS = [
   {
-    tag: "Dashboard",
-    title: "Vos données, lisibles dès le premier regard.",
-    body: "Arcos construit des vues opérationnelles à partir de vos topics MQTT. Indicateurs clés, courbes de tendance, tableaux comparatifs — chaque rôle voit ce dont il a besoin.",
+    tag: "Machines & mesures",
+    title: "Vos machines, en temps réel.",
+    body: "Arcos consolide l'ensemble de vos équipements dans une vue unifiée. Statut en ligne, dernières mesures, qualité du signal — tout visible sans fouiller.",
     metric: { num: "< 1s", label: "Latence affichage" },
-    placeholder: "Dashboard principal — vue temps réel",
+    visual: <DevicesMockup />,
     flip: false,
+  },
+  {
+    tag: "Historique",
+    title: "Comparez, détectez, anticipez.",
+    body: "Explorez l'historique de n'importe quel tag MQTT sur vos plages temporelles. Multi-tags, graphiques combinés, exports PNG/JSON — tout est là sans requête SQL.",
+    metric: { num: "99.7%", label: "Uptime données" },
+    visual: <HistoryMockup />,
+    flip: true,
   },
   {
     tag: "Agent IA",
     title: "Une IA qui raisonne sur vos données terrain.",
-    body: "L'agent lit vos séries temporelles, détecte les patterns inhabituels et génère des rapports automatiques. Pas de configuration supplémentaire — il s'adapte à vos données.",
+    body: "L'agent lit vos séries temporelles, détecte les patterns inhabituels et génère des rapports automatiques. Posez une question en français, recevez une analyse structurée.",
     metric: { num: "98%", label: "Détection anomalies" },
-    placeholder: "Interface agent IA — analyse en cours",
-    flip: true,
-  },
-  {
-    tag: "Alertes",
-    title: "Alertes multi-canal avant la panne.",
-    body: "Seuils dynamiques sur n'importe quel topic MQTT. Escalades configurables par rôle. Notifications par email, SMS, webhook — en moins de 500ms après dépassement.",
-    metric: { num: "< 500ms", label: "Temps de réaction" },
-    placeholder: "Centre d'alertes — historique & règles",
+    visual: <AgentMockup />,
     flip: false,
   },
 ];
@@ -102,8 +103,8 @@ function FeatureCard({ icon, title, desc }: typeof FEATURE_CARDS[0]) {
   );
 }
 
-function ChapterSection({ tag, title, body, metric, placeholder, flip }: typeof CHAPTERS[0]) {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+function ChapterSection({ tag, title, body, metric, visual, flip }: typeof CHAPTERS[0]) {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 });
 
   const textCol = (
     <div className="flex flex-col justify-center">
@@ -126,23 +127,16 @@ function ChapterSection({ tag, title, body, metric, placeholder, flip }: typeof 
   );
 
   const visualCol = (
-    <div className="relative">
-      <div className="device-frame">
-        <div className="device-frame-bar">
-          <span className="device-frame-dot" />
-          <span className="device-frame-dot" />
-          <span className="device-frame-dot" />
-          <div className="ml-3 h-5 flex-1 max-w-[200px] rounded-[4px] bg-[#E5E7EB]" />
-        </div>
-        <div className="img-placeholder aspect-[4/3] w-full">
-          <div className="flex flex-col items-center gap-2 text-center px-6">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#D1D5DB]">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
-            </svg>
-            <span className="text-[#9CA3AF] text-[12px]">{placeholder}</span>
-          </div>
+    <div className="device-frame overflow-hidden">
+      <div className="device-frame-bar">
+        <span className="device-frame-dot" />
+        <span className="device-frame-dot" />
+        <span className="device-frame-dot" />
+        <div className="ml-3 h-5 flex-1 max-w-[180px] rounded-[4px] bg-[#E5E7EB] flex items-center px-2">
+          <span className="text-[10px] text-[#9CA3AF]">app.arcos.io</span>
         </div>
       </div>
+      {visual}
     </div>
   );
 
@@ -153,7 +147,7 @@ function ChapterSection({ tag, title, body, metric, placeholder, flip }: typeof 
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
-          className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-20 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}
+          className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-16 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}
         >
           {flip ? <>{visualCol}{textCol}</> : <>{textCol}{visualCol}</>}
         </motion.div>

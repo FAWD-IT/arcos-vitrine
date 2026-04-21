@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { HeroDashboardMockup } from "./DashboardMockups";
 
 const STATS = [
   { num: "99.7%", label: "Uptime garanti" },
@@ -71,7 +72,7 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Browser frame mockup */}
+        {/* Browser frame — vrai dashboard Arcos */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,16 +89,7 @@ export default function Hero() {
                 <span className="text-[11px] text-[#9CA3AF]">app.arcos.io/dashboard</span>
               </div>
             </div>
-            {/* Placeholder screenshot */}
-            <div className="img-placeholder aspect-[16/9] w-full">
-              <div className="flex flex-col items-center gap-2 text-center">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#D1D5DB]">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <path d="M3 9h18M9 21V9"/>
-                </svg>
-                <span className="text-[#9CA3AF] text-[13px]">Dashboard Arcos — screenshot à intégrer</span>
-              </div>
-            </div>
+            <HeroDashboardMockup />
           </div>
         </motion.div>
       </div>
