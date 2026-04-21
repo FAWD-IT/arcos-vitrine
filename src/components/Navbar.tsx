@@ -87,21 +87,39 @@ export function Navbar() {
           pointerEvents: "auto",
         }}
       >
-        {/* Logo */}
+        {/* Logo — emprise ~ mot « ARCOS » (15px × ~56px) ; SVG carré → cover + crop centre */}
         <Link
           href="/"
           style={{
-            fontFamily: "'PP Neue Montreal', Arial, sans-serif",
-            fontWeight: 500,
-            fontSize: 15,
-            color: scrolled ? "#131514" : "#f1f1f1",
-            textDecoration: "none",
-            letterSpacing: "0.06em",
+            display: "flex",
+            alignItems: "center",
             flexShrink: 0,
-            transition: "color 0.35s ease",
+            width: 56,
+            height: 15,
+            lineHeight: 0,
+            textDecoration: "none",
+            overflow: "hidden",
           }}
+          aria-label="Arcos — accueil"
         >
-          ARCOS
+          <img
+            src="/logo-arcos-nobg2.svg"
+            alt=""
+            width={56}
+            height={15}
+            decoding="async"
+            style={{
+              width: 56,
+              height: 15,
+              display: "block",
+              objectFit: "cover",
+              objectPosition: "50% 50%",
+              transition: "filter 0.35s ease",
+              filter: scrolled
+                ? "none"
+                : "brightness(0) invert(1)",
+            }}
+          />
         </Link>
 
         {/* Links desktop */}
