@@ -4,19 +4,19 @@ import { HGButton } from "./TiltCard";
 
 const PROFILES = [
   {
-    role: "Responsable de production",
-    desc: "Vision temps réel de toute la ligne. Suivi des KPIs, alertes critiques et rapports quotidiens automatiques.",
-    sectors: ["Automobile", "Agroalimentaire", "Énergie"],
+    role: "Directeur d'usine & responsable maintenance",
+    desc: "Vision consolidée de tout le parc sans déployer un SCADA lourd. Alertes critiques, rapports automatiques et KPIs en temps réel — accessibles depuis n'importe où, sans dépendance à l'équipe IT.",
+    sectors: ["Agroalimentaire", "Énergie", "Automobile", "Chimie"],
   },
   {
-    role: "Technicien de maintenance",
-    desc: "Historique complet des pannes, tendances machine et alertes préventives avant que ça casse.",
-    sectors: ["Mécanique", "Électrotechnique"],
+    role: "Ingénieur automation & intégrateur",
+    desc: "Vous configurez des passerelles industrielles (Ewon Flexy ou équivalent) ? Arcos prend le relais côté cloud : historique, alarmes, analyse P&ID et IA disponibles dès la connexion de l'appareil.",
+    sectors: ["Automatisme", "Électrotechnique", "Bureau d'études"],
   },
   {
-    role: "Directeur technique",
-    desc: "Tableau de bord exécutif multi-sites, suivi OEE et export des données pour reporting dirigeant.",
-    sectors: ["Industrie 4.0", "PME / ETI"],
+    role: "PME industrielle multi-sites",
+    desc: "Gérez plusieurs sites ou plusieurs clients dans une seule plateforme avec séparation stricte des données par organisation. Chaque entité ne voit que ses machines et ses utilisateurs.",
+    sectors: ["Multi-sites", "Multi-tenant", "PME / ETI"],
   },
 ];
 
@@ -28,11 +28,11 @@ export function ForWho() {
         {/* Header */}
         <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="forwho-header">
           <h2 className="h-statement">
-            Pensé pour ceux <span className="dim">qui font tourner l&apos;usine.</span>
+            Pensé pour ceux <span className="dim">qui gèrent des machines,</span> pas des serveurs.
           </h2>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
-              Qu&apos;il s&apos;agisse d&apos;un opérateur terrain ou d&apos;un DSI, Arcos adapte son niveau de détail et ses accès à chaque profil.
+              Du responsable maintenance à l&apos;intégrateur terrain, Arcos adapte son niveau de détail et ses accès à chaque profil — sans formation longue.
             </p>
           </div>
         </AnimateIn>

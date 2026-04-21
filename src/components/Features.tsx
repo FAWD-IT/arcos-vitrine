@@ -6,34 +6,42 @@ const SERVICES = [
   {
     id: "realtime",
     num: "01",
-    label: "Dashboard",
-    title: "Tout votre atelier,\nd'un seul coup d'œil.",
-    desc: "Le tableau de bord centralise vos KPIs en temps réel. Chaque widget se met à jour en moins d'une seconde — de la température d'une machine à la pression d'un circuit.",
-    checks: ["Widgets personnalisables par capteur", "Alertes actives en temps réel", "Accès multi-niveaux (opérateur, manager)"],
-  },
-  {
-    id: "history",
-    num: "02",
-    label: "Historique",
-    title: "Remontez le temps.\nAnalysez chaque anomalie.",
-    desc: "L'explorateur d'historique vous permet de croiser plusieurs tags sur n'importe quelle plage temporelle. Idéal pour les audits, la maintenance préventive et la traçabilité réglementaire.",
-    checks: ["Sélection multi-tags simultanée", "Agrégation horaire, journalière, mensuelle", "Export CSV en un clic"],
+    label: "Supervision en direct",
+    title: "Tout votre parc machines,\nd'un seul coup d'œil.",
+    desc: "Statut en ligne / hors ligne, mesures en temps réel et alarmes actives pour chaque équipement. La fiche machine regroupe tout : KPIs, historique, paramètres et qualité du signal.",
+    checks: ["Mise à jour en moins d'une seconde", "Qualité de signal mesure par mesure", "Accès multi-niveaux (opérateur, manager, dirigeant)"],
   },
   {
     id: "alerts",
-    num: "03",
-    label: "Alertes",
+    num: "02",
+    label: "Alertes & traçabilité",
     title: "Réagir avant\nque ça déraille.",
-    desc: "Configurez vos seuils une fois, Arcos surveille en permanence. Les alertes sont horodatées, acquittables et archivées pour chaque machine.",
-    checks: ["Niveaux HIGH / LOW / NO_COMM", "Acquittement depuis l'app ou par e-mail", "Journal d'audit complet"],
+    desc: "Configurez vos seuils une fois, Arcos surveille en permanence. Les alertes sont horodatées, acquittables et archivées — indispensable pour les audits et la traçabilité réglementaire.",
+    checks: ["Niveaux critique / bas / pas de communication", "Acquittement depuis l'interface ou par e-mail", "Journal d'audit complet et exportable"],
+  },
+  {
+    id: "history",
+    num: "03",
+    label: "Historique & rapports",
+    title: "Analyse post-incident\nen quelques secondes.",
+    desc: "Croisez plusieurs mesures sur n'importe quelle plage temporelle. Planifiez des rapports récurrents (jour / semaine / mois) ou générez-les à la demande en PDF.",
+    checks: ["Multi-tags simultanés sur la même vue", "Rapports planifiés automatiquement archivés", "Export CSV en un clic"],
   },
   {
     id: "agent",
     num: "04",
-    label: "Agent IA",
-    title: "Votre data ingénieur,\ntoujours disponible.",
-    desc: "Interrogez vos données en langage naturel. L'agent contextualise, analyse les anomalies et génère un rapport PDF en quelques secondes.",
-    checks: ["Requêtes en français ou anglais", "Analyse statistique automatique", "Rapport PDF téléchargeable"],
+    label: "Assistant IA",
+    title: "Interrogez vos données\nen langage naturel.",
+    desc: "L'agent s'appuie sur les vraies données de vos machines — pas de réponses dans le vide. Il analyse les anomalies, génère des graphiques et produit un rapport PDF en quelques secondes. Les graphiques pertinents s'épinglent directement sur le tableau de bord.",
+    checks: ["Réponses ancrées sur l'historique réel", "Graphiques générés dans la conversation", "Rapport PDF téléchargeable + épinglage dashboard"],
+  },
+  {
+    id: "pid",
+    num: "05",
+    label: "Analyse P&ID",
+    title: "La documentation\nenfin alignée au terrain.",
+    desc: "Importez vos schémas P&ID : l'agent parcourt le schéma, l'inventaire des tags et l'historique récent, puis propose des enrichissements. L'ingénieur valide ou rejette chaque proposition — sans aucune écriture destructive sur les données brutes.",
+    checks: ["Import DWG / DXF avec suivi de pipeline", "Propositions validées par l'ingénieur", "Cockpit opérationnel généré en quelques minutes"],
   },
 ];
 
@@ -47,13 +55,14 @@ export function Features() {
           <WordReveal
             className="h-statement"
             segments={[
-              { text: "La plateforme " },
-              { text: "qui s'adapte à votre infrastructure.", dim: true },
+              { text: "De la mesure brute " },
+              { text: "à la décision éclairée,", dim: true },
+              { text: " sans friction." },
             ]}
           />
           <AnimateIn style={{ display: "flex", alignItems: "flex-end" }} delay={200}>
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
-              Arcos couvre l&apos;ensemble du cycle — de la collecte brute des données MQTT à l&apos;analyse intelligente, en passant par les alertes terrain et les rapports dirigeants.
+              Arcos couvre l&apos;ensemble du cycle — connexion des machines, centralisation des mesures et alarmes, analyse intelligente et rapports automatiques — dans une seule plateforme déployée en jours.
             </p>
           </AnimateIn>
         </div>

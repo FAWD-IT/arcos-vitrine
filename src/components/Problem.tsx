@@ -7,27 +7,27 @@ import { WordReveal } from "./WordReveal";
 const ACCORDION = [
   {
     key: "dashboard",
-    label: "Dashboard temps réel",
-    body: "Tous vos KPIs machine centralisés dans une vue unifiée. Température, pression, débit — mis à jour en moins d'une seconde sans aucune configuration supplémentaire.",
-  },
-  {
-    key: "alertes",
-    label: "Alertes intelligentes",
-    body: "Seuils HIGH / LOW / NO_COMM configurables par machine. Acquittement depuis l'interface ou par e-mail. Journal d'audit complet pour chaque événement.",
+    label: "Tableau de bord opérationnel",
+    body: "Tous vos équipements en un coup d'œil : statut en ligne / hors ligne, mesures en temps réel, alertes actives. Chaque machine dispose de sa propre fiche avec KPIs personnalisables.",
   },
   {
     key: "historique",
-    label: "Historique & analyse",
-    body: "Explorez n'importe quelle plage temporelle sur plusieurs tags simultanément. Export CSV, agrégation horaire ou mensuelle, et analyse post-incident en quelques secondes.",
+    label: "Historique & traçabilité",
+    body: "Croisez plusieurs mesures sur n'importe quelle plage temporelle. Export CSV, agrégation horaire ou mensuelle — indispensable pour les audits, la maintenance préventive et la traçabilité réglementaire.",
   },
   {
-    key: "agent",
-    label: "Agent IA",
-    body: "Interrogez vos données en langage naturel. L'agent contextualise, analyse les anomalies, et génère un rapport PDF téléchargeable en quelques secondes.",
+    key: "rapports",
+    label: "Rapports automatiques",
+    body: "Planifiez des rapports récurrents (jour / semaine / mois) ou ponctuels. Chaque rapport est généré automatiquement, archivé et consultable dans l'interface avec son historique d'exécution.",
+  },
+  {
+    key: "pid",
+    label: "Analyse P&ID assistée par IA",
+    body: "Importez vos schémas P&ID : l'agent analyse l'installation, rapproche la documentation des tags réels et propose des enrichissements que l'ingénieur valide — sans aucune écriture destructive sur les données brutes.",
   },
 ];
 
-const BRANDS = ["Siemens", "Schneider", "Rockwell", "ABB", "Mitsubishi", "Bosch", "Fanuc"];
+const BRANDS = ["Ewon Flexy", "Siemens", "Schneider", "Rockwell", "ABB", "Mitsubishi", "Fanuc"];
 
 export function Problem() {
   const [open, setOpen] = useState<string | null>(null);
@@ -39,7 +39,7 @@ export function Problem() {
       <section className="c spm">
         <div style={{ display: "flex", alignItems: "center", gap: 0, overflowX: "auto" }}>
           <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap", marginRight: 36, flexShrink: 0, fontWeight: 500 }}>
-            Compatible avec
+            Connecté à
           </p>
           {BRANDS.map((b, i) => (
             <span key={b} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
@@ -62,15 +62,14 @@ export function Problem() {
             <WordReveal
               className="h-statement"
               segments={[
-                { text: "Une couche temps réel " },
-                { text: "qui connecte vos machines,", dim: true },
-                { text: " vos équipes, " },
-                { text: "et vos décisions.", dim: true },
+                { text: "Vos machines génèrent des données. " },
+                { text: "Il est temps", dim: true },
+                { text: " d'en tirer parti." },
               ]}
             />
             <AnimateIn delay={300}>
               <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "2rem", fontWeight: 500 }}>
-                Sans Arcos, vos données restent dispersées entre machines, protocoles et feuilles Excel. Avec Arcos, tout remonte en temps réel dans une interface unique — de l&apos;atelier au comité de direction.
+                Sans plateforme adaptée, les mesures restent dispersées entre automates, feuilles Excel et rapports manuels. Arcos centralise tout — tableau de bord, alarmes, historique et IA — dans une interface unique accessible depuis n&apos;importe où.
               </p>
               <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir la démo</HGButton>
             </AnimateIn>

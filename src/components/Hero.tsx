@@ -50,10 +50,9 @@ export function Hero() {
       >
         {/* H1 top-left */}
         <h1 className="h-hero anim-load anim-load-2">
-          Supervision industrielle<br />
-          temps réel. Vos machines<br />
-          parlent.{" "}
-          <span style={{ color: "var(--muted)" }}>Vous écoutez.</span>
+          Supervisez vos machines.<br />
+          Anticipez les pannes.{" "}
+          <span style={{ color: "var(--muted)" }}>Décidez vite.</span>
         </h1>
 
         {/* Stats grid top-right */}
@@ -120,9 +119,9 @@ export function Hero() {
               fontWeight: 500,
             }}
           >
-            Arcos centralise vos données MQTT en temps réel — alertes,
-            historique et IA — dans une seule interface pensée pour les
-            équipes terrain.
+            Arcos connecte vos machines industrielles, centralise mesures
+            et alarmes en temps réel, et met l&apos;IA au service
+            de vos équipes terrain — sans cycle SCADA classique.
           </p>
         </div>
 

@@ -7,11 +7,11 @@ const PLANS = [
     name: "Starter",
     price: "€190",
     period: "/mois",
-    desc: "Idéal pour un premier site ou un POC terrain.",
+    desc: "Idéal pour un premier site ou un pilote terrain.",
     features: [
-      "Jusqu'à 5 appareils MQTT",
-      "Historique 90 jours",
-      "Alertes email",
+      "Jusqu'à 5 machines connectées",
+      "Tableau de bord + alertes + historique 90 j",
+      "Rapports PDF à la demande",
       "1 utilisateur",
       "Support standard",
     ],
@@ -23,10 +23,10 @@ const PLANS = [
     period: "/mois",
     desc: "Pour les équipes opérationnelles sur plusieurs lignes.",
     features: [
-      "Appareils illimités",
-      "Historique 2 ans",
+      "Machines illimitées",
+      "Historique 2 ans + rapports planifiés",
       "Alertes email + SMS + webhook",
-      "Agent IA inclus",
+      "Assistant IA + analyse P&ID inclus",
       "5 utilisateurs",
       "Support prioritaire",
     ],
@@ -37,11 +37,11 @@ const PLANS = [
     name: "Entreprise",
     price: "Sur devis",
     period: "",
-    desc: "Multi-sites, SSO, SLA garanti, déploiement on-premise.",
+    desc: "Multi-sites, multi-tenant, SLA garanti, déploiement on-premise.",
     features: [
-      "Sites illimités",
+      "Sites et organisations illimités",
       "Historique illimité",
-      "SSO / LDAP",
+      "SSO / LDAP + séparation stricte des données",
       "SLA 99.7% contractuel",
       "Utilisateurs illimités",
       "Support dédié 24/7",
@@ -58,7 +58,7 @@ export function Pricing() {
         {/* Header */}
         <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="pricing-header">
           <h2 className="h-statement">
-            Offres alignées <span className="dim">sur votre périmètre.</span>
+            Offres simples <span className="dim">alignées sur votre périmètre.</span>
           </h2>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
