@@ -72,4 +72,10 @@ Les gabarits HTML (`src/lib/email/templates.ts`) reprennent **`globals.css`** (t
 | Bouton ghost | Bordure `#2f2f2f`, texte `#6b6c6b` | Équivalent `.btn-hg-ghost`. |
 | Police | `PP Neue Montreal` + fallback | `@font-face` vers `/fonts/*.woff` sur l’URL publique ; beaucoup de webmails ignorent les polices perso → pile **Helvetica Neue, Helvetica, Arial**. |
 
-**Méta** : `color-scheme: dark` + `supported-color-schemes: dark` pour indiquer un UI sombre ; le rendu peut toutefois varier selon le thème du client — d’où contrastes explicites et version **texte brut** systématique.
+**Méta** : `color-scheme: light dark` + `supported-color-schemes: light dark` (moins d’inversions agressives sur certains clients).
+
+**Gmail iOS (mode sombre)** : conteneur `linear-gradient(#131514,#131514)` + double calque `.gmail-blend-screen` / `.gmail-blend-difference` (`mix-blend-mode: screen` / `difference`) ciblé par `u + .body …` — [méthode Rémi Parmentier](https://www.hteumeuleu.com/2021/fixing-gmail-dark-mode-css-blend-modes/) (nécessite `<!DOCTYPE html>` et `class="body"` sur `<body>`).
+
+**Logo** : taille ~220px de large, `filter: brightness(0) invert(1)` pour un blanc uniforme sur fond sombre (les clients sans `filter` gardent le SVG d’origine).
+
+Version **texte brut** toujours envoyée en parallèle du HTML.

@@ -102,6 +102,14 @@ function labelPill(text: string): string {
   return `<p style="margin:0 0 14px;${fontInline(500)}font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${MUTED};">${escapeHtml(text)}</p>`;
 }
 
+/** Logo plus grand + monochrome blanc (lisible sur fond sombre ; Gmail mode sombre). */
+function logoImgTag(logoUrl: string): string {
+  const u = escapeHtml(logoUrl);
+  return `<img src="${u}" width="220" height="56" alt="Arcos"
+      style="display:block;width:220px;height:auto;max-width:240px;border:0;outline:none;text-decoration:none;
+      -webkit-filter:brightness(0) invert(1);filter:brightness(0) invert(1);" />`;
+}
+
 function emailShell(opts: {
   title: string;
   preheader: string;
@@ -110,6 +118,7 @@ function emailShell(opts: {
 }): string {
   const logoUrl = `${base(opts.siteUrl)}/logo-arcos-nobg2.svg`;
   const faces = fontFaces(opts.siteUrl);
+  const grad = `linear-gradient(${BG},${BG})`;
 
   return `<!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -117,60 +126,67 @@ function emailShell(opts: {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="supported-color-schemes" content="dark" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
   <title>${escapeHtml(opts.title)}</title>
   <!--[if mso]><style type="text/css">table, td { border-collapse: collapse; }</style><![endif]-->
   <style type="text/css">
     ${faces}
-    :root { color-scheme: dark; }
+    :root { color-scheme: light dark; }
+    /* Gmail (surtout iOS) : inversion des couleurs — contournement documenté (hteumeuleu.com) */
+    u + .body .gmail-blend-screen { background: #000000 !important; mix-blend-mode: screen !important; }
+    u + .body .gmail-blend-difference { background: #000000 !important; mix-blend-mode: difference !important; }
     body, table, td, p, a, h1, span { ${fontInline(500)} -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     h1 { font-weight: 500; }
     a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
     @media (prefers-color-scheme: dark) {
-      .arc-wrap { background-color: ${BG} !important; color: ${TEXT} !important; }
       .arc-card { background-color: ${BG} !important; }
     }
   </style>
 </head>
-<body class="arc-wrap" bgcolor="${BG_OUTER}" style="margin:0;padding:0;background-color:${BG_OUTER} !important;color:${TEXT} !important;">
+<body class="body arc-wrap" bgcolor="${BG_OUTER}" style="margin:0;padding:0;background-color:${BG_OUTER};color:${TEXT};">
   <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:transparent;width:0;height:0;">
     ${escapeHtml(opts.preheader)}
   </div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${BG_OUTER}" style="background-color:${BG_OUTER} !important;padding:24px 12px;">
-    <tr>
-      <td align="center" style="padding:0;">
-        <table role="presentation" class="arc-card" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${BG}" style="max-width:560px;background-color:${BG} !important;border-radius:12px;border:1px solid ${BORDER};overflow:hidden;">
+  <div style="background-color:${BG};background-image:${grad};color:${WHITE};">
+    <div class="gmail-blend-screen">
+      <div class="gmail-blend-difference">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${BG_OUTER}" style="background-color:${BG_OUTER};padding:24px 12px;">
           <tr>
-            <td bgcolor="${BG}" style="padding:28px 32px 20px;border-bottom:1px solid ${BORDER};background-color:${BG} !important;">
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+            <td align="center" style="padding:0;">
+              <table role="presentation" class="arc-card" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${BG}" style="max-width:560px;background-color:${BG};border-radius:12px;border:1px solid ${BORDER};overflow:hidden;">
                 <tr>
-                  <td valign="middle" style="padding-right:12px;">
-                    <img src="${escapeHtml(logoUrl)}" width="140" height="36" alt="Arcos"
-                      style="display:block;height:36px;width:auto;max-width:160px;border:0;outline:none;text-decoration:none;color:${TEAL};" />
+                  <td bgcolor="${BG}" style="padding:28px 32px 22px;border-bottom:1px solid ${BORDER};background-color:${BG};">
+                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                      <tr>
+                        <td valign="middle" style="padding-right:14px;">
+                          ${logoImgTag(logoUrl)}
+                        </td>
+                        <td valign="middle" align="right" style="${fontInline(500)}font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:${MUTED};">
+                          Supervision industrielle
+                        </td>
+                      </tr>
+                    </table>
                   </td>
-                  <td valign="middle" align="right" style="${fontInline(500)}font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:${MUTED};">
-                    Supervision industrielle
+                </tr>
+                <tr>
+                  <td bgcolor="${BG}" style="padding:28px 32px 32px;background-color:${BG};color:${TEXT};${fontInline(500)}font-size:16px;line-height:1.55;">
+                    ${opts.innerHtml}
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor="${BG}" style="padding:20px 32px 24px;border-top:1px solid ${BORDER};background-color:${BG};${fontInline(500)}font-size:12px;line-height:1.5;color:${MUTED};">
+                    FAWD · <a href="${escapeHtml(opts.siteUrl)}" style="color:${TEAL};text-decoration:none;">${escapeHtml(opts.siteUrl.replace(/^https?:\/\//, ""))}</a>
+                    <br /><span style="color:${NAVY};">—</span> Plateforme <strong style="color:${WHITE};font-weight:500;">Arcos</strong>.
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
-          <tr>
-            <td class="arc-wrap" bgcolor="${BG}" style="padding:28px 32px 32px;background-color:${BG} !important;color:${TEXT} !important;${fontInline(500)}font-size:16px;line-height:1.55;">
-              ${opts.innerHtml}
-            </td>
-          </tr>
-          <tr>
-            <td bgcolor="${BG}" style="padding:20px 32px 24px;border-top:1px solid ${BORDER};background-color:${BG} !important;${fontInline(500)}font-size:12px;line-height:1.5;color:${MUTED};">
-              FAWD · <a href="${escapeHtml(opts.siteUrl)}" style="color:${TEAL};text-decoration:none;">${escapeHtml(opts.siteUrl.replace(/^https?:\/\//, ""))}</a>
-              <br /><span style="color:${NAVY};">—</span> Plateforme <strong style="color:${WHITE};font-weight:500;">Arcos</strong>.
-            </td>
-          </tr>
         </table>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+  </div>
 </body>
 </html>`;
 }
