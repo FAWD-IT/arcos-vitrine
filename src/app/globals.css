@@ -1,38 +1,74 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────
+   DESIGN SYSTEM ARCOS
+   Skill: ui-ux-pro-max → Dark Mode OLED + Syne editorial
+   ───────────────────────────────────────────────────── */
+
 :root {
-  --brand-navy: #082d44;
-  --accent: #14a9cf;
-  --accent-light: #4dc8eb;
-  --background: #06090d;
-  --foreground: #ddeaf2;
-  --card-bg: #0b1520;
-  --card-border: #14293a;
-  --muted: #6a8fa5;
-  --section-alt: #08101a;
-  --surface-raised: #0e1e2c;
+  /* Brand */
+  --brand-navy:    #082d44;
+  --accent:        #14a9cf;
+  --accent-light:  #4dc8eb;
+
+  /* Surface OLED — vraies teintes noires (pas juste sombre) */
+  --background:    #06080b;
+  --surface-1:     #0a0e14;
+  --surface-2:     #0e1520;
+  --surface-3:     #131d2a;
+
+  /* Texte */
+  --foreground:    #e2edf5;
+  --text-muted:    #5a7a90;
+  --text-dimmed:   #2e4a5e;
+
+  /* Bordures */
+  --border-dim:    rgba(20,169,207,0.08);
+  --border-mid:    rgba(20,169,207,0.14);
+  --border-hi:     rgba(20,169,207,0.28);
+
+  /* Fonts */
+  --font-display:  var(--font-syne), system-ui, sans-serif;
+  --font-body:     var(--font-inter), system-ui, sans-serif;
+  --font-mono:     var(--font-mono, 'JetBrains Mono'), 'Courier New', monospace;
+
+  /* Radius — signature : angles mixtes, pas full-pill partout */
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-xl:   18px;
+  --r-2xl:  24px;
+
+  /* Timing */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast:  150ms;
+  --dur-mid:   250ms;
+  --dur-slow:  500ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-accent-light: var(--accent-light);
-  --color-brand-navy: var(--brand-navy);
-  --color-card-bg: var(--card-bg);
-  --color-card-border: var(--card-border);
-  --color-muted: var(--muted);
-  --color-section-alt: var(--section-alt);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background:    var(--background);
+  --color-foreground:    var(--foreground);
+  --color-accent:        var(--accent);
+  --color-accent-light:  var(--accent-light);
+  --color-brand-navy:    var(--brand-navy);
+  --color-surface-1:     var(--surface-1);
+  --color-surface-2:     var(--surface-2);
+  --color-surface-3:     var(--surface-3);
+  --color-muted:         var(--text-muted);
+  --font-sans:           var(--font-body);
+  --font-display:        var(--font-display);
+  --font-mono:           var(--font-mono);
 }
 
-* { box-sizing: border-box; }
+/* ── Reset */
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -40,15 +76,47 @@ body {
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
-  font-feature-settings: "ss01", "ss03";
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "ss03", "kern";
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 ::selection {
-  background: rgba(20, 169, 207, 0.3);
-  color: white;
+  background: rgba(20, 169, 207, 0.28);
+  color: #fff;
 }
 
-/* ── Scan line global (très subtil) */
+/* ── Typographie : classes utilitaires Syne */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Titres hero/éditoriaux */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+}
+
+/* Sous-titres sections */
+.text-section {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+/* Mono data */
+.text-data {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum", "ss01";
+  letter-spacing: -0.02em;
+}
+
+/* ── Scan lines OLED subtiles */
 body::after {
   content: "";
   position: fixed;
@@ -59,8 +127,8 @@ body::after {
     0deg,
     transparent,
     transparent 3px,
-    rgba(0, 0, 0, 0.025) 3px,
-    rgba(0, 0, 0, 0.025) 4px
+    rgba(0, 0, 0, 0.018) 3px,
+    rgba(0, 0, 0, 0.018) 4px
   );
 }
 
@@ -71,56 +139,44 @@ body::after {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ── Grille de points */
+/* ── Grille points */
 .bg-dot-grid {
-  background-image: radial-gradient(rgba(20, 169, 207, 0.07) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(20, 169, 207, 0.065) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
-/* ── Fond section marine */
+/* ── Fonds sections */
 .bg-section-lift {
   background:
-    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(20, 169, 207, 0.07) 0%, transparent 65%),
-    linear-gradient(180deg, #081320 0%, #06090d 60%);
+    radial-gradient(ellipse 130% 55% at 50% 0%, rgba(20,169,207,0.065) 0%, transparent 60%),
+    linear-gradient(180deg, var(--surface-1) 0%, var(--background) 60%);
 }
 
 .bg-section-slab {
-  background: linear-gradient(180deg, #0a1520 0%, #06090d 100%);
+  background: linear-gradient(180deg, var(--surface-1) 0%, var(--background) 100%);
 }
 
-/* ── Ligne cyan : fine déco verticale ou horizontale */
-.arcos-line-v {
-  width: 1px;
-  background: linear-gradient(180deg, transparent 0%, #14a9cf 40%, #14a9cf 60%, transparent 100%);
-  opacity: 0.25;
-}
-
-.arcos-line-h {
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #14a9cf 40%, #14a9cf 60%, transparent 100%);
-  opacity: 0.18;
-}
-
-/* ── Étiquette technique */
+/* ── Étiquette technique signature (cornet coupé = forme non-template) */
 .tag-tech {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  border: 1px solid rgba(20, 169, 207, 0.2);
-  background: rgba(20, 169, 207, 0.06);
-  padding: 2px 10px 2px 6px;
-  border-radius: 4px;
+  gap: 6px;
+  border: 1px solid rgba(20,169,207,0.22);
+  background: rgba(20,169,207,0.05);
+  padding: 3px 10px 3px 7px;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+  font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(77, 200, 235, 0.75);
+  color: var(--accent-light);
+  cursor: default;
 }
 
 .tag-tech::before {
@@ -129,61 +185,156 @@ body::after {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #14a9cf;
-  box-shadow: 0 0 6px #14a9cf;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  flex-shrink: 0;
 }
 
-/* ── Texte oversized (pour sections éditoriales) */
-.arcos-big {
-  font-size: clamp(5rem, 18vw, 14rem);
-  font-weight: 800;
-  line-height: 0.88;
-  letter-spacing: -0.055em;
-  font-feature-settings: "tnum";
+/* ── Boutons signature Arcos (non-pill) */
+
+/* Bouton primaire — fond cyan, clip-path angulaire */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 12px 28px;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: background var(--dur-fast) ease-out, box-shadow var(--dur-mid) ease-out;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-/* ── Cards */
+.btn-primary:hover {
+  background: var(--accent-light);
+  box-shadow: 0 0 36px rgba(20,169,207,0.38);
+}
+
+/* Bouton ghost — bordure simple */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: rgba(226,237,245,0.55);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 11px 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: border-color var(--dur-fast) ease-out, color var(--dur-fast) ease-out, background var(--dur-fast) ease-out;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(20,169,207,0.35);
+  color: rgba(226,237,245,0.9);
+  background: rgba(20,169,207,0.06);
+}
+
+/* Lien texte flèche */
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: rgba(226,237,245,0.35);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--dur-fast) ease-out;
+}
+
+.btn-link:hover {
+  color: rgba(226,237,245,0.7);
+}
+
+/* ── Cards signature */
+
+.card-arcos {
+  border: 1px solid var(--border-dim);
+  background: var(--surface-1);
+  transition: border-color var(--dur-mid) ease-out, box-shadow var(--dur-mid) ease-out, transform var(--dur-mid) var(--ease-out);
+  cursor: default;
+}
+
+.card-arcos:hover {
+  border-color: var(--border-mid);
+  box-shadow: 0 0 0 1px rgba(20,169,207,0.08), 0 24px 60px -20px rgba(0,0,0,0.9);
+  transform: translateY(-2px);
+}
+
+.card-arcos-interactive {
+  cursor: pointer;
+}
+
 .card-inset {
-  box-shadow:
-    inset 0 1px 0 rgba(20, 169, 207, 0.06),
-    0 24px 64px -32px rgba(0, 0, 0, 0.9);
+  box-shadow: inset 0 1px 0 rgba(20,169,207,0.06), 0 24px 64px -32px rgba(0,0,0,0.9);
 }
 
-.card-hover {
-  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+/* Filet cyan haut sur cards */
+.card-top-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-mid) ease-out;
 }
-.card-hover:hover {
-  border-color: rgba(20, 169, 207, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 32px 64px -28px rgba(0,0,0,0.95);
-  transform: translateY(-1px);
+.card-top-line:hover::before { opacity: 0.5; }
+
+/* ── Ligne décorative cyan */
+.arcos-line-h {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.16;
 }
 
-/* ── Oscilloscope line animation */
-@keyframes scope-scan {
-  0%   { transform: translateX(-100%); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateX(100%); opacity: 0; }
+.arcos-line-v {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--accent), transparent);
+  opacity: 0.22;
 }
 
-.scope-scan {
-  animation: scope-scan 3.5s ease-in-out infinite;
-}
+/* ── Animations */
 
-/* ── Pulse point */
-@keyframes pulse-ring {
-  0%   { transform: scale(1); opacity: 0.65; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-.pulse-ring {
-  animation: pulse-ring 2.2s ease-out infinite;
-}
-
-/* ── Ticker scrolling */
 @keyframes ticker {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.ticker-track {
-  animation: ticker 28s linear infinite;
+.ticker-track { animation: ticker 30s linear infinite; }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+.pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+
+/* ── Prefers-reduced-motion — obligatoire (skill UX rule: HIGH severity) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ticker-track { animation: none; }
 }

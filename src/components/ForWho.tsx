@@ -55,7 +55,7 @@ export default function ForWho() {
           className="mb-16"
         >
           <span className="tag-tech mb-6 block w-fit">Pour qui</span>
-          <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.045em] text-white">
+          <h2 className="text-display text-[clamp(2.2rem,5vw,4rem)] text-white">
             Pensé pour ceux
             <br />
             <span className="text-white/28">qui font tourner l&apos;usine.</span>
@@ -63,7 +63,7 @@ export default function ForWho() {
         </motion.div>
 
         {/* Profils */}
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] lg:grid-cols-3">
+        <div className="grid gap-[1px] overflow-hidden rounded-[var(--r-xl)] border border-[var(--border-dim)] bg-[var(--border-dim)] lg:grid-cols-3">
           {PROFILES.map((p, i) => (
             <motion.div
               key={p.code}
@@ -71,23 +71,22 @@ export default function ForWho() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: i * 0.07 }}
-              className={`group relative flex flex-col gap-5 p-8 transition-colors sm:p-10 ${p.accent ? "bg-[#081826]" : "bg-[#06090d]"} hover:bg-[#081522]`}
+              className={`group relative flex flex-col gap-5 p-8 transition-colors duration-200 sm:p-10 ${p.accent ? "bg-[var(--surface-2)]" : "bg-[var(--surface-1)]"} hover:bg-[var(--surface-3)]`}
             >
-              {/* accent top */}
-              <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent ${p.accent ? "via-accent/40" : "via-white/[0.06]"} to-transparent`} />
+              <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent ${p.accent ? "via-accent/35" : "via-white/[0.05]"} to-transparent`} />
 
               <div>
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white/22">{p.code}</p>
-                <p className="mt-1 text-[12px] text-white/35">{p.role}</p>
+                <p className="text-data text-[10px] font-600 uppercase tracking-[0.18em] text-white/22">{p.code}</p>
+                <p className="mt-1 text-[12px] text-white/32">{p.role}</p>
               </div>
 
-              <h3 className="text-[clamp(1.4rem,2.8vw,2rem)] font-bold leading-[1.1] tracking-[-0.035em] text-white/90 group-hover:text-white">
+              <h3 className="text-section text-[clamp(1.4rem,2.8vw,2rem)] text-white/90 transition-colors group-hover:text-white">
                 {p.headline}
               </h3>
 
-              <p className="text-[14px] leading-relaxed text-white/32">{p.body}</p>
+              <p className="text-[14px] leading-relaxed text-white/30">{p.body}</p>
 
-              <div className="mt-auto h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+              <div className="mt-auto h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
             </motion.div>
           ))}
         </div>
@@ -105,7 +104,7 @@ export default function ForWho() {
             {SECTORS.map((s) => (
               <span
                 key={s}
-                className="rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-[13px] text-white/40"
+                className="rounded-[var(--r-sm)] border border-[var(--border-dim)] bg-[var(--surface-1)] px-4 py-2 text-[12px] text-white/38 transition-colors duration-150 hover:border-[var(--border-mid)] hover:text-white/55"
               >
                 {s}
               </span>
@@ -119,17 +118,14 @@ export default function ForWho() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.55, delay: 0.1 }}
-          className="mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-2xl border border-accent/20 bg-[#081522] px-8 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-14"
+          className="mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-[var(--r-2xl)] border border-[var(--border-mid)] bg-[var(--surface-2)] px-8 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-14"
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_5%_50%,rgba(20,169,207,0.09),transparent_55%)]" />
-          <p className="relative max-w-[580px] text-[clamp(1.15rem,2.4vw,1.55rem)] font-semibold leading-[1.4] text-white/70">
+          <p className="font-display relative max-w-[580px] text-[clamp(1.15rem,2.4vw,1.55rem)] font-semibold leading-[1.4] text-white/70">
             &ldquo;Le même flux MQTT — exposé différemment selon qui regarde.
             <span className="text-accent-light/80"> Technicien, maintenance ou direction.</span>&rdquo;
           </p>
-          <a
-            href="#demo"
-            className="relative shrink-0 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-7 py-3 text-[13px] font-semibold text-accent-light transition-all hover:bg-accent/20 hover:shadow-[0_0_24px_rgba(20,169,207,0.2)]"
-          >
+          <a href="#demo" className="btn-ghost shrink-0">
             Parler à l&apos;équipe →
           </a>
         </motion.div>

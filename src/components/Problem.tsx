@@ -44,7 +44,7 @@ function EditorialLine({ n, big, rest, body, tag, i }: typeof LINES[number] & { 
 
       {/* Texte oversized */}
       <div className="col-span-1">
-        <p className="text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[0.92] tracking-[-0.045em] text-white">
+        <p className="text-display text-[clamp(2.6rem,6.5vw,5.5rem)] text-white">
           {big}
           <span className="text-white/25">{rest}</span>
         </p>
@@ -82,11 +82,11 @@ export default function Problem() {
         >
           <div>
             <span className="tag-tech mb-5 block w-fit">Le terrain</span>
-            <p className="text-[clamp(1.6rem,3.5vw,2.5rem)] font-bold leading-[1.05] tracking-[-0.04em] text-white">
-              Ce que l&apos;industrie vit
-              <br />
-              <span className="text-white/28">sans couche temps réel.</span>
-            </p>
+        <p className="text-section text-[clamp(1.6rem,3.5vw,2.5rem)] text-white">
+            Ce que l&apos;industrie vit
+            <br />
+            <span className="text-white/28">sans couche temps réel.</span>
+          </p>
           </div>
           <p className="max-w-[340px] text-[14px] leading-relaxed text-white/30">
             Chaque ligne ci-dessous est un pattern terrain récurrent.
@@ -118,10 +118,7 @@ export default function Problem() {
               <span className="text-white/35">Déployé en jours.</span>
             </p>
           </div>
-          <a
-            href="#features"
-            className="relative shrink-0 inline-flex items-center gap-2 rounded-full border border-accent/35 bg-accent/10 px-6 py-3 text-[13px] font-semibold text-accent-light transition-all hover:bg-accent/20 hover:shadow-[0_0_24px_rgba(20,169,207,0.25)]"
-          >
+            <a href="#features" className="btn-primary shrink-0">
             Voir la plateforme →
           </a>
         </motion.div>

@@ -153,7 +153,7 @@ export default function Navbar() {
             <span className="sr-only">Arcos</span>
           </a>
 
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center gap-0.5 md:flex">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div
@@ -165,14 +165,14 @@ export default function Navbar() {
                 >
                   <button
                     type="button"
-                    className={`flex items-center gap-1 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors ${
-                      mega === link.id ? "text-white" : "text-white/45 hover:text-white/85"
+                    className={`flex cursor-pointer items-center gap-1 px-4 py-2.5 font-display text-[12px] font-600 uppercase tracking-[0.08em] transition-colors duration-150 ${
+                      mega === link.id ? "text-accent-light" : "text-white/38 hover:text-white/80"
                     }`}
                     aria-expanded={mega === link.id}
                   >
                     {link.label}
                     <ChevronDown
-                      className={`h-3 w-3 opacity-50 transition-transform ${mega === link.id ? "rotate-180" : ""}`}
+                      className={`h-3 w-3 transition-transform duration-200 ${mega === link.id ? "rotate-180 opacity-80" : "opacity-35"}`}
                     />
                   </button>
                 </div>
@@ -180,7 +180,7 @@ export default function Navbar() {
                 <a
                   key={link.id}
                   href={link.href}
-                  className="rounded-lg px-3 py-2 text-[13px] font-medium text-white/45 transition-colors hover:text-white/85"
+                  className="cursor-pointer px-4 py-2.5 font-display text-[12px] font-600 uppercase tracking-[0.08em] text-white/38 transition-colors duration-150 hover:text-white/80"
                 >
                   {link.label}
                 </a>
@@ -188,23 +188,20 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="hidden items-center gap-5 md:flex">
+          <div className="hidden items-center gap-4 md:flex">
             <a
               href="#demo"
-              className="text-[13px] font-medium text-white/50 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+              className="cursor-pointer font-mono text-[11px] text-white/35 transition-colors duration-150 hover:text-white/65"
             >
               Connexion
             </a>
-            <a
-              href="#demo"
-              className="rounded-full bg-white px-5 py-2 text-[12px] font-semibold uppercase tracking-wide text-black transition-colors hover:bg-white/90"
-            >
+            <a href="#demo" className="btn-primary text-[11px]">
               Demander une démo
             </a>
           </div>
 
           <button
-            className="md:hidden"
+            className="cursor-pointer p-1 text-white/50 transition-colors hover:text-white md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >
@@ -228,15 +225,15 @@ export default function Navbar() {
                     <a
                       key={item.title}
                       href={item.href}
-                      className="group rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 transition-colors hover:border-accent/25 hover:bg-white/[0.04]"
+                      className="card-arcos card-arcos-interactive card-top-line group relative rounded-[var(--r-lg)] p-4"
                     >
                       <div className="mb-3 overflow-hidden rounded-lg border border-white/[0.05] bg-black/40">
                         {item.illu}
                       </div>
-                      <div className="text-[14px] font-semibold text-white/90 group-hover:text-white">
+                      <div className="font-display text-[13px] font-700 tracking-tight text-white/85 transition-colors duration-150 group-hover:text-white">
                         {item.title}
                       </div>
-                      <p className="mt-1.5 text-[12px] leading-relaxed text-white/38">{item.desc}</p>
+                      <p className="mt-1.5 text-[11px] leading-relaxed text-white/32">{item.desc}</p>
                     </a>
                   ))}
                 </div>
@@ -252,7 +249,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-white/[0.06] bg-background md:hidden"
+              className="overflow-hidden border-t border-white/[0.06] bg-[var(--background)] md:hidden"
           >
             <div className="flex flex-col gap-1 px-6 py-6">
               <button
@@ -315,7 +312,7 @@ export default function Navbar() {
               </a>
               <a
                 href="#demo"
-                className="mt-3 rounded-full bg-white py-3 text-center text-[13px] font-semibold text-black"
+                className="btn-primary mt-3 w-full justify-center text-[13px]"
                 onClick={() => setMobileOpen(false)}
               >
                 Demander une démo

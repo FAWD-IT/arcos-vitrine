@@ -44,7 +44,7 @@ function Chapter({
         className="[direction:ltr]"
       >
         <span className="tag-tech mb-6 block w-fit">{tag}</span>
-        <h3 className="text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[0.96] tracking-[-0.042em] text-white">
+        <h3 className="text-display text-[clamp(2rem,4.5vw,3.5rem)] text-white">
           {title}
         </h3>
         <p className="mt-6 max-w-[440px] text-[16px] leading-[1.7] text-white/38">{sub}</p>
@@ -72,20 +72,20 @@ function VisDashboard() {
   const line2 = "M0,75 Q40,65 80,70 T160,60 T220,68 T280,55 T360,62 T400,58";
 
   return (
-    <div ref={ref} className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[#07111c] shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85)]">
+    <div ref={ref} className="overflow-hidden rounded-[var(--r-xl)] border border-[var(--border-dim)] bg-[var(--surface-1)] shadow-[0_32px_80px_-20px_rgba(0,0,0,0.9)]">
       {/* Barre titre */}
-      <div className="flex items-center gap-3 border-b border-white/[0.07] px-5 py-3">
+      <div className="flex items-center gap-3 border-b border-[var(--border-dim)] px-5 py-3">
         <div className="flex gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-white/[0.08]" />
           <span className="h-2.5 w-2.5 rounded-full bg-white/[0.08]" />
           <span className="h-2.5 w-2.5 rounded-full bg-white/[0.08]" />
         </div>
-        <span className="font-mono text-[10px] text-white/25">Dashboard · Site Charleroi</span>
+        <span className="text-data text-[10px] text-white/25">Dashboard · Site Charleroi</span>
         <div className="ml-auto flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_5px_#14a9cf]">
             <span className="block h-1.5 w-1.5 animate-ping rounded-full bg-accent opacity-50" />
           </span>
-          <span className="font-mono text-[9px] text-accent/55">LIVE</span>
+          <span className="text-data text-[9px] text-accent/55">LIVE</span>
         </div>
       </div>
 
@@ -93,7 +93,7 @@ function VisDashboard() {
       <div className="px-5 py-5">
         <div className="mb-2 flex items-center justify-between">
           <span className="font-mono text-[10px] text-white/25">Température / Pression — 24h</span>
-          <span className="font-mono text-[10px] text-white/18">13/04 → 14/04</span>
+          <span className="text-data text-[10px] text-white/18">13/04 → 14/04</span>
         </div>
         <div className="relative h-[130px]">
           <svg viewBox="0 0 400 90" className="h-full w-full" aria-hidden>
@@ -144,7 +144,7 @@ function VisDashboard() {
           { l: "Tags actifs", v: "14", u: "" },
         ].map((m) => (
           <div key={m.l} className="px-5 py-4 text-center">
-            <p className="font-mono text-[16px] font-semibold text-white/80">
+            <p className="text-data text-[16px] font-semibold text-white/80">
               {m.v}<span className="ml-1 text-[10px] text-white/28">{m.u}</span>
             </p>
             <p className="mt-0.5 text-[9px] uppercase tracking-wide text-white/22">{m.l}</p>
@@ -229,7 +229,7 @@ function VisAlertes() {
     ok: "bg-emerald-400 shadow-[0_0_5px_rgba(52,211,153,0.4)]",
   };
   return (
-    <div ref={ref} className="rounded-2xl border border-white/[0.1] bg-[#07111c] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]">
+    <div ref={ref} className="rounded-[var(--r-xl)] border border-[var(--border-dim)] bg-[var(--surface-1)] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.85)]">
       <div className="border-b border-white/[0.06] px-5 py-3">
         <span className="font-mono text-[10px] text-white/25">Journal d&apos;alertes — Site Charleroi</span>
       </div>
@@ -272,7 +272,7 @@ function VisMultisite() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.45, delay: i * 0.08 }}
-          className="flex items-center gap-4 rounded-xl border border-white/[0.08] bg-[#0a1828] px-5 py-4"
+          className="card-arcos flex items-center gap-4 rounded-[var(--r-md)] px-5 py-4"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
             <span className={`h-2 w-2 rounded-full ${s.status === "ok" ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.5)]" : "bg-yellow-400 shadow-[0_0_6px_rgba(250,204,21,0.5)]"}`} />
@@ -282,10 +282,10 @@ function VisMultisite() {
             <p className="text-[11px] text-white/28">{s.tags} tags actifs</p>
           </div>
           <div className="text-right">
-            <p className="font-mono text-[13px] font-semibold text-white/70">
+            <p className="text-data text-[13px] font-semibold text-white/70">
               <AnimNum end={s.up} decimals={1} suffix=" %" delay={i * 0.1} />
             </p>
-            <p className="text-[9px] uppercase tracking-wide text-white/25">uptime</p>
+            <p className="text-data text-[9px] uppercase tracking-wide text-white/25">uptime</p>
           </div>
           <div className="h-1.5 w-20 overflow-hidden rounded-full bg-white/[0.06]">
             <motion.div
@@ -318,11 +318,11 @@ export default function Features() {
         >
           <span className="tag-tech mb-6 block w-fit">Plateforme</span>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.045em] text-white">
-              Ce qu&apos;Arcos
-              <br />
-              <span className="text-white/28">construit pour vous.</span>
-            </h2>
+          <h2 className="text-display text-[clamp(2.2rem,5vw,4rem)] text-white">
+            Ce qu&apos;Arcos
+            <br />
+            <span className="text-white/28">construit pour vous.</span>
+          </h2>
             <p className="max-w-[380px] text-[15px] leading-relaxed text-white/32 lg:text-right">
               Dashboard, IA, alertes, multi-sites —
               sur la même base MQTT.

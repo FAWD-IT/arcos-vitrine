@@ -68,13 +68,11 @@ export default function Pricing() {
           transition={{ duration: 0.5 }}
           className="mx-auto mb-14 max-w-[640px] text-center"
         >
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-accent/70">
-            Pricing
-          </p>
-          <h2 className="text-[clamp(1.85rem,3.8vw,3rem)] font-bold leading-[1.08] tracking-[-0.03em]">
+          <span className="tag-tech mb-6 inline-block">Pricing</span>
+          <h2 className="text-display text-[clamp(1.85rem,3.8vw,3rem)] text-white">
             Offres par périmètre
             <br />
-            <span className="text-white/35">site &amp; volume de données.</span>
+            <span className="text-white/28">site &amp; volume.</span>
           </h2>
           <p className="mt-4 text-[15px] leading-relaxed text-white/36">
             Facturation alignée sur le nombre de sites supervisés et la charge
@@ -90,23 +88,24 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: i * 0.08 }}
-              className={`relative flex flex-col rounded-3xl border p-8 sm:p-9 card-hover ${
+              className={`card-inset relative flex flex-col rounded-[var(--r-2xl)] border p-8 sm:p-9 ${
                 plan.highlighted
-                  ? "border-accent/35 bg-gradient-to-b from-accent/[0.12] via-[#101010] to-[#0a0a0a] card-inset shadow-[0_0_0_1px_rgba(20,169,207,0.2)_inset]"
-                  : "border-white/[0.08] bg-[#0c0c0c] card-inset"
+                  ? "border-accent/35 bg-gradient-to-b from-accent/[0.1] via-[var(--surface-2)] to-[var(--surface-1)] shadow-[0_0_0_1px_rgba(20,169,207,0.18)_inset]"
+                  : "border-[var(--border-dim)] bg-[var(--surface-1)]"
               }`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-accent/30 bg-accent px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg shadow-black/40">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg shadow-black/50"
+                  style={{ clipPath: "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))" }}>
                   Recommandé
                 </div>
               )}
 
-              <h3 className="text-[19px] font-bold text-white/95">{plan.name}</h3>
-              <p className="mt-1 text-[13px] text-white/30">{plan.description}</p>
+              <h3 className="font-display text-[19px] font-700 tracking-tight text-white/95">{plan.name}</h3>
+              <p className="mt-1 text-[13px] text-white/28">{plan.description}</p>
 
-              <div className="my-7 border-b border-white/[0.06] pb-7">
-                <span className="text-[30px] font-bold tracking-tight text-white/90">
+              <div className="my-7 border-b border-[var(--border-dim)] pb-7">
+                <span className="text-data text-[28px] font-bold text-white/88">
                   {plan.price}
                 </span>
               </div>
@@ -132,14 +131,12 @@ export default function Pricing() {
 
               <a
                 href="#demo"
-                className={`group mt-auto flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-[13px] font-semibold transition-all ${
-                  plan.highlighted
-                    ? "bg-white text-black hover:bg-white/90"
-                    : "border border-white/[0.1] text-white/70 hover:border-white/18 hover:bg-white/[0.04]"
+                className={`mt-auto flex w-full cursor-pointer items-center justify-center gap-2 text-[13px] ${
+                  plan.highlighted ? "btn-primary" : "btn-ghost"
                 }`}
               >
                 {plan.cta}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-4 w-4" />
               </a>
             </motion.div>
           ))}

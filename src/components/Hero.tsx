@@ -116,7 +116,7 @@ function OscopeSignal() {
 /* ── Live metric widget */
 function MetricPill({ label, value, unit, live = false }: { label: string; value: string; unit?: string; live?: boolean }) {
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 backdrop-blur-sm">
+    <div className="card-arcos flex items-center gap-3 rounded-[var(--r-md)] px-4 py-2.5 backdrop-blur-sm">
       {live && (
         <span className="relative flex h-2 w-2 shrink-0">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
@@ -124,7 +124,7 @@ function MetricPill({ label, value, unit, live = false }: { label: string; value
         </span>
       )}
       <div>
-        <p className="font-mono text-[13px] font-semibold leading-none text-white/85">
+        <p className="text-data text-[13px] font-semibold leading-none text-white/85">
           {value}
           {unit && <span className="ml-1 text-[10px] text-white/35">{unit}</span>}
         </p>
@@ -164,20 +164,20 @@ export default function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.06 }}
-              className="text-[clamp(2.8rem,6vw,5.25rem)] font-bold leading-[0.95] tracking-[-0.045em] text-white"
+              className="text-display text-[clamp(3rem,6.5vw,5.5rem)]"
             >
               Vos machines
               <br />
               <span className="text-accent-light">parlent.</span>
               <br />
-              <span className="text-white/40">Vous écoutez.</span>
+              <span className="text-white/35">Vous écoutez.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.16 }}
-              className="mt-8 max-w-[480px] text-[16px] leading-[1.7] text-white/40"
+              className="mt-8 max-w-[480px] text-[15px] leading-[1.75] text-white/38"
             >
               Arcos agrège vos topics MQTT, construit des vues opérationnelles
               et expose un agent IA qui raisonne sur les mêmes séries temporelles.
@@ -189,17 +189,11 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.25 }}
               className="mt-10 flex flex-wrap items-center gap-4"
             >
-              <a
-                href="#demo"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-[13px] font-semibold tracking-wide text-white transition-all hover:bg-accent-light hover:shadow-[0_0_32px_rgba(20,169,207,0.35)]"
-              >
+              <a href="#demo" className="btn-primary">
                 Demander une démo
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-4 w-4" />
               </a>
-              <a
-                href="#features"
-                className="text-[13px] font-medium text-white/35 transition-colors hover:text-white/65"
-              >
+              <a href="#features" className="btn-link">
                 Voir la plateforme →
               </a>
             </motion.div>
@@ -217,7 +211,7 @@ export default function Hero() {
                 { end: 40, suffix: " +", unit: "h/sem. récupérées", decimals: 0 },
               ].map((s, i) => (
                 <div key={i} className="text-left">
-                  <p className="font-mono text-[2rem] font-bold leading-none tracking-[-0.04em] text-white/90">
+                  <p className="text-data text-[2rem] font-bold leading-none text-white/90">
                     <AnimCount end={s.end} suffix={s.suffix} decimals={s.decimals} />
                   </p>
                   <p className="mt-1.5 text-[11px] text-white/28">{s.unit}</p>
@@ -236,7 +230,7 @@ export default function Hero() {
             {/* Badge live */}
             <div className="flex items-center justify-between">
               <span className="tag-tech">Signal live</span>
-              <span className="font-mono text-[10px] text-white/20">MQTT · 14 tags</span>
+              <span className="text-data text-[10px] text-white/20">MQTT · 14 tags actifs</span>
             </div>
 
             {/* Oscope */}

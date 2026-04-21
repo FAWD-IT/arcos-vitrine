@@ -1,39 +1,56 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Syne, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-geist-sans",
+/** Syne — geometric, ultra-bold, editorial. Signature des titres Arcos. */
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+/** Inter — neutre, lisible, corps de texte. */
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
+});
+
+/** JetBrains Mono — données, tags, métriques. */
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Arcos — Supervisez vos machines. En temps réel.",
+  title: "Arcos — Supervision industrielle MQTT",
   description:
-    "Arcos connecte vos équipements industriels, visualise vos données et laisse une IA analyser à votre place.",
+    "Arcos agrège vos topics MQTT, expose des tableaux de bord et un agent IA qui raisonne sur vos données terrain.",
   keywords: [
     "supervision industrielle",
-    "monitoring industriel",
-    "IoT",
-    "IA industrielle",
+    "MQTT",
+    "monitoring IoT",
     "dashboard temps réel",
+    "agent IA industriel",
     "maintenance prédictive",
   ],
   openGraph: {
-    title: "Arcos — Supervisez vos machines. En temps réel.",
+    title: "Arcos — Supervision industrielle MQTT",
     description:
-      "Connectez vos équipements industriels, visualisez vos données et laissez une IA analyser à votre place.",
+      "Dashboard, alertes et IA sur vos données MQTT. Déployé en jours.",
     type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr" className={`${inter.variable} antialiased`}>
+    <html lang="fr" className={`${syne.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         {children}
       </body>

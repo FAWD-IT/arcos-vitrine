@@ -50,7 +50,7 @@ export default function Footer() {
 
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="mb-5 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-white/20">
+              <h4 className="mb-5 text-data text-[10px] font-semibold uppercase tracking-[0.2em] text-white/20">
                 {category}
               </h4>
               <ul className="space-y-3">
@@ -58,7 +58,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="flex items-center gap-1.5 text-[13px] text-white/28 transition-colors hover:text-white/55"
+                      className="flex cursor-pointer items-center gap-1.5 text-[13px] text-white/28 transition-colors duration-150 hover:text-white/55"
                       {...("external" in link && link.external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
@@ -77,23 +77,23 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.05] pt-8 sm:flex-row">
-          <p className="font-mono text-[10px] text-white/15">
-            &copy; {new Date().getFullYear()} FAWD SRL. Tous droits réservés.
+          <p className="text-data text-[10px] text-white/15">
+            &copy; {new Date().getFullYear()} FAWD SRL — Charleroi, Belgique
           </p>
           <div className="flex gap-6">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] text-white/18 transition-colors hover:text-white/40">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="cursor-pointer text-data text-[10px] text-white/18 transition-colors duration-150 hover:text-white/42">
               LinkedIn
             </a>
-            <a href="https://github.com/FAWD-IT" target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] text-white/18 transition-colors hover:text-white/40">
+            <a href="https://github.com/FAWD-IT" target="_blank" rel="noopener noreferrer" className="cursor-pointer text-data text-[10px] text-white/18 transition-colors duration-150 hover:text-white/42">
               GitHub
             </a>
           </div>
         </div>
       </div>
 
-      {/* Watermark géant */}
+      {/* Watermark géant — font Syne pour identité */}
       <div className="pointer-events-none select-none overflow-hidden">
-        <p className="text-center text-[clamp(6rem,20vw,16rem)] font-black leading-none tracking-[-0.06em] text-white/[0.018]">
+        <p className="font-display text-center text-[clamp(6rem,20vw,16rem)] font-black leading-none tracking-[-0.06em] text-white/[0.015]">
           ARCOS
         </p>
       </div>
