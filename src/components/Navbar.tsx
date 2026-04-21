@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { HGArrow } from "./TiltCard";
 
@@ -14,10 +14,16 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
+  // ref toujours à jour pour les event handlers (évite closure périmée)
+  const scrolledRef = useRef(false);
 
   useEffect(() => {
     setMounted(true);
-    const h = () => setScrolled(window.scrollY > 50);
+    const h = () => {
+      const s = window.scrollY > 50;
+      scrolledRef.current = s;
+      setScrolled(s);
+    };
     window.addEventListener("scroll", h, { passive: true });
     h();
     return () => window.removeEventListener("scroll", h);
@@ -112,10 +118,10 @@ export function Navbar() {
                   transform: mounted ? "none" : "translateY(6px)",
                 }}
                 onMouseEnter={e =>
-                  (e.currentTarget.style.color = scrolled ? "#131514" : "#f1f1f1")
+                  (e.currentTarget.style.color = scrolledRef.current ? "#131514" : "#f1f1f1")
                 }
                 onMouseLeave={e =>
-                  (e.currentTarget.style.color = scrolled
+                  (e.currentTarget.style.color = scrolledRef.current
                     ? "rgba(0,0,0,0.45)"
                     : "rgba(255,255,255,0.45)")
                 }
@@ -151,9 +157,11 @@ export function Navbar() {
               gap: 8,
               fontSize: 14,
               fontWeight: 500,
-              color: scrolled ? "#131514" : "#131514",
+              /* scrolled=true → pill claire → bouton sombre (bg #131514, texte blanc)  */
+              /* scrolled=false → pill sombre → bouton clair (bg #f1f1f1, texte sombre) */
+              color:      scrolled ? "#f1f1f1" : "#131514",
               background: scrolled ? "#131514" : "#f1f1f1",
-              border: scrolled ? "1.5px solid #131514" : "1.5px solid #f1f1f1",
+              border:     scrolled ? "1.5px solid #131514" : "1.5px solid #f1f1f1",
               borderRadius: 3,
               padding: "10px 14px",
               textDecoration: "none",
@@ -162,21 +170,18 @@ export function Navbar() {
             }}
             onMouseEnter={e => {
               const el = e.currentTarget;
-              if (scrolled) {
-                el.style.background = "transparent";
-                el.style.color = "#131514";
-                el.style.borderColor = "rgba(0,0,0,0.3)";
-              } else {
-                el.style.background = "transparent";
-                el.style.color = "#f1f1f1";
-                el.style.borderColor = "rgba(255,255,255,0.35)";
-              }
+              const s = scrolledRef.current;
+              /* hover = gris intermédiaire, pas transparent */
+              el.style.background  = s ? "#2a2a28" : "#d8d8d6";
+              el.style.color       = s ? "#f1f1f1" : "#131514";
+              el.style.borderColor = s ? "#2a2a28" : "#d8d8d6";
             }}
             onMouseLeave={e => {
               const el = e.currentTarget;
-              el.style.background  = scrolled ? "#131514" : "#f1f1f1";
-              el.style.color       = scrolled ? "#f1f1f1" : "#131514";
-              el.style.borderColor = scrolled ? "#131514"  : "#f1f1f1";
+              const s = scrolledRef.current;
+              el.style.background  = s ? "#131514" : "#f1f1f1";
+              el.style.color       = s ? "#f1f1f1" : "#131514";
+              el.style.borderColor = s ? "#131514"  : "#f1f1f1";
             }}
           >
             Parler à l&apos;équipe

@@ -88,13 +88,15 @@ export function HGButton({ children, href, ghost = false, style, onClick }: BtnP
   const onEnter = (e: React.MouseEvent<HTMLElement>) => {
     const el = e.currentTarget;
     if (ghost) {
-      el.style.background  = "#f1f1f1";
-      el.style.color       = "#131514";
-      el.style.borderColor = "#f1f1f1";
-    } else {
-      el.style.background  = "transparent";
+      /* ghost sur fond sombre → hover gris intermédiaire visible */
+      el.style.background  = "rgba(255,255,255,0.12)";
       el.style.color       = "#f1f1f1";
-      el.style.borderColor = "rgba(255,255,255,0.35)";
+      el.style.borderColor = "rgba(255,255,255,0.3)";
+    } else {
+      /* bouton clair → hover gris légèrement plus sombre (pas transparent) */
+      el.style.background  = "#d8d8d6";
+      el.style.color       = "#131514";
+      el.style.borderColor = "#d8d8d6";
     }
   };
 

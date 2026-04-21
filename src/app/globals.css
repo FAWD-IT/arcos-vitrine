@@ -126,9 +126,9 @@ body {
   white-space: nowrap;
 }
 .btn-hg:hover {
-  background: transparent;
-  color: #f1f1f1;
-  border-color: rgba(255,255,255,0.35);
+  background: #d8d8d6;
+  color: #131514;
+  border-color: #d8d8d6;
 }
 
 /* Variante ghost (outline discret, texte muted → hover blanc) */
@@ -150,9 +150,9 @@ body {
   white-space: nowrap;
 }
 .btn-hg-ghost:hover {
-  background: #f1f1f1;
-  color: #131514;
-  border-color: #f1f1f1;
+  background: rgba(255,255,255,0.12);
+  color: #f1f1f1;
+  border-color: rgba(255,255,255,0.3);
 }
 
 /* ── Status dot */
