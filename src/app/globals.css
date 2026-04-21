@@ -122,13 +122,14 @@ body {
   padding: 11px 16px;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
   white-space: nowrap;
 }
 .btn-hg:hover {
-  background: #d8d8d6;
+  background: #d6eff5;
   color: #131514;
-  border-color: #d8d8d6;
+  border-color: rgba(20,169,207,0.45);
+  box-shadow: 0 0 0 2px rgba(20,169,207,0.15);
 }
 
 /* Variante ghost (outline discret, texte muted → hover blanc) */
@@ -150,9 +151,9 @@ body {
   white-space: nowrap;
 }
 .btn-hg-ghost:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.1);
   color: #f1f1f1;
-  border-color: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.35);
 }
 
 /* ── Status dot */

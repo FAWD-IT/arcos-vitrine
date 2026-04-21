@@ -70,7 +70,7 @@ export function HGButton({ children, href, ghost = false, style, onClick }: BtnP
     textDecoration: "none",
     cursor: "pointer",
     whiteSpace: "nowrap",
-    transition: "background 0.22s ease, color 0.22s ease, border-color 0.22s ease",
+    transition: "background 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease",
     ...(ghost
       ? {
           color: "var(--muted)",
@@ -88,15 +88,17 @@ export function HGButton({ children, href, ghost = false, style, onClick }: BtnP
   const onEnter = (e: React.MouseEvent<HTMLElement>) => {
     const el = e.currentTarget;
     if (ghost) {
-      /* ghost sur fond sombre → hover gris intermédiaire visible */
-      el.style.background  = "rgba(255,255,255,0.12)";
+      /* ghost sur fond sombre → légèrement plus visible */
+      el.style.background  = "rgba(255,255,255,0.1)";
       el.style.color       = "#f1f1f1";
-      el.style.borderColor = "rgba(255,255,255,0.3)";
+      el.style.borderColor = "rgba(255,255,255,0.35)";
+      el.style.boxShadow   = "none";
     } else {
-      /* bouton clair → hover gris légèrement plus sombre (pas transparent) */
-      el.style.background  = "#d8d8d6";
+      /* bouton blanc → teinte teal subtile pour marquer l'état hover */
+      el.style.background  = "#d6eff5";
       el.style.color       = "#131514";
-      el.style.borderColor = "#d8d8d6";
+      el.style.borderColor = "rgba(20,169,207,0.45)";
+      el.style.boxShadow   = "0 0 0 2px rgba(20,169,207,0.15)";
     }
   };
 
@@ -106,10 +108,12 @@ export function HGButton({ children, href, ghost = false, style, onClick }: BtnP
       el.style.background  = "transparent";
       el.style.color       = "var(--muted)";
       el.style.borderColor = "rgba(255,255,255,0.12)";
+      el.style.boxShadow   = "none";
     } else {
       el.style.background  = "#f1f1f1";
       el.style.color       = "#131514";
       el.style.borderColor = "#f1f1f1";
+      el.style.boxShadow   = "none";
     }
   };
 

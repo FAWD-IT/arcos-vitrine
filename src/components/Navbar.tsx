@@ -157,31 +157,45 @@ export function Navbar() {
               gap: 8,
               fontSize: 14,
               fontWeight: 500,
-              /* scrolled=true → pill claire → bouton sombre (bg #131514, texte blanc)  */
-              /* scrolled=false → pill sombre → bouton clair (bg #f1f1f1, texte sombre) */
-              color:      scrolled ? "#f1f1f1" : "#131514",
-              background: scrolled ? "#131514" : "#f1f1f1",
-              border:     scrolled ? "1.5px solid #131514" : "1.5px solid #f1f1f1",
+              /*
+               * pill sombre (non scrollé) → bouton ghost outline blanc, texte blanc
+               * pill claire  (scrollé)    → bouton blanc rempli, texte sombre
+               */
+              color:      scrolled ? "#131514" : "rgba(255,255,255,0.9)",
+              background: scrolled ? "#f1f1f1" : "transparent",
+              border:     scrolled
+                ? "1.5px solid #f1f1f1"
+                : "1.5px solid rgba(255,255,255,0.35)",
               borderRadius: 3,
               padding: "10px 14px",
               textDecoration: "none",
               whiteSpace: "nowrap",
-              transition: "background 0.22s ease, color 0.22s ease, border-color 0.22s ease",
+              transition: "background 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease",
             }}
             onMouseEnter={e => {
               const el = e.currentTarget;
               const s = scrolledRef.current;
-              /* hover = gris intermédiaire, pas transparent */
-              el.style.background  = s ? "#2a2a28" : "#d8d8d6";
-              el.style.color       = s ? "#f1f1f1" : "#131514";
-              el.style.borderColor = s ? "#2a2a28" : "#d8d8d6";
+              if (s) {
+                /* pill claire → hover bouton blanc avec teinte teal subtile */
+                el.style.background  = "#d6eff5";
+                el.style.color       = "#131514";
+                el.style.borderColor = "rgba(20,169,207,0.45)";
+                el.style.boxShadow   = "0 0 0 2px rgba(20,169,207,0.15)";
+              } else {
+                /* pill sombre → hover ghost legèrement plus visible */
+                el.style.background  = "rgba(255,255,255,0.1)";
+                el.style.color       = "#ffffff";
+                el.style.borderColor = "rgba(255,255,255,0.6)";
+                el.style.boxShadow   = "none";
+              }
             }}
             onMouseLeave={e => {
               const el = e.currentTarget;
               const s = scrolledRef.current;
-              el.style.background  = s ? "#131514" : "#f1f1f1";
-              el.style.color       = s ? "#f1f1f1" : "#131514";
-              el.style.borderColor = s ? "#131514"  : "#f1f1f1";
+              el.style.background  = s ? "#f1f1f1" : "transparent";
+              el.style.color       = s ? "#131514" : "rgba(255,255,255,0.9)";
+              el.style.borderColor = s ? "#f1f1f1" : "rgba(255,255,255,0.35)";
+              el.style.boxShadow   = "none";
             }}
           >
             Parler à l&apos;équipe
