@@ -1,5 +1,6 @@
 "use client";
-import type { CSSProperties } from "react";
+import type { CSSProperties, FormEvent } from "react";
+import { useState } from "react";
 import { AnimateIn } from "./AnimateIn";
 import { HGArrow } from "./TiltCard";
 import { WordReveal } from "./WordReveal";
@@ -30,7 +31,56 @@ const labelStyle: CSSProperties = {
   marginTop: 14,
 };
 
+type FormStatus = "idle" | "loading" | "success" | "error";
+
 export function CTA() {
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const website = (fd.get("website") as string | null)?.trim() ?? "";
+    if (website) {
+      setStatus("success");
+      return;
+    }
+
+    const name = String(fd.get("name") ?? "").trim();
+    const email = String(fd.get("email") ?? "").trim().toLowerCase();
+    const company = String(fd.get("company") ?? "").trim();
+    const message = String(fd.get("message") ?? "").trim();
+
+    setStatus("loading");
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          message,
+          website: String(fd.get("website") ?? "").trim(),
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setStatus("error");
+        setErrorMessage(data.error || "Une erreur est survenue.");
+        return;
+      }
+      setStatus("success");
+      form.reset();
+    } catch {
+      setStatus("error");
+      setErrorMessage("Réseau indisponible. Réessayez ou écrivez à infra@fawd.be.");
+    }
+  }
+
   return (
     <>
       <div className="line" />
@@ -39,7 +89,6 @@ export function CTA() {
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "flex-start" }}
           className="cta-grid"
         >
-          {/* Gauche : accroche */}
           <div>
             <AnimateIn>
               <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: "1.5rem", fontWeight: 500 }}>
@@ -60,46 +109,52 @@ export function CTA() {
             </AnimateIn>
           </div>
 
-          {/* Droite : formulaire (FormSubmit — sans backend) */}
-          <form
-            action="https://formsubmit.co/contact@fawd.be"
-            method="POST"
-            style={{ display: "flex", flexDirection: "column", gap: 0 }}
-          >
-            <input type="hidden" name="_subject" value="Arcos — Contact depuis la vitrine" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="text" name="_gotcha" style={{ display: "none" }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
+          <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
 
             <label style={{ ...labelStyle, marginTop: 0 }}>
               Nom complet *
-              <input name="Nom" type="text" required placeholder="Jean Dupont" style={inputStyle} />
+              <input name="name" type="text" required placeholder="Jean Dupont" style={inputStyle} disabled={status === "loading"} />
             </label>
             <label style={labelStyle}>
               E-mail professionnel *
-              <input name="email" type="email" required placeholder="vous@entreprise.com" style={inputStyle} />
+              <input name="email" type="email" required placeholder="vous@entreprise.com" style={inputStyle} disabled={status === "loading"} />
             </label>
             <label style={labelStyle}>
               Entreprise
-              <input name="Entreprise" type="text" placeholder="Nom de l&apos;organisation" style={inputStyle} />
+              <input name="company" type="text" placeholder="Nom de l&apos;organisation" style={inputStyle} disabled={status === "loading"} />
             </label>
             <label style={labelStyle}>
               Message *
               <textarea
-                name="Message"
+                name="message"
                 required
                 rows={5}
                 placeholder="Nombre de sites, type de machines, délai souhaité…"
                 style={{ ...inputStyle, marginTop: 6, resize: "vertical", minHeight: 120 }}
+                disabled={status === "loading"}
               />
             </label>
+
+            {status === "success" && (
+              <p style={{ marginTop: "1.25rem", fontSize: 14, color: "var(--teal)", fontWeight: 500 }} role="status">
+                Message envoyé. Vous recevrez un accusé de réception par e-mail.
+              </p>
+            )}
+            {status === "error" && errorMessage && (
+              <p style={{ marginTop: "1.25rem", fontSize: 14, color: "#e57373", fontWeight: 500 }} role="alert">
+                {errorMessage}
+              </p>
+            )}
 
             <div style={{ marginTop: "1.5rem" }}>
               <button
                 type="submit"
                 className="btn-hg"
                 style={{ border: "none", font: "inherit", width: "auto" }}
+                disabled={status === "loading"}
               >
-                Envoyer le message
+                {status === "loading" ? "Envoi en cours…" : "Envoyer le message"}
                 <HGArrow size={12} color="currentColor" />
               </button>
             </div>

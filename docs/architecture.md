@@ -6,7 +6,8 @@
 - **Styling** : Tailwind CSS v4
 - **Animations** : Framer Motion
 - **Icônes** : Lucide React
-- **Font** : Inter (Google Fonts)
+- **Font** : PP Neue Montreal (fichiers locaux `/public/fonts/`)
+- **E-mail transactionnel** : Nodemailer (SMTP), route `POST /api/contact`
 
 ## Structure du projet
 ```
@@ -19,9 +20,12 @@ arcos-vitrine/
 ├── public/                  # Assets statiques
 ├── src/
 │   ├── app/
+│   │   ├── api/contact/route.ts  # Envoi formulaire → SMTP + accusé visiteur
 │   │   ├── globals.css      # Styles globaux + tokens
-│   │   ├── layout.tsx       # Layout racine (metadata, fonts)
-│   │   └── page.tsx         # Page d'accueil (assemblage sections)
+│   │   ├── layout.tsx       # Layout racine (metadata SEO, viewport)
+│   │   ├── page.tsx         # Page d'accueil (assemblage sections)
+│   │   ├── robots.ts        # robots.txt
+│   │   └── sitemap.ts       # sitemap.xml
 │   └── components/
 │       ├── Navbar.tsx        # Navigation fixe + menu mobile
 │       ├── Hero.tsx          # Section héro + preview dashboard
@@ -36,10 +40,15 @@ arcos-vitrine/
 └── tsconfig.json
 ```
 
+## Formulaire contact & SMTP
+- Le formulaire appelle `POST /api/contact` (JSON : `name`, `email`, `company`, `message` ; honeypot `website` côté HTML, vide côté honnête).
+- Variables d’environnement : voir `.env.example` (`SMTP_*`, `CONTACT_TEAM_TO`, `NEXT_PUBLIC_SITE_URL`).
+- **Ne jamais committer** les secrets : utiliser `.env.local` en dev et les secrets de la plateforme en prod.
+- Deux e-mails par envoi : notification équipe (`CONTACT_TEAM_TO`, `Reply-To` = e-mail visiteur) et accusé de réception HTML + texte brut au visiteur (multipart, en-têtes sobres, pré-en-tête masqué).
+
 ## Déploiement
-- Build statique (`next build` → export statique possible)
-- Compatible Vercel, Netlify, ou tout CDN statique
-- Option on-premise via Docker si nécessaire
+- `next build` : pages statiques + route API dynamique (`/api/contact` nécessite un runtime Node avec variables SMTP).
+- Compatible Vercel / Node hébergé ; **pas** d’export statique seul si le formulaire doit fonctionner sans backend tiers.
 
 ## Choix techniques
 - **App Router** : Routing moderne Next.js, Server Components par défaut

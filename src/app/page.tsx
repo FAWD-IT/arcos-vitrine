@@ -7,10 +7,12 @@ import { ForWho }      from "@/components/ForWho";
 import { Pricing }     from "@/components/Pricing";
 import { CTA }         from "@/components/CTA";
 import { Footer }      from "@/components/Footer";
+import { JsonLd }      from "@/components/JsonLd";
 
 export default function Home() {
   return (
     <>
+      <JsonLd />
       <Navbar />
       <main>
         <Hero />

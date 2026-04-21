@@ -24,7 +24,6 @@ export function Hero() {
         width: "100%",
       }}
     >
-      {/* Top : titre + photo — colonnes resserrées, alignement vertical, cadre photo adouci */}
       <div className="hero-top">
         <h1 className="h-hero hero-headline anim-load anim-load-2">
           Supervisez vos machines.<br />
@@ -32,7 +31,6 @@ export function Hero() {
           <span style={{ color: "var(--muted)" }}>Décidez vite.</span>
         </h1>
 
-        {/* Même grille 2×2 fantôme + photo + overlay survol (grain, texte, CTA) */}
         <div className="hero-photo-outer anim-load anim-load-2">
           <div className="hero-photo-inner">
             <div
@@ -74,7 +72,6 @@ export function Hero() {
                   position: "absolute",
                   inset: 0,
                   zIndex: 1,
-                  pointerEvents: "none",
                 }}
               >
                 <Image
@@ -88,21 +85,9 @@ export function Hero() {
               </div>
             </div>
           </div>
-
-          <div className="hero-photo-overlay" role="region" aria-label="Invitation à contacter Arcos">
-            <span className="hero-photo-grain" aria-hidden />
-            <div className="hero-photo-overlay-content">
-              <p className="hero-photo-overlay-text">
-                Vous aussi, vous pourriez <span className="hero-photo-overlay-accent">connecter votre parc</span> à
-                Arcos.
-              </p>
-              <HGButton href="#contact">Parler à l&apos;équipe</HGButton>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Bottom: status + description + CTAs */}
       <div
         style={{
           paddingBottom: "4rem",
@@ -159,93 +144,10 @@ export function Hero() {
           position: relative;
           border-radius: 10px;
           overflow: hidden;
-          box-shadow:
-            0 28px 56px rgba(0, 0, 0, 0.42),
-            0 0 0 1px rgba(255, 255, 255, 0.07);
+          border: 1px solid var(--border);
         }
         .hero-photo-inner {
           position: relative;
-          z-index: 0;
-        }
-        /* Overlay : visible au survol (appareils avec hover) */
-        .hero-photo-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: clamp(1rem, 3vw, 1.5rem);
-          opacity: 0;
-          visibility: hidden;
-          transition:
-            opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-            visibility 0s linear 0.4s;
-          pointer-events: none;
-          background: linear-gradient(
-            165deg,
-            rgba(19, 21, 20, 0.25) 0%,
-            rgba(19, 21, 20, 0.55) 45%,
-            rgba(8, 45, 68, 0.5) 100%
-          );
-        }
-        @media (hover: hover) and (pointer: fine) {
-          .hero-photo-outer:hover .hero-photo-overlay {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transition:
-              opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0s linear 0s;
-          }
-        }
-        .hero-photo-grain {
-          position: absolute;
-          inset: -28%;
-          opacity: 0.38;
-          mix-blend-mode: overlay;
-          pointer-events: none;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-          background-size: 140px 140px;
-          animation: heroGrain 0.48s steps(5) infinite;
-          will-change: transform;
-        }
-        @keyframes heroGrain {
-          0% { transform: translate(0, 0) rotate(0deg); }
-          20% { transform: translate(-1.2%, 1.4%) rotate(0.12deg); }
-          40% { transform: translate(1.1%, -0.8%) rotate(-0.1deg); }
-          60% { transform: translate(-0.7%, -1.1%) rotate(0.08deg); }
-          80% { transform: translate(1%, 0.6%) rotate(-0.05deg); }
-          100% { transform: translate(0, 0) rotate(0deg); }
-        }
-        .hero-photo-overlay-content {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1.25rem;
-          max-width: 18rem;
-          text-align: center;
-        }
-        .hero-photo-overlay-text {
-          margin: 0;
-          font-family: 'PP Neue Montreal', Arial, sans-serif;
-          font-size: clamp(0.95rem, 1.8vw, 1.125rem);
-          font-weight: 500;
-          line-height: 1.45;
-          color: rgba(241, 241, 241, 0.92);
-          letter-spacing: -0.01em;
-        }
-        .hero-photo-overlay-accent {
-          color: #f1f1f1;
-          font-weight: 500;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-photo-grain {
-            animation: none !important;
-            opacity: 0.22;
-          }
         }
         @media (max-width: 768px) {
           .hero-top {

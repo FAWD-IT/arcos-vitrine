@@ -46,3 +46,9 @@ Arcos se connecte via MQTT — tout équipement publiant en MQTT est compatible.
 - FAWD SRL, Charleroi, Belgique
 - Testé sur équipements réels
 - Stack cloud ou on-premise
+
+### Contact (formulaire vitrine)
+- Champs : nom (requis), e-mail professionnel (requis), entreprise (optionnel), message (requis).
+- Côté serveur : longueurs bornées, e-mail validé, anti-spam champ honeypot `website` (réponse neutre si rempli).
+- Limite de fréquence par adresse IP pour limiter l’abus.
+- Chaque envoi déclenche deux e-mails : notification à l’équipe (`CONTACT_TEAM_TO`, `Reply-To` = demandeur) et accusé de réception au demandeur (HTML + texte brut).
