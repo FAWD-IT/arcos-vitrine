@@ -23,6 +23,8 @@ arcos-vitrine/
 │   │   ├── api/contact/route.ts  # Envoi formulaire → SMTP + accusé visiteur
 │   │   ├── globals.css      # Styles globaux + tokens
 │   │   ├── layout.tsx       # Layout racine (metadata SEO, viewport)
+│   │   ├── icon.svg         # Favicon (logo blanc sur fond noir)
+│   │   ├── apple-icon.svg   # Icône « Ajouter à l’écran d’accueil » (même traitement)
 │   │   ├── page.tsx         # Page d'accueil (assemblage sections)
 │   │   ├── robots.ts        # robots.txt
 │   │   └── sitemap.ts       # sitemap.xml
