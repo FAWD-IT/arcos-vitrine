@@ -3,94 +3,124 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
+/* Logos clients / intégrateurs — style Grafit ticker */
+const LOGOS = [
+  { name: "Ewon / Talk2M" },
+  { name: "Siemens S7"    },
+  { name: "Schneider"     },
+  { name: "Modbus TCP"    },
+  { name: "OPC-UA"        },
+  { name: "Wago"          },
+];
+
 const PROBLEMS = [
   {
+    kicker: "01",
     title: "Données manuelles",
-    desc: "Vos opérateurs notent encore sur papier ou dans des fichiers Excel. Aucune centralisation, aucune traçabilité automatique.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-        <polyline points="10 9 9 9 8 9"/>
-      </svg>
-    ),
+    body: "Vos opérateurs notent sur papier ou dans Excel. Aucune centralisation, aucune traçabilité automatique.",
   },
   {
+    kicker: "02",
     title: "Aveugle en temps réel",
-    desc: "Sans flux continu, vous découvrez les anomalies après coup — en analysant des logs de la veille ou en recevant un appel du terrain.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-        <line x1="1" y1="1" x2="23" y2="23"/>
-      </svg>
-    ),
+    body: "Sans flux continu, vous découvrez les anomalies après coup — en analysant des logs de la veille.",
   },
   {
+    kicker: "03",
     title: "Alertes trop tard",
-    desc: "Les seuils sont définis dans des PLCs. Quand un technicien reçoit le SMS d'alerte, la machine est souvent déjà arrêtée depuis plusieurs minutes.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-        <line x1="12" y1="9" x2="12" y2="13"/>
-        <line x1="12" y1="17" x2="12.01" y2="17"/>
-      </svg>
-    ),
+    body: "Quand le technicien reçoit le SMS, la machine est souvent déjà arrêtée depuis plusieurs minutes.",
   },
   {
+    kicker: "04",
     title: "Silos de données",
-    desc: "Chaque machine parle son propre protocole. L'intégration est un projet en soi, qui mobilise des ressources IT pendant des mois.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <ellipse cx="12" cy="5" rx="9" ry="3"/>
-        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-      </svg>
-    ),
+    body: "Chaque machine parle son protocole. L'intégration est un projet IT qui mobilise des équipes pendant des mois.",
   },
 ];
 
 export default function Problem() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 });
 
   return (
-    <section className="bg-[#F7F7F5]">
-      <div className="container-arcos section-pad">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-14"
-        >
-          <p className="section-label">Le problème</p>
-          <h2 className="max-w-[480px]">
-            Ce que l&apos;industrie vit
-            <br />
-            <span className="text-[#6B7280]">sans couche temps réel.</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PROBLEMS.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: i * 0.08 }}
-              className="card bg-white p-6"
-            >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-[8px] bg-[#F3F4F6] text-[#6B7280]">
-                {p.icon}
-              </div>
-              <h3 className="text-[17px] font-semibold text-[#0A0A0A]">{p.title}</h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-[#6B7280]">{p.desc}</p>
-            </motion.div>
-          ))}
+    <>
+      {/* Bande logos — style Grafit "trusted by" */}
+      <div style={{ background: "var(--black-2)", borderTop: "1px solid var(--border-dark)", borderBottom: "1px solid var(--border-dark)" }}>
+        <div className="c py-5">
+          <div className="flex items-center justify-between gap-6 overflow-hidden">
+            <span className="text-[11px] font-medium shrink-0" style={{ color: "var(--text-muted-light)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              Compatible avec
+            </span>
+            <div className="flex items-center gap-0 flex-1 overflow-hidden">
+              {LOGOS.map((l, i) => (
+                <div
+                  key={l.name}
+                  className="flex items-center justify-center flex-1 px-4 py-2 text-[13px] font-medium"
+                  style={{
+                    color: "rgba(255,255,255,0.38)",
+                    borderLeft: i > 0 ? "1px solid var(--border-dark)" : "1px solid var(--border-dark)",
+                    transition: "color 180ms",
+                  }}
+                >
+                  {l.name}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+
+      {/* Section problème */}
+      <section style={{ background: "var(--grey-1)" }}>
+        <div className="c sp" ref={ref}>
+
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="mb-16 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+          >
+            <div>
+              <span className="section-kicker">Le problème</span>
+              <h2 className="h2-dark max-w-[500px]">
+                Ce que l&apos;industrie vit
+                <br />
+                sans couche temps réel.
+              </h2>
+            </div>
+            <p className="max-w-[340px] text-[15px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>
+              La plupart des sites industriels fonctionnent encore sans visibilité opérationnelle en temps réel. Arcos est construit pour changer ça.
+            </p>
+          </motion.div>
+
+          {/* Grille 2×2 */}
+          <div className="grid gap-px lg:grid-cols-2" style={{ border: "1px solid var(--border-light)", borderRadius: 14, overflow: "hidden" }}>
+            {PROBLEMS.map((p, i) => (
+              <motion.div
+                key={p.title}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
+                className="p-8 lg:p-10"
+                style={{
+                  background: "#fff",
+                  borderRight: i % 2 === 0 ? "1px solid var(--border-light)" : "none",
+                  borderBottom: i < 2 ? "1px solid var(--border-light)" : "none",
+                }}
+              >
+                <p
+                  className="text-[11px] font-medium mb-5 font-mono"
+                  style={{ color: "var(--teal)", letterSpacing: "0.1em" }}
+                >
+                  {p.kicker}
+                </p>
+                <h3 className="h3 mb-3">{p.title}</h3>
+                <p className="text-[15px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>
+                  {p.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

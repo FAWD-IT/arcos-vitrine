@@ -2,61 +2,79 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ArrowRight } from "lucide-react";
 
 export default function CTA() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="demo" className="bg-[#0A0A0A]">
-      <div className="container-arcos section-pad">
+    <section
+      id="demo"
+      style={{ background: "var(--black)", borderTop: "1px solid var(--border-dark)" }}
+    >
+      <div className="c sp" ref={ref}>
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
-          className="mx-auto max-w-[640px] text-center"
+          className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"
         >
-          <p className="mb-4 text-[13px] font-medium uppercase tracking-[0.1em] text-[#6B7280]">
-            Contact
-          </p>
-          <h2 className="text-[clamp(36px,5vw,52px)] font-bold leading-[1.12] tracking-[-0.025em] text-white">
-            Parler à
-            <br />
-            l&apos;équipe produit.
-          </h2>
-          <p className="mx-auto mt-6 max-w-[440px] text-[16px] leading-relaxed text-[#9CA3AF]">
-            Démo technique, atelier MQTT ou simple échange sur votre périmètre —
-            on s&apos;adapte à votre contexte.
-          </p>
+          {/* Gauche */}
+          <div className="max-w-[540px]">
+            <span className="section-kicker section-kicker--light">Contact</span>
+            <h2 className="h2-light">
+              Parler à l&apos;équipe
+              <br />
+              <span style={{ color: "var(--teal)" }}>produit.</span>
+            </h2>
+            <p className="mt-5 text-[15px] leading-relaxed" style={{ color: "var(--text-muted-light)" }}>
+              Démo technique, atelier MQTT ou simple échange sur votre périmètre —
+              on s&apos;adapte à votre contexte.
+            </p>
+          </div>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a
-              href="mailto:contact@fawd.be?subject=Démo Arcos"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-[var(--r-md)] bg-white px-6 py-3 text-[14px] font-semibold text-[#0A0A0A] transition-opacity hover:opacity-85"
-            >
-              Écrire à l&apos;équipe
-              <ArrowRight className="h-4 w-4" />
+          {/* Droite — actions */}
+          <div className="flex flex-col gap-4 lg:items-end">
+            <a href="mailto:contact@fawd.be?subject=Démo Arcos" className="btn-arrow">
+              <span className="btn-arrow__text">Écrire à l&apos;équipe</span>
+              <span className="btn-arrow__icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
             </a>
             <a
               href="mailto:contact@fawd.be?subject=Atelier technique Arcos"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-[var(--r-md)] border border-white/20 px-6 py-3 text-[14px] text-white/70 transition-all hover:border-white/40 hover:text-white"
+              className="text-[13px] transition-colors"
+              style={{ color: "var(--text-muted-light)" }}
             >
-              Atelier technique
+              Demander un atelier technique →
             </a>
-          </div>
 
-          <p className="mt-12 text-[12px] text-[#4B5563]">
-            Développé par FAWD SRL · Charleroi, Belgique ·{" "}
-            <a
-              href="https://fawd.be"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#6B7280] underline underline-offset-2 transition-colors hover:text-white/70"
+            {/* Info */}
+            <div
+              className="mt-4 rounded-xl p-5"
+              style={{ border: "1px solid var(--border-dark)", background: "var(--black-2)" }}
             >
-              fawd.be
-            </a>
-          </p>
+              <p className="text-[12px] mb-3" style={{ color: "var(--text-muted-light)" }}>
+                FAWD SRL · Charleroi, Belgique
+              </p>
+              <div className="flex flex-col gap-1.5">
+                {[
+                  "Déploiement en 5 jours",
+                  "Équipe technique dédiée",
+                  "Support réactif",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-[13px]" style={{ color: "rgba(255,255,255,0.6)" }}>
+                    <span
+                      className="h-1.5 w-1.5 rounded-full shrink-0"
+                      style={{ background: "var(--teal)" }}
+                    />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

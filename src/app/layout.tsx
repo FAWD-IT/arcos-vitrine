@@ -11,15 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Arcos — Supervision industrielle MQTT",
   description:
-    "Arcos agrège vos topics MQTT, expose des tableaux de bord et un agent IA qui raisonne sur vos données terrain.",
-  keywords: [
-    "supervision industrielle",
-    "MQTT",
-    "monitoring IoT",
-    "dashboard temps réel",
-    "agent IA industriel",
-    "maintenance prédictive",
-  ],
+    "Arcos agrège vos topics MQTT, expose des tableaux de bord temps réel et un agent IA qui raisonne sur vos données terrain.",
   openGraph: {
     title: "Arcos — Supervision industrielle MQTT",
     description: "Dashboard, alertes et IA sur vos données MQTT. Déployé en jours.",
@@ -27,12 +19,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={inter.className}>
-      <body className="min-h-screen flex flex-col bg-white text-[#0A0A0A]">
+      <body className="min-h-screen flex flex-col bg-white text-[#0a0a0a]">
         {children}
       </body>
     </html>
