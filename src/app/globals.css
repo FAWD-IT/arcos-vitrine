@@ -206,11 +206,12 @@ body {
   display: none;
 }
 @media (max-width: 768px) {
+  /* z-index bas : doit rester SOUS la pill + menu (sinon les clics vont au backdrop) */
   .mobile-nav-backdrop {
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 98;
+    z-index: 0;
     /* Pas de backdrop-filter : le flou rendait la page illisible sous le menu */
     background: rgba(0, 0, 0, 0.35);
     opacity: 0;

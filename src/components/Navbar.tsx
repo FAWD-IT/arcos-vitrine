@@ -69,7 +69,7 @@ export function Navbar() {
       <div
         style={{
           position: "relative",
-          zIndex: 2,
+          zIndex: 10,
           width: "100%",
           maxWidth: scrolled ? "1080px" : "1300px",
           background: scrolled ? "#EAEAEA" : "rgb(21,22,21)",
