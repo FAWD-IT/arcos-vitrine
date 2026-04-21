@@ -98,7 +98,9 @@ export function Navbar() {
             height: 15,
             lineHeight: 0,
             textDecoration: "none",
-            overflow: "hidden",
+            overflow: "visible",
+            position: "relative",
+            zIndex: 1,
           }}
           aria-label="Arcos — accueil"
         >
@@ -114,6 +116,8 @@ export function Navbar() {
               display: "block",
               objectFit: "cover",
               objectPosition: "50% 50%",
+              transform: "scale(1.22)",
+              transformOrigin: "left center",
               transition: "filter 0.35s ease",
               filter: scrolled
                 ? "none"
