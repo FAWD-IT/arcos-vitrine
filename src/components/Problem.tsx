@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { AnimateIn } from "./AnimateIn";
 import { HGButton, TiltCard } from "./TiltCard";
+import { WordReveal } from "./WordReveal";
 
 const ACCORDION = [
   {
@@ -57,15 +58,23 @@ export function Problem() {
           className="stmt-grid"
         >
           {/* Left: big statement */}
-          <AnimateIn>
-            <h2 className="h-statement">
-              Une couche temps réel <span className="dim">qui connecte vos machines,</span> vos équipes, <span className="dim">et vos décisions.</span>
-            </h2>
-            <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "2rem", fontWeight: 500 }}>
-              Sans Arcos, vos données restent dispersées entre machines, protocoles et feuilles Excel. Avec Arcos, tout remonte en temps réel dans une interface unique — de l&apos;atelier au comité de direction.
-            </p>
-            <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir la démo</HGButton>
-          </AnimateIn>
+          <div>
+            <WordReveal
+              className="h-statement"
+              segments={[
+                { text: "Une couche temps réel " },
+                { text: "qui connecte vos machines,", dim: true },
+                { text: " vos équipes, " },
+                { text: "et vos décisions.", dim: true },
+              ]}
+            />
+            <AnimateIn delay={300}>
+              <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "2rem", fontWeight: 500 }}>
+                Sans Arcos, vos données restent dispersées entre machines, protocoles et feuilles Excel. Avec Arcos, tout remonte en temps réel dans une interface unique — de l&apos;atelier au comité de direction.
+              </p>
+              <HGButton href="#demo" style={{ marginTop: "2rem" }}>Voir la démo</HGButton>
+            </AnimateIn>
+          </div>
 
           {/* Right: accordion */}
           <AnimateIn delay={120}>

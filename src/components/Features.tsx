@@ -1,5 +1,6 @@
 "use client";
 import { AnimateIn } from "./AnimateIn";
+import { WordReveal } from "./WordReveal";
 
 const SERVICES = [
   {
@@ -42,16 +43,20 @@ export function Features() {
       <div className="line" />
       <section id="features-detail" className="c sp">
         {/* Header row */}
-        <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="feat-header">
-          <h2 className="h-statement">
-            La plateforme <span className="dim">qui s&apos;adapte à votre infrastructure.</span>
-          </h2>
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="feat-header">
+          <WordReveal
+            className="h-statement"
+            segments={[
+              { text: "La plateforme " },
+              { text: "qui s'adapte à votre infrastructure.", dim: true },
+            ]}
+          />
+          <AnimateIn style={{ display: "flex", alignItems: "flex-end" }} delay={200}>
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
               Arcos couvre l&apos;ensemble du cycle — de la collecte brute des données MQTT à l&apos;analyse intelligente, en passant par les alertes terrain et les rapports dirigeants.
             </p>
-          </div>
-        </AnimateIn>
+          </AnimateIn>
+        </div>
 
         {/* Services list */}
         {SERVICES.map((svc, i) => (

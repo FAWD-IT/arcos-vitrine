@@ -1,6 +1,7 @@
 "use client";
 import { AnimateIn } from "./AnimateIn";
 import { HGButton } from "./TiltCard";
+import { WordReveal } from "./WordReveal";
 export function CTA() {
   return (
     <>
@@ -11,21 +12,29 @@ export function CTA() {
           className="cta-grid"
         >
           {/* Left */}
-          <AnimateIn>
-            <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: "1.5rem", fontWeight: 500 }}>
-              Contact
-            </p>
-            <h2 className="h-statement">
-              Parler à l&apos;équipe <span className="dim">produit.</span>
-            </h2>
-            <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "1.5rem", fontWeight: 500, maxWidth: 400 }}>
-              Montrez-nous votre infrastructure, on vous montre Arcos en live — en moins de 30 minutes.
-            </p>
-            <div style={{ display: "flex", gap: 10, marginTop: "2rem", flexWrap: "wrap" }}>
-              <HGButton href="mailto:contact@fawd.be">Écrire à l&apos;équipe</HGButton>
-              <HGButton href="tel:+32" ghost>Planifier un appel</HGButton>
-            </div>
-          </AnimateIn>
+          <div>
+            <AnimateIn>
+              <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: "1.5rem", fontWeight: 500 }}>
+                Contact
+              </p>
+            </AnimateIn>
+            <WordReveal
+              className="h-statement"
+              segments={[
+                { text: "Parler à l'équipe " },
+                { text: "produit.", dim: true },
+              ]}
+            />
+            <AnimateIn delay={300}>
+              <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "1.5rem", fontWeight: 500, maxWidth: 400 }}>
+                Montrez-nous votre infrastructure, on vous montre Arcos en live — en moins de 30 minutes.
+              </p>
+              <div style={{ display: "flex", gap: 10, marginTop: "2rem", flexWrap: "wrap" }}>
+                <HGButton href="mailto:contact@fawd.be">Écrire à l&apos;équipe</HGButton>
+                <HGButton href="tel:+32" ghost>Planifier un appel</HGButton>
+              </div>
+            </AnimateIn>
+          </div>
 
           {/* Right: info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
