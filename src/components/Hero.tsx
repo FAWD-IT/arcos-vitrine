@@ -24,35 +24,24 @@ export function Hero() {
         width: "100%",
       }}
     >
-      {/* Top: headline + stats */}
-      <div
-        style={{
-          flex: 1,
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 40,
-          alignItems: "flex-start",
-          paddingTop: "5.5rem",
-        }}
-        className="hero-top"
-      >
-        {/* H1 top-left */}
-        <h1 className="h-hero anim-load anim-load-2">
+      {/* Top : titre + photo — colonnes resserrées, alignement vertical, cadre photo adouci */}
+      <div className="hero-top">
+        <h1 className="h-hero hero-headline anim-load anim-load-2">
           Supervisez vos machines.<br />
           Anticipez les pannes.{" "}
           <span style={{ color: "var(--muted)" }}>Décidez vite.</span>
         </h1>
 
-        {/* Même grille 2×2 que les stats ; photo par-dessus (même emprise totale) */}
-        <div
-          className="anim-load anim-load-2"
-          style={{
-            position: "relative",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 0,
-          }}
-        >
+        {/* Même grille 2×2 fantôme ; cadre visuel autour de la photo */}
+        <div className="hero-photo-outer anim-load anim-load-2">
+          <div
+            style={{
+              position: "relative",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 0,
+            }}
+          >
           {STATS.map((s, i) => (
             <div
               key={s.value}
@@ -91,11 +80,12 @@ export function Hero() {
               src="/hero-technician.png"
               alt="Technicien en intervention sur une armoire électrique industrielle"
               fill
-              sizes="(max-width: 768px) 100vw, 42vw"
-              style={{ objectFit: "cover", objectPosition: "center center" }}
+              sizes="(max-width: 768px) 100vw, 40vw"
+              style={{ objectFit: "cover", objectPosition: "52% 42%" }}
               priority
             />
           </div>
+        </div>
         </div>
       </div>
 
@@ -138,8 +128,34 @@ export function Hero() {
       </div>
 
       <style>{`
+        .hero-top {
+          flex: 1;
+          display: grid;
+          grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+          column-gap: clamp(1rem, 3vw, 1.75rem);
+          row-gap: 2rem;
+          align-items: center;
+          padding-top: clamp(3.5rem, 8vh, 5.25rem);
+        }
+        .hero-headline {
+          margin: 0;
+          max-width: 16em;
+          padding-right: clamp(0rem, 1.5vw, 0.75rem);
+        }
+        .hero-photo-outer {
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow:
+            0 28px 56px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.07);
+        }
         @media (max-width: 768px) {
-          .hero-top    { grid-template-columns: 1fr !important; padding-top: 5rem !important; }
+          .hero-top {
+            grid-template-columns: 1fr !important;
+            padding-top: 4.5rem !important;
+            align-items: stretch !important;
+          }
+          .hero-headline { max-width: none !important; padding-right: 0 !important; }
           .hero-bottom { grid-template-columns: 1fr !important; gap: 2rem !important; }
         }
         @media (max-width: 480px) { section { padding-inline: 20px !important; } }
