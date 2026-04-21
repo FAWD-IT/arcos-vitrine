@@ -24,9 +24,7 @@ export function JsonLd() {
         inLanguage: "fr-BE",
         offers: {
           "@type": "Offer",
-          price: "0",
-          priceCurrency: "EUR",
-          description: "Contact commercial pour déploiement et tarification.",
+          description: "Tarification sur demande selon votre périmètre (contact commercial).",
         },
         provider: { "@id": `${SITE}/#organization` },
       },

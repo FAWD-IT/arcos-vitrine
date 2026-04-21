@@ -5,8 +5,6 @@ import { HGButton } from "./TiltCard";
 const PLANS = [
   {
     name: "Starter",
-    price: "€190",
-    period: "/mois",
     desc: "Idéal pour un premier site ou un pilote terrain.",
     features: [
       "Jusqu'à 5 machines connectées",
@@ -15,12 +13,10 @@ const PLANS = [
       "1 utilisateur",
       "Support standard",
     ],
-    cta: "Démarrer",
+    cta: "Demander une proposition",
   },
   {
     name: "Pro",
-    price: "€490",
-    period: "/mois",
     desc: "Pour les équipes opérationnelles sur plusieurs lignes.",
     features: [
       "Machines illimitées",
@@ -30,13 +26,11 @@ const PLANS = [
       "5 utilisateurs",
       "Support prioritaire",
     ],
-    cta: "Choisir Pro",
+    cta: "Demander une proposition",
     highlight: true,
   },
   {
     name: "Entreprise",
-    price: "Sur devis",
-    period: "",
     desc: "Multi-sites, multi-tenant, SLA garanti, déploiement on-premise.",
     features: [
       "Sites et organisations illimités",
@@ -55,19 +49,17 @@ export function Pricing() {
     <>
       <div className="line" />
       <section id="pricing" className="c sp">
-        {/* Header */}
         <AnimateIn as="div" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="pricing-header">
           <h2 className="h-statement">
-            Offres simples <span className="dim">alignées sur votre périmètre.</span>
+            Offres sur mesure <span className="dim">tarification sur demande.</span>
           </h2>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
-              Du pilote terrain à la supervision multi-sites — chaque plan inclut un déploiement accompagné et un support réactif.
+              Du pilote terrain à la supervision multi-sites — chaque projet est chiffré avec vous après analyse de votre périmètre.
             </p>
           </div>
         </AnimateIn>
 
-        {/* Plans: 3 col row */}
         <div
           style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", borderTop: "1px solid var(--border)" }}
           className="plans-grid"
@@ -100,22 +92,19 @@ export function Pricing() {
                 </p>
               )}
 
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: "0.5rem" }}>
+              <div style={{ marginBottom: "0.5rem" }}>
                 <span
                   style={{
-                    fontSize: plan.price === "Sur devis" ? 22 : 36,
+                    fontSize: 22,
                     fontWeight: 500,
                     color: "var(--white)",
                     letterSpacing: "-0.02em",
-                    lineHeight: 1,
+                    lineHeight: 1.2,
                     fontFamily: "'PP Neue Montreal', Arial, sans-serif",
                   }}
                 >
-                  {plan.price}
+                  Sur demande
                 </span>
-                {plan.period && (
-                  <span style={{ fontSize: 13, color: "var(--muted)", fontWeight: 500 }}>{plan.period}</span>
-                )}
               </div>
 
               <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: "2rem", lineHeight: 1.5, fontWeight: 500 }}>
@@ -136,7 +125,6 @@ export function Pricing() {
               <HGButton href="#contact" style={{ alignSelf: "flex-start" }}>{plan.cta}</HGButton>
             </div>
           ))}
-          {/* Last item right border off */}
         </div>
       </section>
 

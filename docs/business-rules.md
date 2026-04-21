@@ -37,10 +37,8 @@ Arcos se connecte via MQTT — tout équipement publiant en MQTT est compatible.
 - Industrie de l'eau, énergie, agroalimentaire, process
 
 ### Pricing
-- Structure par site supervisé + nombre de devices
-- Setup one-shot + abonnement mensuel
-- Pas de licence par utilisateur
-- 3 plans : Starter, Pro (recommandé), Enterprise
+- **Aucun tarif public** sur la vitrine : tout est **sur demande** après analyse du périmètre.
+- 3 offres présentées (Starter, Pro recommandé, Entreprise) comme **paliers d’accompagnement**, sans montants affichés.
 
 ### Crédibilité
 - FAWD SRL, Charleroi, Belgique

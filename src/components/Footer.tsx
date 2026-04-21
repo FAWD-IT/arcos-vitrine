@@ -81,33 +81,9 @@ export function Footer() {
         </div>
         <div style={{ textAlign: "right" }}>
           <p style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>
-            Bruxelles, Belgique
-          </p>
-          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.15)", fontWeight: 500 }}>
-            50.8503° N, 4.3517° E
+            Charleroi, Belgique
           </p>
         </div>
-      </div>
-
-      {/* Giant ARCOS watermark */}
-      <div
-        aria-hidden="true"
-        style={{
-          textAlign: "center",
-          fontSize: "clamp(8rem, 22vw, 18rem)",
-          fontFamily: "'PP Neue Montreal', Arial, sans-serif",
-          fontWeight: 500,
-          color: "var(--white)",
-          opacity: 0.045,
-          letterSpacing: "-0.04em",
-          lineHeight: 0.85,
-          userSelect: "none",
-          pointerEvents: "none",
-          overflow: "hidden",
-          paddingBottom: "0.5rem",
-        }}
-      >
-        ARCOS
       </div>
     </footer>
   );
