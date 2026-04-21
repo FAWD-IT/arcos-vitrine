@@ -55,3 +55,21 @@ Thème dark premium (Obsidian OS, références type **COLAB** SaaS) : grille den
 Le site alterne entre :
 - Fond `background` avec gradient radial cyan
 - Fond `section-alt` avec `bg-dot-grid` / `bg-section-lift`
+
+## E-mails transactionnels (Arcos)
+
+Les gabarits HTML (`src/lib/email/templates.ts`) reprennent **`globals.css`** (tokens réels du site), pas l’ancienne table « logo » de ce fichier.
+
+| Élément | Valeur | Remarque client mail |
+|---------|--------|----------------------|
+| Fond | `#131514` | `bgcolor` + `background-color` + `!important` sur blocs clés pour limiter les inversions (Gmail / Apple). |
+| Texte | `#d5d6d5` | Corps, aligné `--text`. |
+| Titres | `#f1f1f1` | `--white`, `font-weight: 500`. |
+| Muet | `#6b6c6b` | `--muted` (labels uppercase type section Contact). |
+| Bordure | `#2f2f2f` | Hex à la place de `rgba(255,255,255,0.12)` pour stabilité en mode auto. |
+| Accent | `#14a9cf` | `--teal` (liens). |
+| Bouton primaire | Fond `#f1f1f1`, texte `#131514`, radius `3px` | Équivalent `.btn-hg`. |
+| Bouton ghost | Bordure `#2f2f2f`, texte `#6b6c6b` | Équivalent `.btn-hg-ghost`. |
+| Police | `PP Neue Montreal` + fallback | `@font-face` vers `/fonts/*.woff` sur l’URL publique ; beaucoup de webmails ignorent les polices perso → pile **Helvetica Neue, Helvetica, Arial**. |
+
+**Méta** : `color-scheme: dark` + `supported-color-schemes: dark` pour indiquer un UI sombre ; le rendu peut toutefois varier selon le thème du client — d’où contrastes explicites et version **texte brut** systématique.

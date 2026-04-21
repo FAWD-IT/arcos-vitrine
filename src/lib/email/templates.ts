@@ -1,12 +1,22 @@
 import { escapeHtml } from "./escape";
 
-const BRAND_BG = "#131514";
-const BRAND_TEXT = "#d5d6d5";
-const BRAND_HEAD = "#f1f1f1";
-const BRAND_MUTED = "#8a8b8a";
-const BRAND_BORDER = "rgba(255,255,255,0.12)";
-const BRAND_ACCENT = "#14a9cf";
-const BRAND_LOGO_BLUE = "#082d44";
+/**
+ * Tokens alignés sur `src/app/globals.css` (:root + .btn-hg).
+ * Bordures / fonds en hex (pas de rgba) pour limiter les dérives
+ * Gmail / Apple Mail en mode sombre ou « auto ».
+ */
+const BG = "#131514";
+const BG_OUTER = "#131514";
+const TEXT = "#d5d6d5";
+const WHITE = "#f1f1f1";
+const MUTED = "#6b6c6b";
+const BORDER = "#2f2f2f";
+const PANEL = "#1a1b1a";
+const TEAL = "#14a9cf";
+const NAVY = "#082d44";
+const BTN_FG = "#131514";
+const BTN_BG = "#f1f1f1";
+const BTN_BORDER = "#f1f1f1";
 
 export type ContactPayload = {
   name: string;
@@ -15,38 +25,131 @@ export type ContactPayload = {
   message: string;
 };
 
+function base(siteUrl: string): string {
+  return siteUrl.replace(/\/$/, "");
+}
+
+/** Pile identique au site ; PP Neue Montreal chargée si le client mail l’autorise. */
+function fontFaces(siteUrl: string): string {
+  const b = base(siteUrl);
+  const book = `${b}/fonts/ppneuemontreal-book.woff`;
+  const medium = `${b}/fonts/ppneuemontreal-medium.woff`;
+  const bold = `${b}/fonts/ppneuemontreal-bold.woff`;
+  return `
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('${book}') format('woff');
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('${medium}') format('woff');
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('${bold}') format('woff');
+}`;
+}
+
+const FONT_STACK =
+  "'PP Neue Montreal','Helvetica Neue',Helvetica,Arial,sans-serif";
+
+function fontInline(weight: 400 | 500 | 700 = 500): string {
+  return `font-family:${FONT_STACK};font-weight:${weight};`;
+}
+
+/** Bouton type `.btn-hg` (primaire vitrine). */
+function btnHgPrimary(label: string, href: string): string {
+  const safeHref = escapeHtml(href);
+  const safeLabel = escapeHtml(label);
+  return `<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:4px;">
+  <tr>
+    <td bgcolor="${BTN_BG}" style="border-radius:3px;background-color:${BTN_BG};border:1.5px solid ${BTN_BORDER};mso-padding-alt:11px 16px;">
+      <a href="${safeHref}" target="_blank" rel="noopener noreferrer"
+        style="display:inline-block;padding:11px 16px;${fontInline(500)}font-size:16px;line-height:1.2;color:${BTN_FG};text-decoration:none;border-radius:3px;">
+        ${safeLabel}
+      </a>
+    </td>
+  </tr>
+</table>`;
+}
+
+/** Lien secondaire type `.btn-hg-ghost` (outline). */
+function btnHgGhost(label: string, href: string): string {
+  const safeHref = escapeHtml(href);
+  const safeLabel = escapeHtml(label);
+  return `<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:10px;">
+  <tr>
+    <td style="border-radius:3px;border:1.5px solid ${BORDER};background-color:transparent;mso-padding-alt:11px 16px;">
+      <a href="${safeHref}" target="_blank" rel="noopener noreferrer"
+        style="display:inline-block;padding:11px 16px;${fontInline(500)}font-size:16px;line-height:1.2;color:${MUTED};text-decoration:none;border-radius:3px;">
+        ${safeLabel}
+      </a>
+    </td>
+  </tr>
+</table>`;
+}
+
+function labelPill(text: string): string {
+  return `<p style="margin:0 0 14px;${fontInline(500)}font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${MUTED};">${escapeHtml(text)}</p>`;
+}
+
 function emailShell(opts: {
   title: string;
   preheader: string;
   innerHtml: string;
   siteUrl: string;
 }): string {
-  const logoUrl = `${opts.siteUrl.replace(/\/$/, "")}/logo-arcos-nobg2.svg`;
+  const logoUrl = `${base(opts.siteUrl)}/logo-arcos-nobg2.svg`;
+  const faces = fontFaces(opts.siteUrl);
+
   return `<!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="supported-color-schemes" content="dark" />
   <title>${escapeHtml(opts.title)}</title>
-  <!--[if mso]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
+  <!--[if mso]><style type="text/css">table, td { border-collapse: collapse; }</style><![endif]-->
+  <style type="text/css">
+    ${faces}
+    :root { color-scheme: dark; }
+    body, table, td, p, a, h1, span { ${fontInline(500)} -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    h1 { font-weight: 500; }
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+    @media (prefers-color-scheme: dark) {
+      .arc-wrap { background-color: ${BG} !important; color: ${TEXT} !important; }
+      .arc-card { background-color: ${BG} !important; }
+    }
+  </style>
 </head>
-<body style="margin:0;padding:0;background:#0a0b0b;">
+<body class="arc-wrap" bgcolor="${BG_OUTER}" style="margin:0;padding:0;background-color:${BG_OUTER} !important;color:${TEXT} !important;">
   <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:transparent;width:0;height:0;">
     ${escapeHtml(opts.preheader)}
   </div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0b0b;padding:24px 12px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${BG_OUTER}" style="background-color:${BG_OUTER} !important;padding:24px 12px;">
     <tr>
-      <td align="center">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:${BRAND_BG};border-radius:12px;border:1px solid ${BRAND_BORDER};overflow:hidden;">
+      <td align="center" style="padding:0;">
+        <table role="presentation" class="arc-card" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${BG}" style="max-width:560px;background-color:${BG} !important;border-radius:12px;border:1px solid ${BORDER};overflow:hidden;">
           <tr>
-            <td style="padding:28px 32px 20px;border-bottom:1px solid ${BRAND_BORDER};">
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+            <td bgcolor="${BG}" style="padding:28px 32px 20px;border-bottom:1px solid ${BORDER};background-color:${BG} !important;">
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                 <tr>
                   <td valign="middle" style="padding-right:12px;">
-                    <img src="${escapeHtml(logoUrl)}" width="140" height="36" alt="Arcos" style="display:block;height:36px;width:auto;max-width:160px;border:0;outline:none;text-decoration:none;" />
+                    <img src="${escapeHtml(logoUrl)}" width="140" height="36" alt="Arcos"
+                      style="display:block;height:36px;width:auto;max-width:160px;border:0;outline:none;text-decoration:none;color:${TEAL};" />
                   </td>
-                  <td valign="middle" align="right" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:${BRAND_MUTED};">
+                  <td valign="middle" align="right" style="${fontInline(500)}font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:${MUTED};">
                     Supervision industrielle
                   </td>
                 </tr>
@@ -54,14 +157,14 @@ function emailShell(opts: {
             </td>
           </tr>
           <tr>
-            <td style="padding:28px 32px 32px;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;color:${BRAND_TEXT};">
+            <td class="arc-wrap" bgcolor="${BG}" style="padding:28px 32px 32px;background-color:${BG} !important;color:${TEXT} !important;${fontInline(500)}font-size:16px;line-height:1.55;">
               ${opts.innerHtml}
             </td>
           </tr>
           <tr>
-            <td style="padding:20px 32px 24px;border-top:1px solid ${BRAND_BORDER};font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:${BRAND_MUTED};">
-              FAWD · <a href="${escapeHtml(opts.siteUrl)}" style="color:${BRAND_ACCENT};text-decoration:none;">${escapeHtml(opts.siteUrl.replace(/^https?:\/\//, ""))}</a>
-              <br /><span style="color:${BRAND_LOGO_BLUE};">—</span> Cet e-mail concerne la plateforme <strong style="color:${BRAND_HEAD};font-weight:600;">Arcos</strong>.
+            <td bgcolor="${BG}" style="padding:20px 32px 24px;border-top:1px solid ${BORDER};background-color:${BG} !important;${fontInline(500)}font-size:12px;line-height:1.5;color:${MUTED};">
+              FAWD · <a href="${escapeHtml(opts.siteUrl)}" style="color:${TEAL};text-decoration:none;">${escapeHtml(opts.siteUrl.replace(/^https?:\/\//, ""))}</a>
+              <br /><span style="color:${NAVY};">—</span> Plateforme <strong style="color:${WHITE};font-weight:500;">Arcos</strong>.
             </td>
           </tr>
         </table>
@@ -72,31 +175,41 @@ function emailShell(opts: {
 </html>`;
 }
 
+function fieldTableRow(label: string, valueHtml: string, withTopBorder: boolean): string {
+  const top = withTopBorder ? `border-top:1px solid ${BORDER};` : "";
+  return `<tr>
+    <td bgcolor="${PANEL}" style="padding:12px 16px;${top}background-color:${PANEL} !important;${fontInline(500)}font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:${MUTED};width:118px;vertical-align:top;">${escapeHtml(label)}</td>
+    <td bgcolor="${BG}" style="padding:12px 16px;${top}background-color:${BG} !important;${fontInline(500)}font-size:16px;color:${TEXT};vertical-align:top;">${valueHtml}</td>
+  </tr>`;
+}
+
 export function teamNotificationHtml(
   p: ContactPayload,
   siteUrl: string,
   submittedAtIso: string
 ): string {
   const inner = `
-    <p style="margin:0 0 16px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:${BRAND_ACCENT};">
-      Nouvelle demande · vitrine web
-    </p>
-    <h1 style="margin:0 0 20px;font-size:20px;font-weight:600;color:${BRAND_HEAD};letter-spacing:-0.02em;">
+    ${labelPill("Nouvelle demande · vitrine web")}
+    <h1 style="margin:0 0 20px;${fontInline(500)}font-size:20px;line-height:1.15;color:${WHITE};letter-spacing:-0.01em;">
       ${escapeHtml(p.name)}
     </h1>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${BRAND_BORDER};border-radius:8px;overflow:hidden;">
-      <tr><td style="padding:12px 16px;background:rgba(255,255,255,0.03);font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND_MUTED};width:120px;">E-mail</td>
-          <td style="padding:12px 16px;font-size:15px;color:${BRAND_HEAD};"><a href="mailto:${escapeHtml(p.email)}" style="color:${BRAND_ACCENT};text-decoration:none;">${escapeHtml(p.email)}</a></td></tr>
-      <tr><td colspan="2" style="height:1px;background:${BRAND_BORDER};font-size:0;line-height:0;">&nbsp;</td></tr>
-      <tr><td style="padding:12px 16px;background:rgba(255,255,255,0.03);font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND_MUTED};">Entreprise</td>
-          <td style="padding:12px 16px;font-size:15px;color:${BRAND_TEXT};">${p.company ? escapeHtml(p.company) : "—"}</td></tr>
-      <tr><td colspan="2" style="height:1px;background:${BRAND_BORDER};font-size:0;line-height:0;">&nbsp;</td></tr>
-      <tr><td colspan="2" style="padding:14px 16px;background:rgba(255,255,255,0.03);font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND_MUTED};">Message</td></tr>
-      <tr><td colspan="2" style="padding:0 16px 18px;font-size:15px;color:${BRAND_TEXT};white-space:pre-wrap;">${escapeHtml(p.message)}</td></tr>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ${BORDER};border-radius:8px;overflow:hidden;">
+      ${fieldTableRow("E-mail", `<a href="mailto:${escapeHtml(p.email)}" style="color:${TEAL};text-decoration:none;">${escapeHtml(p.email)}</a>`, false)}
+      ${fieldTableRow("Entreprise", p.company ? escapeHtml(p.company) : `<span style="color:${MUTED};">—</span>`, true)}
+      <tr>
+        <td colspan="2" bgcolor="${PANEL}" style="padding:12px 16px;border-top:1px solid ${BORDER};background-color:${PANEL} !important;${fontInline(500)}font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:${MUTED};">Message</td>
+      </tr>
+      <tr>
+        <td colspan="2" bgcolor="${BG}" style="padding:0 16px 18px;background-color:${BG} !important;${fontInline(500)}font-size:16px;color:${TEXT};white-space:pre-wrap;">${escapeHtml(p.message)}</td>
+      </tr>
     </table>
-    <p style="margin:20px 0 0;font-size:12px;color:${BRAND_MUTED};">
-      Reçu le ${escapeHtml(submittedAtIso)} · répondre directement à cet e-mail pour joindre ${escapeHtml(p.name)}.
+    <p style="margin:22px 0 0;${fontInline(500)}font-size:12px;color:${MUTED};line-height:1.5;">
+      Reçu le ${escapeHtml(submittedAtIso)} · répondre à cet e-mail pour joindre ${escapeHtml(p.name)}.
+    </p>
+    <p style="margin:18px 0 0;">
+      ${btnHgPrimary("Ouvrir la vitrine", base(siteUrl) + "/")}
     </p>`;
+
   return emailShell({
     title: "Arcos — nouvelle demande",
     preheader: `Message de ${p.name} (${p.email})`,
@@ -106,26 +219,38 @@ export function teamNotificationHtml(
 }
 
 export function userConfirmationHtml(p: ContactPayload, siteUrl: string): string {
+  const origin = base(siteUrl);
+  const first = escapeHtml(p.name.split(/\s+/)[0] || p.name);
   const inner = `
-    <p style="margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:${BRAND_ACCENT};">
-      Merci pour votre message
-    </p>
-    <h1 style="margin:0 0 16px;font-size:20px;font-weight:600;color:${BRAND_HEAD};letter-spacing:-0.02em;">
+    ${labelPill("Merci pour votre message")}
+    <h1 style="margin:0 0 16px;${fontInline(500)}font-size:20px;line-height:1.15;color:${WHITE};letter-spacing:-0.01em;">
       Nous revenons vers vous sous 24h ouvrées
     </h1>
-    <p style="margin:0 0 20px;">
-      Bonjour ${escapeHtml(p.name.split(/\s+/)[0] || p.name)},
+    <p style="margin:0 0 18px;color:${TEXT};">
+      Bonjour ${first},
     </p>
-    <p style="margin:0 0 16px;">
-      Votre demande concernant <strong style="color:${BRAND_HEAD};font-weight:600;">Arcos</strong> a bien été transmise à l&apos;équipe produit. Nous vous contacterons à l&apos;adresse <a href="mailto:${escapeHtml(p.email)}" style="color:${BRAND_ACCENT};text-decoration:none;">${escapeHtml(p.email)}</a>.
+    <p style="margin:0 0 16px;color:${TEXT};">
+      Votre demande concernant <strong style="color:${WHITE};font-weight:500;">Arcos</strong> a bien été transmise à l&apos;équipe produit. Nous vous contacterons à l&apos;adresse
+      <a href="mailto:${escapeHtml(p.email)}" style="color:${TEAL};text-decoration:none;">${escapeHtml(p.email)}</a>.
     </p>
-    <p style="margin:0 0 20px;color:${BRAND_MUTED};font-size:14px;">
-      En attendant, vous pouvez préciser votre contexte (nombre de sites, types de machines, délais) en répondant simplement à cet e-mail.
+    <p style="margin:0 0 20px;color:${MUTED};font-size:15px;line-height:1.55;">
+      Vous pouvez préciser votre contexte (sites, machines, délais) en répondant à cet e-mail.
     </p>
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:8px;border:1px solid ${BRAND_BORDER};border-radius:8px;background:rgba(255,255,255,0.02);">
-      <tr><td style="padding:14px 18px;font-size:13px;color:${BRAND_MUTED};">Récapitulatif de votre message</td></tr>
-      <tr><td style="padding:0 18px 16px;font-size:14px;color:${BRAND_TEXT};white-space:pre-wrap;">${escapeHtml(p.message)}</td></tr>
-    </table>`;
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ${BORDER};border-radius:8px;background-color:${PANEL} !important;" bgcolor="${PANEL}">
+      <tr>
+        <td style="padding:14px 18px;${fontInline(500)}font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:${MUTED};">Récapitulatif</td>
+      </tr>
+      <tr>
+        <td style="padding:0 18px 18px;${fontInline(500)}font-size:15px;color:${TEXT};white-space:pre-wrap;background-color:${BG} !important;" bgcolor="${BG}">${escapeHtml(p.message)}</td>
+      </tr>
+    </table>
+    <p style="margin:24px 0 0;">
+      ${btnHgPrimary("Visiter le site", origin + "/")}
+    </p>
+    <p style="margin:0;">
+      ${btnHgGhost("Section contact", origin + "/#contact")}
+    </p>`;
+
   return emailShell({
     title: "Arcos — accusé de réception",
     preheader: "Votre message a bien été reçu par l'équipe Arcos.",
