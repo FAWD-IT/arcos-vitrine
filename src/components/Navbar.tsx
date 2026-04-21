@@ -1,127 +1,159 @@
 "use client";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
-
-const links = [
-  { label: "Fonctionnalités", href: "#features" },
-  { label: "Intégrations",    href: "#integrations" },
-  { label: "Tarifs",          href: "#pricing" },
+const NAV_LINKS = [
+  { href: "#features",     label: "Fonctionnalités" },
+  { href: "#integrations", label: "Connectivité" },
+  { href: "#for-who",      label: "Pour qui" },
+  { href: "#pricing",      label: "Tarifs" },
 ];
 
-export default function Navbar() {
+export function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handler, { passive: true });
+    handler();
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50"
-      style={{ background: "var(--black)", borderBottom: "1px solid var(--border-dark)" }}
+      style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        background: scrolled ? "rgba(10,10,10,0.88)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
+        transition: "background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease",
+      }}
     >
-      <div className="c flex h-[60px] items-center justify-between">
+      <div className="c" style={{ display: "flex", alignItems: "center", height: 64, gap: 40 }}>
 
         {/* Logo */}
-        <a href="#" className="flex items-center shrink-0">
-          <img
+        <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          <Image
             src="/logo-arcos.svg"
             alt="Arcos"
-            className="h-7 w-auto max-w-[130px] object-contain brightness-0 invert"
+            width={96}
+            height={28}
+            priority
+            style={{ filter: "brightness(0) invert(1)", objectFit: "contain" }}
           />
-        </a>
+        </Link>
 
-        {/* Links — desktop */}
-        <div className="hidden items-center gap-0 md:flex">
-          {links.map((l) => (
+        {/* Nav links */}
+        <div
+          className="nav-links-desktop"
+          style={{ display: "flex", alignItems: "center", gap: 32, flex: 1 }}
+        >
+          {NAV_LINKS.map(({ href, label }) => (
             <a
-              key={l.label}
-              href={l.href}
-              className="px-4 py-2 text-[13px] transition-colors duration-150"
-              style={{ color: "var(--text-muted-light)" }}
+              key={href}
+              href={href}
+              style={{
+                fontSize: 13, color: "rgba(255,255,255,0.6)",
+                textDecoration: "none", fontWeight: 400,
+                transition: "color 0.2s",
+                display: "flex", alignItems: "center", gap: 4,
+              }}
               onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted-light)")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
             >
-              {l.label}
+              <span style={{ opacity: 0.35, fontSize: 9 }}>✦</span>
+              {label}
             </a>
           ))}
         </div>
 
-        {/* Right — desktop */}
-        <div className="hidden items-center gap-3 md:flex">
-          {/* Pill teal — disponibilité */}
-          <span className="pill pill--teal">
+        {/* Right */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginLeft: "auto" }}>
+          <span className="pill pill--teal" style={{ display: "flex" }}>
             <span className="pill__dot" />
             Disponible
           </span>
-          {/* CTA */}
-          <a
-            href="#demo"
-            className="inline-flex items-center gap-0 text-[13px] font-medium cursor-pointer"
-          >
-            <span
-              className="px-4 py-2 transition-colors duration-150"
-              style={{
-                border: "1px solid rgba(255,255,255,0.18)",
-                borderRight: "none",
-                borderRadius: "var(--r-md) 0 0 var(--r-md)",
-                color: "#fff",
-              }}
-            >
-              Parler à l&apos;équipe
-            </span>
-            <span
-              className="flex items-center justify-center px-3 py-2"
-              style={{
-                background: "var(--teal)",
-                borderRadius: "0 var(--r-md) var(--r-md) 0",
-                color: "#fff",
-              }}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
+
+          {/* CTA split button */}
+          <a href="#demo" className="btn-a" style={{ textDecoration: "none" }}>
+            <span className="btn-a__t">Parler à l&apos;équipe</span>
+            <span className="btn-a__i">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </span>
           </a>
-        </div>
 
-        {/* Burger — mobile */}
-        <button
-          className="cursor-pointer p-1 transition-colors md:hidden"
-          style={{ color: "var(--text-muted-light)" }}
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          {/* Mobile burger */}
+          <button
+            className="mobile-burger"
+            onClick={() => setOpen(o => !o)}
+            style={{
+              display: "none", background: "none", border: "none",
+              cursor: "pointer", padding: 4, color: "#fff",
+            }}
+            aria-label="Menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              {open ? (
+                <path d="M4 4l14 14M18 4L4 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              ) : (
+                <>
+                  <line x1="3" y1="7" x2="19" y2="7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                  <line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                  <line x1="3" y1="15" x2="19" y2="15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Menu mobile */}
+      {/* Mobile menu */}
       {open && (
         <div
-          className="border-t px-5 pb-6 pt-4 md:hidden"
-          style={{ background: "var(--black)", borderColor: "var(--border-dark)" }}
+          style={{
+            background: "rgba(10,10,10,0.97)", borderTop: "1px solid rgba(255,255,255,0.07)",
+            padding: "1rem 20px 1.5rem",
+          }}
         >
-          <div className="flex flex-col gap-1 mb-4">
-            {links.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 text-[15px] transition-colors"
-                style={{ color: "var(--text-muted-light)" }}
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-          <a href="#demo" className="btn-arrow w-full justify-center">
-            <span className="btn-arrow__text flex-1 text-center">Parler à l&apos;équipe</span>
-            <span className="btn-arrow__icon">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </span>
+          {NAV_LINKS.map(({ href, label }) => (
+            <a
+              key={href} href={href}
+              onClick={() => setOpen(false)}
+              style={{
+                display: "block", padding: "10px 0",
+                fontSize: 15, color: "rgba(255,255,255,0.8)",
+                textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.05)",
+              }}
+            >
+              {label}
+            </a>
+          ))}
+          <a
+            href="#demo"
+            onClick={() => setOpen(false)}
+            style={{
+              display: "inline-block", marginTop: 16,
+              padding: "9px 20px", background: "var(--accent)",
+              color: "#fff", borderRadius: "var(--r)",
+              fontSize: 13, fontWeight: 500, textDecoration: "none",
+            }}
+          >
+            Parler à l&apos;équipe →
           </a>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .nav-links-desktop { display: none !important; }
+          .mobile-burger { display: flex !important; }
+        }
+      `}</style>
     </nav>
   );
 }

@@ -1,122 +1,117 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
-/* Logos clients / intégrateurs — style Grafit ticker */
 const LOGOS = [
-  { name: "Ewon / Talk2M" },
-  { name: "Siemens S7"    },
-  { name: "Schneider"     },
-  { name: "Modbus TCP"    },
-  { name: "OPC-UA"        },
-  { name: "Wago"          },
+  { name: "Siemens",    abbr: "SIE" },
+  { name: "Schneider",  abbr: "SE"  },
+  { name: "Rockwell",   abbr: "ROK" },
+  { name: "Bosch",      abbr: "BSH" },
+  { name: "ABB",        abbr: "ABB" },
+  { name: "Mitsubishi", abbr: "MEL" },
+  { name: "Fanuc",      abbr: "FAN" },
 ];
 
 const PROBLEMS = [
   {
-    kicker: "01",
-    title: "Données manuelles",
-    body: "Vos opérateurs notent sur papier ou dans Excel. Aucune centralisation, aucune traçabilité automatique.",
+    num: "01",
+    title: "Données dispersées",
+    desc: "Chaque machine parle son propre protocole. Il faut 3 outils différents pour avoir une vue globale — et encore, elle est déjà obsolète.",
   },
   {
-    kicker: "02",
-    title: "Aveugle en temps réel",
-    body: "Sans flux continu, vous découvrez les anomalies après coup — en analysant des logs de la veille.",
+    num: "02",
+    title: "Alertes ignorées",
+    desc: "Les dépassements de seuil restent dans les logs. Sans système centralisé, une alerte critique se perd entre deux équipes.",
   },
   {
-    kicker: "03",
-    title: "Alertes trop tard",
-    body: "Quand le technicien reçoit le SMS, la machine est souvent déjà arrêtée depuis plusieurs minutes.",
+    num: "03",
+    title: "Historique inaccessible",
+    desc: "L'analyse post-incident prend des jours. Les données sont là, mais personne ne sait où les trouver ni comment les lire.",
   },
   {
-    kicker: "04",
-    title: "Silos de données",
-    body: "Chaque machine parle son protocole. L'intégration est un projet IT qui mobilise des équipes pendant des mois.",
+    num: "04",
+    title: "Maintenance réactive",
+    desc: "On répare quand ça casse. Sans visibilité temps réel ni tendances, la maintenance préventive reste un vœu pieux.",
   },
 ];
 
-export default function Problem() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 });
-
+export function Problem() {
   return (
     <>
-      {/* Bande logos — style Grafit "trusted by" */}
-      <div style={{ background: "var(--black-2)", borderTop: "1px solid var(--border-dark)", borderBottom: "1px solid var(--border-dark)" }}>
-        <div className="c py-5">
-          <div className="flex items-center justify-between gap-6 overflow-hidden">
-            <span className="text-[11px] font-medium shrink-0" style={{ color: "var(--text-muted-light)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+      {/* Logo band */}
+      <section style={{ background: "var(--black-1)", borderTop: "1px solid var(--bd-dark)" }}>
+        <div className="c" style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 0, overflowX: "auto" }}>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.09em", textTransform: "uppercase", whiteSpace: "nowrap", marginRight: 32, flexShrink: 0 }}>
               Compatible avec
-            </span>
-            <div className="flex items-center gap-0 flex-1 overflow-hidden">
-              {LOGOS.map((l, i) => (
-                <div
-                  key={l.name}
-                  className="flex items-center justify-center flex-1 px-4 py-2 text-[13px] font-medium"
+            </p>
+            {LOGOS.map((l, i) => (
+              <div key={l.name} style={{ display: "flex", alignItems: "center" }}>
+                {i > 0 && <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.08)", marginInline: 20 }} />}
+                <span
                   style={{
-                    color: "rgba(255,255,255,0.38)",
-                    borderLeft: i > 0 ? "1px solid var(--border-dark)" : "1px solid var(--border-dark)",
-                    transition: "color 180ms",
+                    fontSize: 12, fontWeight: 600, letterSpacing: "0.08em",
+                    color: "rgba(255,255,255,0.45)", textTransform: "uppercase",
+                    whiteSpace: "nowrap", flexShrink: 0,
                   }}
                 >
                   {l.name}
-                </div>
-              ))}
-            </div>
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Section problème */}
-      <section style={{ background: "var(--grey-1)" }}>
-        <div className="c sp" ref={ref}>
+      {/* Problem section */}
+      <section style={{ background: "var(--light-bg)", borderTop: "1px solid var(--bd-light)" }}>
+        <div className="c sp">
+          <p className="kicker kicker--dark"><span className="kicker__sym">✦</span> Le problème</p>
+          <h2 className="title-d" style={{ maxWidth: 560, marginBottom: "3.5rem" }}>
+            Ce que l&apos;industrie vit<br />sans couche temps réel.
+          </h2>
 
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-16 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 16,
+            }}
           >
-            <div>
-              <span className="section-kicker">Le problème</span>
-              <h2 className="h2-dark max-w-[500px]">
-                Ce que l&apos;industrie vit
-                <br />
-                sans couche temps réel.
-              </h2>
-            </div>
-            <p className="max-w-[340px] text-[15px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>
-              La plupart des sites industriels fonctionnent encore sans visibilité opérationnelle en temps réel. Arcos est construit pour changer ça.
-            </p>
-          </motion.div>
-
-          {/* Grille 2×2 */}
-          <div className="grid gap-px lg:grid-cols-2" style={{ border: "1px solid var(--border-light)", borderRadius: 14, overflow: "hidden" }}>
-            {PROBLEMS.map((p, i) => (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
-                className="p-8 lg:p-10"
+            {PROBLEMS.map(p => (
+              <div
+                key={p.num}
                 style={{
-                  background: "#fff",
-                  borderRight: i % 2 === 0 ? "1px solid var(--border-light)" : "none",
-                  borderBottom: i < 2 ? "1px solid var(--border-light)" : "none",
+                  background: "var(--white)",
+                  border: "1px solid var(--bd-light)",
+                  borderRadius: 16,
+                  padding: "2.5rem",
+                  transition: "all 0.3s ease",
                 }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}
               >
                 <p
-                  className="text-[11px] font-medium mb-5 font-mono"
-                  style={{ color: "var(--teal)", letterSpacing: "0.1em" }}
+                  style={{
+                    fontSize: 11, fontWeight: 600,
+                    color: "var(--accent)", letterSpacing: "0.1em",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    margin: "0 0 1rem",
+                  }}
                 >
-                  {p.kicker}
+                  {p.num}
                 </p>
-                <h3 className="h3 mb-3">{p.title}</h3>
-                <p className="text-[15px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>
-                  {p.body}
+                <h3
+                  style={{
+                    fontSize: 20, fontWeight: 600,
+                    color: "var(--text-dark)", lineHeight: 1.3,
+                    margin: "0 0 0.75rem",
+                  }}
+                >
+                  {p.title}
+                </h3>
+                <p style={{ fontSize: 14, color: "var(--text-muted-d)", lineHeight: 1.7, margin: 0 }}>
+                  {p.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

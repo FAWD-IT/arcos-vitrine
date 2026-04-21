@@ -1,82 +1,90 @@
 "use client";
-
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
-export default function CTA() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-
+export function CTA() {
   return (
     <section
       id="demo"
-      style={{ background: "var(--black)", borderTop: "1px solid var(--border-dark)" }}
+      style={{ background: "var(--black)", borderTop: "1px solid var(--bd-dark)" }}
     >
-      <div className="c sp" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
-          className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"
+      <div className="c sp">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "5rem",
+            alignItems: "flex-start",
+          }}
+          className="cta-grid"
         >
-          {/* Gauche */}
-          <div className="max-w-[540px]">
-            <span className="section-kicker section-kicker--light">Contact</span>
-            <h2 className="h2-light">
-              Parler à l&apos;équipe
-              <br />
-              <span style={{ color: "var(--teal)" }}>produit.</span>
+          {/* Left */}
+          <div>
+            <p className="kicker kicker--light"><span className="kicker__sym">✦</span> Contact</p>
+            <h2
+              className="title-l"
+              style={{ marginBottom: "2rem" }}
+            >
+              Parler à l&apos;équipe<br />produit.
             </h2>
-            <p className="mt-5 text-[15px] leading-relaxed" style={{ color: "var(--text-muted-light)" }}>
-              Démo technique, atelier MQTT ou simple échange sur votre périmètre —
-              on s&apos;adapte à votre contexte.
+            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, marginBottom: "2.5rem", maxWidth: 380 }}>
+              Montrez-nous votre infrastructure, on vous montre Arcos en live — en moins de 30 minutes.
             </p>
-          </div>
-
-          {/* Droite — actions */}
-          <div className="flex flex-col gap-4 lg:items-end">
-            <a href="mailto:contact@fawd.be?subject=Démo Arcos" className="btn-arrow">
-              <span className="btn-arrow__text">Écrire à l&apos;équipe</span>
-              <span className="btn-arrow__icon">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
+            <a href="mailto:contact@fawd.be" className="btn-a" style={{ textDecoration: "none" }}>
+              <span className="btn-a__t">Écrire à l&apos;équipe</span>
+              <span className="btn-a__i">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </span>
             </a>
-            <a
-              href="mailto:contact@fawd.be?subject=Atelier technique Arcos"
-              className="text-[13px] transition-colors"
-              style={{ color: "var(--text-muted-light)" }}
-            >
-              Demander un atelier technique →
-            </a>
-
-            {/* Info */}
-            <div
-              className="mt-4 rounded-xl p-5"
-              style={{ border: "1px solid var(--border-dark)", background: "var(--black-2)" }}
-            >
-              <p className="text-[12px] mb-3" style={{ color: "var(--text-muted-light)" }}>
-                FAWD SRL · Charleroi, Belgique
-              </p>
-              <div className="flex flex-col gap-1.5">
-                {[
-                  "Déploiement en 5 jours",
-                  "Équipe technique dédiée",
-                  "Support réactif",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-[13px]" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    <span
-                      className="h-1.5 w-1.5 rounded-full shrink-0"
-                      style={{ background: "var(--teal)" }}
-                    />
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
-        </motion.div>
+
+          {/* Right: info card */}
+          <div
+            style={{
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid var(--bd-dark)",
+              borderRadius: 16,
+              padding: "2.5rem",
+            }}
+          >
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 1.5rem" }}>
+              FAWD SRL
+            </p>
+            {[
+              ["Siège",    "Bruxelles, Belgique"],
+              ["E-mail",   "contact@fawd.be"],
+              ["Réponse",  "Sous 24h ouvrées"],
+              ["Langues",  "Français · Anglais"],
+            ].map(([k, v]) => (
+              <div
+                key={k}
+                style={{
+                  display: "flex", alignItems: "flex-start", gap: 14,
+                  paddingBlock: "0.85rem",
+                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                }}
+              >
+                <span
+                  style={{
+                    width: 6, height: 6, borderRadius: "50%", marginTop: 6,
+                    background: "var(--accent)", flexShrink: 0,
+                    boxShadow: "0 0 6px var(--accent)",
+                  }}
+                />
+                <div>
+                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: "0 0 2px", letterSpacing: "0.06em", textTransform: "uppercase" }}>{k}</p>
+                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", margin: 0 }}>{v}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .cta-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+        }
+      `}</style>
     </section>
   );
 }

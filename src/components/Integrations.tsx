@@ -1,82 +1,99 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
 const PROTOCOLS = [
-  { name: "MQTT Broker",   desc: "Natif — tous brokers" },
-  { name: "Talk2M / Ewon", desc: "Cloud Ewon" },
-  { name: "Modbus TCP",    desc: "Via gateway" },
-  { name: "OPC-UA",        desc: "Standard ouvert" },
-  { name: "REST API",      desc: "HTTP custom" },
-  { name: "Siemens S7",    desc: "S7-300/400/1200" },
-  { name: "Schneider",     desc: "Modicon, M340" },
-  { name: "Wago / Phoenix", desc: "I/O via gateway" },
+  { name: "MQTT",      desc: "Broker natif, QoS 0/1/2, retain, wildcards" },
+  { name: "Modbus",    desc: "TCP & RTU, registres coils/holding en lecture/écriture" },
+  { name: "OPC-UA",    desc: "Serveur/client, sécurité certificats, namespace discovery" },
+  { name: "HTTP/REST", desc: "Webhooks entrants/sortants, auth Bearer ou API key" },
+  { name: "Sparkplug", desc: "Compatible Sparkplug B, EoN & Device payloads" },
+  { name: "BACnet",    desc: "IP & MSTP — bâtiments intelligents et HVAC" },
+  { name: "SQL",       desc: "Connexion PostgreSQL / MySQL pour historique externe" },
+  { name: "CSV",       desc: "Import/export massif via fichier ou S3 bucket" },
 ];
 
-export default function Integrations() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 });
-
+export function Integrations() {
   return (
-    <section id="integrations" style={{ background: "#fff", borderTop: "1px solid var(--border-light)" }}>
-      <div className="c sp" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-14 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
-        >
-          <div>
-            <span className="section-kicker">Connectivité</span>
-            <h2 className="h2-dark max-w-[460px]">
-              Un hub qui parle
-              <br />
-              tous vos protocoles.
-            </h2>
-          </div>
-          <p className="max-w-[320px] text-[15px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>
-            Arcos normalise vos sources hétérogènes en un seul flux MQTT. Un protocole manquant ? On s'adapte.
-          </p>
-        </motion.div>
-
+    <section
+      id="integrations"
+      style={{ background: "var(--white)", borderTop: "1px solid var(--bd-light)" }}
+    >
+      <div className="c sp">
         <div
-          className="grid gap-px"
           style={{
-            border: "1px solid var(--border-light)",
-            borderRadius: 14,
-            overflow: "hidden",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "5rem",
+            alignItems: "flex-start",
           }}
+          className="integ-grid"
         >
-          {PROTOCOLS.map((p, i) => (
-            <motion.div
-              key={p.name}
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.35, delay: i * 0.05 }}
-              className="p-6 flex flex-col gap-2"
-              style={{
-                background: "#fff",
-                borderRight: (i + 1) % 4 !== 0 ? "1px solid var(--border-light)" : "none",
-                borderBottom: i < 4 ? "1px solid var(--border-light)" : "none",
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <span
-                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
-                  style={{ background: "var(--teal-dim)" }}
-                >
-                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ color: "var(--teal)" }}>
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-                <p className="text-[14px] font-semibold" style={{ color: "var(--text-dark)" }}>{p.name}</p>
+          {/* Left: text */}
+          <div style={{ position: "sticky", top: 100 }}>
+            <p className="kicker kicker--dark"><span className="kicker__sym">✦</span> Connectivité</p>
+            <h2 className="title-d" style={{ marginBottom: "1.5rem" }}>
+              Un hub qui parle<br />tous vos protocoles.
+            </h2>
+            <p style={{ fontSize: 16, color: "var(--text-muted-d)", lineHeight: 1.7, marginBottom: "2.5rem" }}>
+              Arcos s&apos;intègre à votre infrastructure existante sans aucune réécriture. Branchez, configurez en quelques clics, et les données arrivent.
+            </p>
+            <a href="#demo" className="btn-ad" style={{ textDecoration: "none" }}>
+              <span className="btn-ad__t">Voir toutes les intégrations</span>
+              <span className="btn-ad__i">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          {/* Right: protocol grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 12,
+            }}
+          >
+            {PROTOCOLS.map(p => (
+              <div
+                key={p.name}
+                style={{
+                  background: "var(--white)",
+                  border: "1px solid var(--bd-light)",
+                  borderRadius: 12,
+                  padding: "1.25rem 1.5rem",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 0 1px rgba(20,169,207,0.12)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--bd-light)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                  <span
+                    style={{
+                      width: 18, height: 18, borderRadius: "50%",
+                      background: "rgba(20,169,207,0.1)", flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }}
+                  >
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                      <path d="M1.5 4.5l2 2 4-4" stroke="var(--accent)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-dark)" }}>{p.name}</span>
+                </div>
+                <p style={{ fontSize: 12, color: "var(--text-muted-d)", lineHeight: 1.5, margin: 0 }}>{p.desc}</p>
               </div>
-              <p className="text-[12px]" style={{ color: "var(--text-muted-dark)" }}>{p.desc}</p>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .integ-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .integ-grid > *:first-child { position: static !important; }
+        }
+      `}</style>
     </section>
   );
 }

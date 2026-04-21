@@ -1,159 +1,110 @@
 "use client";
-
-import { motion } from "framer-motion";
-import { HeroDashboardMockup } from "./DashboardMockups";
-
-const STATS = [
-  { num: "99.7%", label: "Uptime" },
-  { num: "5j",    label: "Déploiement" },
-  { num: "48+",   label: "Sites live" },
-  { num: "< 1s",  label: "Latence" },
-];
-
-export default function Hero() {
+export function Hero() {
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ background: "var(--black)", minHeight: "100vh" }}
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        background: "var(--black)",
+        overflow: "hidden",
+      }}
     >
-      {/* Ambient glow teal top-right */}
+      {/* Subtle depth gradient */}
       <div
-        className="pointer-events-none absolute"
         style={{
-          top: -200,
-          right: -100,
-          width: 700,
-          height: 700,
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(20,169,207,0.08) 0%, transparent 70%)",
+          position: "absolute", inset: 0, pointerEvents: "none",
+          background:
+            "radial-gradient(ellipse 80% 60% at 70% 30%, #1a1a1a 0%, transparent 60%)," +
+            "radial-gradient(ellipse 50% 40% at 20% 80%, rgba(20,169,207,0.03) 0%, transparent 60%)",
         }}
       />
 
-      {/* Layout : texte bas-gauche + dashboard droite */}
-      <div className="c flex h-screen min-h-[600px] flex-col">
+      {/* Grain texture overlay */}
+      <div
+        style={{
+          position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.025,
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundRepeat: "repeat",
+          backgroundSize: "200px",
+        }}
+      />
 
-        {/* Mockup dashboard — flottant en haut à droite */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="absolute right-0 top-[60px] hidden lg:block"
-          style={{ width: "56%", paddingRight: 0 }}
+      {/* Content: positionné en bas-gauche */}
+      <div className="c" style={{ paddingBottom: "5rem", position: "relative", zIndex: 2 }}>
+
+        {/* Kicker */}
+        <p className="kicker kicker--light" style={{ marginBottom: "1.5rem" }}>
+          <span className="kicker__sym">✦</span>
+          Supervision industrielle MQTT
+        </p>
+
+        {/* H1 — pleine largeur, blanc */}
+        <h1
+          style={{
+            fontFamily: "Inter, system-ui, sans-serif",
+            fontSize: "clamp(3rem, 7vw, 6rem)",
+            fontWeight: 700,
+            lineHeight: 1.04,
+            letterSpacing: "-0.04em",
+            color: "#ffffff",
+            margin: 0,
+            maxWidth: "820px",
+          }}
         >
-          <div className="device-frame" style={{ margin: "40px 0 0 0", borderRadius: "14px 0 0 14px" }}>
-            <div className="device-frame-bar">
-              <span className="device-frame-dot" />
-              <span className="device-frame-dot" />
-              <span className="device-frame-dot" />
-              <div
-                className="ml-3 flex h-5 flex-1 max-w-[220px] items-center rounded-sm px-2"
-                style={{ background: "rgba(255,255,255,0.06)" }}
-              >
-                <span className="text-[10px]" style={{ color: "var(--text-muted-light)" }}>
-                  app.arcos.io/dashboard
-                </span>
-              </div>
-            </div>
-            <HeroDashboardMockup />
-          </div>
-        </motion.div>
+          Vos machines parlent.<br />Vous écoutez.
+        </h1>
 
-        {/* Texte — bottom-left comme Grafit */}
-        <div className="mt-auto pb-20 lg:max-w-[46%]">
-          {/* Kicker */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="section-kicker section-kicker--light mb-6"
+        {/* Sous-titre + CTA */}
+        <div
+          style={{
+            marginTop: "2.5rem",
+            display: "flex",
+            alignItems: "flex-end",
+            gap: "3rem",
+            flexWrap: "wrap",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)",
+              color: "rgba(255,255,255,0.50)",
+              lineHeight: 1.6,
+              maxWidth: 420,
+              margin: 0,
+            }}
           >
-            Supervision industrielle MQTT
-          </motion.p>
+            Arcos centralise vos données MQTT en temps réel — alertes,
+            historique et IA — dans une interface pensée pour l&apos;atelier.
+          </p>
 
-          {/* H1 */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="h1"
-          >
-            Vos machines
-            <br />
-            parlent.{" "}
-            <span style={{ color: "var(--teal)" }}>Vous</span>
-            <br />
-            <span style={{ color: "var(--teal)" }}>écoutez.</span>
-          </motion.h1>
-
-          {/* Sous-titre */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.22 }}
-            className="mt-6 max-w-[460px] text-[16px] leading-relaxed"
-            style={{ color: "var(--text-muted-light)" }}
-          >
-            Arcos agrège vos topics MQTT, construit des vues opérationnelles
-            et expose un agent IA qui raisonne sur vos données terrain.
-          </motion.p>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.30 }}
-            className="mt-10 flex flex-wrap items-center gap-3"
-          >
-            <a href="#demo" className="btn-arrow">
-              <span className="btn-arrow__text">Parler à l&apos;équipe</span>
-              <span className="btn-arrow__icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </span>
-            </a>
-            <a
-              href="#features"
-              className="text-[13px] transition-colors duration-150"
-              style={{ color: "var(--text-muted-light)" }}
-            >
-              Voir la plateforme →
-            </a>
-          </motion.div>
-
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="mt-12 flex flex-wrap gap-8"
-            style={{ borderTop: "1px solid var(--border-dark)", paddingTop: 28 }}
-          >
-            {STATS.map((s) => (
-              <div key={s.num}>
-                <p
-                  className="text-[28px] font-bold leading-none"
-                  style={{ letterSpacing: "-0.03em", color: "#fff" }}
-                >
-                  {s.num}
-                </p>
-                <p className="mt-1.5 text-[12px]" style={{ color: "var(--text-muted-light)" }}>
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </motion.div>
+          <a href="#demo" className="btn-a" style={{ textDecoration: "none", flexShrink: 0 }}>
+            <span className="btn-a__t">Obtenir une démo</span>
+            <span className="btn-a__i">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </a>
         </div>
       </div>
 
-      {/* Mockup mobile */}
-      <div className="c pb-12 lg:hidden">
-        <div className="device-frame">
-          <div className="device-frame-bar">
-            <span className="device-frame-dot" /><span className="device-frame-dot" /><span className="device-frame-dot" />
-          </div>
-          <HeroDashboardMockup />
-        </div>
+      {/* Scroll hint */}
+      <div
+        style={{
+          position: "absolute", bottom: "2rem", right: "2.5rem",
+          color: "rgba(255,255,255,0.2)", fontSize: 11,
+          letterSpacing: "0.15em", textTransform: "uppercase",
+          display: "flex", alignItems: "center", gap: 8, zIndex: 2,
+        }}
+      >
+        Défiler
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 2v10M3 9l4 4 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </div>
     </section>
   );

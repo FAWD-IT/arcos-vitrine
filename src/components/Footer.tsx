@@ -1,80 +1,95 @@
-import { ExternalLink } from "lucide-react";
+"use client";
+import Image from "next/image";
 
-const COL = {
-  Produit: [
-    { label: "Dashboard",        href: "#features"      },
-    { label: "Agent IA",         href: "#features"      },
-    { label: "Alertes",          href: "#features"      },
-    { label: "Multi-sites",      href: "#features"      },
-    { label: "Intégrations MQTT", href: "#integrations" },
+const LINKS = {
+  "Produit":  [
+    { href: "#features",     label: "Fonctionnalités" },
+    { href: "#integrations", label: "Connectivité"    },
+    { href: "#pricing",      label: "Tarifs"          },
   ],
-  Entreprise: [
-    { label: "À propos",  href: "#"                    },
-    { label: "Contact",   href: "mailto:contact@fawd.be" },
-    { label: "FAWD SRL",  href: "https://fawd.be", external: true },
+  "Équipe":  [
+    { href: "https://fawd.be",          label: "FAWD Studio"    },
+    { href: "https://github.com/FAWD-IT", label: "GitHub"       },
+    { href: "#demo",                    label: "Contact"         },
   ],
-  Légal: [
-    { label: "Mentions légales", href: "#" },
-    { label: "Confidentialité",  href: "#" },
-    { label: "CGV",              href: "#" },
+  "Légal":    [
+    { href: "#",  label: "Mentions légales"    },
+    { href: "#",  label: "Confidentialité"     },
+    { href: "#",  label: "CGU"                 },
   ],
 };
 
-export default function Footer() {
+export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer style={{ background: "var(--black)", borderTop: "1px solid var(--border-dark)" }}>
-      <div className="c py-16">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5">
+    <footer style={{ background: "var(--black)", borderTop: "1px solid var(--bd-dark)", position: "relative", overflow: "hidden" }}>
+
+      {/* Giant ARCOS watermark */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: "3rem",
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontSize: "clamp(6rem, 18vw, 14rem)",
+          fontWeight: 800,
+          letterSpacing: "-0.05em",
+          color: "#fff",
+          opacity: 0.04,
+          whiteSpace: "nowrap",
+          userSelect: "none",
+          lineHeight: 1,
+          pointerEvents: "none",
+        }}
+      >
+        ARCOS
+      </div>
+
+      <div className="c" style={{ paddingTop: "5rem", paddingBottom: "3rem", position: "relative", zIndex: 1 }}>
+
+        {/* Top row */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr repeat(3, 1fr)",
+            gap: "3rem",
+            paddingBottom: "3.5rem",
+            borderBottom: "1px solid var(--bd-dark)",
+          }}
+          className="footer-grid"
+        >
           {/* Brand */}
-          <div className="lg:col-span-2">
-            <a href="#" className="inline-flex items-center">
-              <img
-                src="/logo-arcos.svg"
-                alt="Arcos"
-                className="h-7 w-auto max-w-[130px] object-contain brightness-0 invert"
-              />
-            </a>
-            <p className="mt-4 max-w-[280px] text-[14px] leading-relaxed" style={{ color: "var(--text-muted-light)" }}>
-              Supervision industrielle via MQTT. Dashboard, alertes et IA sur vos données terrain.
+          <div>
+            <Image
+              src="/logo-arcos.svg"
+              alt="Arcos"
+              width={88}
+              height={26}
+              style={{ filter: "brightness(0) invert(1)", objectFit: "contain", marginBottom: "1rem", display: "block" }}
+            />
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.7, maxWidth: 240, margin: 0 }}>
+              Supervision industrielle temps réel — MQTT, alertes, historique et IA, en une seule plateforme.
             </p>
-            <div className="mt-6 space-y-1 text-[12px]" style={{ color: "var(--grey-4)" }}>
-              <p>FAWD SRL · Charleroi, Belgique</p>
-              <p>
-                <a
-                  href="https://fawd.be"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors"
-                  style={{ color: "var(--teal)" }}
-                >
-                  fawd.be
-                </a>
-              </p>
-            </div>
           </div>
 
-          {/* Links */}
-          {Object.entries(COL).map(([cat, links]) => (
-            <div key={cat}>
-              <h4
-                className="mb-4 text-[11px] font-semibold uppercase tracking-[0.1em]"
-                style={{ color: "var(--grey-3)" }}
-              >
-                {cat}
+          {/* Link columns */}
+          {Object.entries(LINKS).map(([col, items]) => (
+            <div key={col}>
+              <h4 style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.35)", letterSpacing: "0.10em", textTransform: "uppercase", margin: "0 0 1.25rem" }}>
+                {col}
               </h4>
-              <ul className="space-y-3">
-                {links.map((l) => (
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+                {items.map(l => (
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="flex items-center gap-1.5 text-[13px] cursor-pointer transition-colors"
-                      style={{ color: "var(--text-muted-light)" }}
-                      {...("external" in l && l.external
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
+                      style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.2s" }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
                     >
                       {l.label}
-                      {"external" in l && l.external && <ExternalLink className="h-3 w-3 opacity-40" />}
                     </a>
                   </li>
                 ))}
@@ -83,26 +98,33 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom */}
+        {/* Bottom bar */}
         <div
-          className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row"
-          style={{ borderColor: "var(--border-dark)" }}
+          style={{
+            paddingTop: "2rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}
         >
-          <p className="text-[12px]" style={{ color: "var(--grey-4)" }}>
-            &copy; {new Date().getFullYear()} FAWD SRL. Tous droits réservés.
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", margin: 0 }}>
+            © {year} FAWD SRL — Arcos. Tous droits réservés.
           </p>
-          <div className="flex gap-5">
+          <div style={{ display: "flex", gap: 20 }}>
             {[
-              { label: "LinkedIn", href: "https://linkedin.com" },
-              { label: "GitHub",   href: "https://github.com/FAWD-IT" },
-            ].map((s) => (
+              { href: "https://github.com/FAWD-IT", label: "GitHub" },
+              { href: "https://linkedin.com",       label: "LinkedIn" },
+            ].map(s => (
               <a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] cursor-pointer transition-colors"
-                style={{ color: "var(--grey-4)" }}
+                style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}
               >
                 {s.label}
               </a>
@@ -110,6 +132,13 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; }
+          .footer-grid > *:first-child { grid-column: 1 / -1; }
+        }
+      `}</style>
     </footer>
   );
 }

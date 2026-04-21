@@ -1,122 +1,107 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
 const PROFILES = [
   {
-    code: "Terrain",
-    role: "Technicien / Opérateur",
-    headline: "Tout voir, sans fouiller.",
-    body: "Vue temps réel sur indicateurs, alarmes actives, historique récent — sur téléphone ou écran de supervision.",
-    accent: false,
-  },
-  {
-    code: "Maintenance",
-    role: "Responsable maintenance",
-    headline: "Anticiper, pas subir.",
-    body: "Tendances longue durée, détection de dérive avant la panne, rapports automatiques. La planification change.",
+    role: "Responsable de production",
+    desc: "Vision temps réel de toute la ligne. Suivi des KPIs, alertes critiques, et rapports quotidiens en automatique.",
+    sectors: ["Automobile", "Agroalimentaire", "Énergie"],
     accent: true,
   },
   {
-    code: "Direction",
-    role: "Direction technique",
-    headline: "KPIs consolidés, rien de plus.",
-    body: "OEE, TRS, disponibilité, coût énergétique — sans intervention IT, en temps réel.",
+    role: "Technicien de maintenance",
+    desc: "Historique complet des pannes, tendances machine, et alertes préventives avant que ça casse.",
+    sectors: ["Mécanique", "Électrotechnique"],
+    accent: false,
+  },
+  {
+    role: "Directeur technique",
+    desc: "Tableau de bord exécutif multi-sites, suivi OEE, et export des données pour reporting auprès du comité.",
+    sectors: ["Industrie 4.0", "PME / ETI"],
     accent: false,
   },
 ];
 
-const SECTORS = [
-  "Agroalimentaire", "Eau & traitement", "Énergie",
-  "Pharmacie", "Métallurgie", "Logistique", "Bâtiment industriel",
-];
-
-export default function ForWho() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 });
-
+export function ForWho() {
   return (
-    <section style={{ background: "var(--grey-1)", borderTop: "1px solid var(--border-light)" }}>
-      <div className="c sp" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-14 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
-        >
-          <div>
-            <span className="section-kicker">Pour qui</span>
-            <h2 className="h2-dark max-w-[460px]">
-              Pensé pour ceux
-              <br />
-              qui font tourner l&apos;usine.
-            </h2>
-          </div>
-          <p className="max-w-[320px] text-[15px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>
-            Un même flux MQTT, exposé différemment selon le rôle.
-          </p>
-        </motion.div>
+    <section
+      id="for-who"
+      style={{ background: "var(--light-bg)", borderTop: "1px solid var(--bd-light)" }}
+    >
+      <div className="c sp">
+        <p className="kicker kicker--dark"><span className="kicker__sym">✦</span> Pour qui</p>
+        <h2 className="title-d" style={{ maxWidth: 560, marginBottom: "3.5rem" }}>
+          Pensé pour ceux<br />qui font tourner l&apos;usine.
+        </h2>
 
-        {/* Profils */}
         <div
-          className="grid gap-px"
           style={{
-            border: "1px solid var(--border-light)",
-            borderRadius: 14,
-            overflow: "hidden",
+            display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+            marginBottom: "4rem",
           }}
+          className="forwho-grid"
         >
-          {PROFILES.map((p, i) => (
-            <motion.div
-              key={p.code}
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: i * 0.07 }}
-              className="p-8 flex flex-col gap-4"
+          {PROFILES.map(p => (
+            <div
+              key={p.role}
               style={{
-                background: p.accent ? "#fff" : "#fff",
-                borderRight: i < 2 ? "1px solid var(--border-light)" : "none",
-                borderTop: p.accent ? "3px solid var(--teal)" : "3px solid transparent",
+                background: "var(--white)",
+                border: "1px solid var(--bd-light)",
+                borderTop: p.accent ? `3px solid var(--accent)` : "1px solid var(--bd-light)",
+                borderRadius: 16,
+                padding: "2rem",
+                transition: "all 0.3s ease",
               }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.07)"; }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}
             >
-              <div>
-                <p className="text-[11px] font-medium font-mono" style={{ color: "var(--teal)", letterSpacing: "0.1em" }}>
-                  {p.code}
-                </p>
-                <p className="mt-1 text-[13px]" style={{ color: "var(--text-muted-dark)" }}>{p.role}</p>
+              <h3 style={{ fontSize: 17, fontWeight: 600, color: "var(--text-dark)", lineHeight: 1.3, margin: "0 0 0.75rem" }}>
+                {p.role}
+              </h3>
+              <p style={{ fontSize: 14, color: "var(--text-muted-d)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
+                {p.desc}
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {p.sectors.map(s => (
+                  <span
+                    key={s}
+                    style={{
+                      fontSize: 11, padding: "3px 10px",
+                      borderRadius: 999, background: "var(--white)",
+                      border: "1px solid var(--bd-light)",
+                      color: "var(--text-muted-d)", letterSpacing: "0.04em",
+                    }}
+                  >
+                    {s}
+                  </span>
+                ))}
               </div>
-              <h3 className="h3 text-[20px]">{p.headline}</h3>
-              <p className="text-[14px] leading-relaxed" style={{ color: "var(--text-muted-dark)" }}>{p.body}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Secteurs */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-12"
-        >
-          <p className="section-kicker mb-4">Secteurs d&apos;application</p>
-          <div className="flex flex-wrap gap-2">
-            {SECTORS.map((s) => (
-              <span
-                key={s}
-                className="rounded-full px-4 py-2 text-[13px] transition-colors"
-                style={{
-                  border: "1px solid var(--border-light)",
-                  color: "var(--text-muted-dark)",
-                  background: "#fff",
-                }}
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-        </motion.div>
+        {/* CTA */}
+        <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+          <p style={{ fontSize: 15, color: "var(--text-muted-d)", margin: 0 }}>
+            Votre profil n&apos;est pas dans la liste ?
+          </p>
+          <a href="#demo" className="btn-ad" style={{ textDecoration: "none" }}>
+            <span className="btn-ad__t">Parlons-en</span>
+            <span className="btn-ad__i">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .forwho-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }
