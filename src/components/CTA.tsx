@@ -5,59 +5,58 @@ import { ArrowRight } from "lucide-react";
 
 export default function CTA() {
   return (
-    <section
-      id="demo"
-      className="relative overflow-hidden border-t border-white/[0.06] px-6 py-24 sm:py-32"
-    >
-      <div className="pointer-events-none absolute inset-0 bg-section-lift" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[min(100%,720px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(20,169,207,0.1)_0%,transparent_65%)] blur-[50px]" />
+    <section id="demo" className="relative overflow-hidden border-t border-white/[0.06] px-6 py-24 sm:py-32">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_100%,rgba(8,45,68,0.7)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[min(100%,800px)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse,rgba(20,169,207,0.07)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.2]" />
 
       <motion.div
-        initial={{ opacity: 0, y: 22 }}
+        initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.55 }}
-        className="relative z-10 mx-auto max-w-[720px]"
+        transition={{ duration: 0.6 }}
+        className="relative z-10 mx-auto max-w-[860px]"
       >
-        <div className="overflow-hidden rounded-3xl border border-white/[0.1] bg-[#080808] p-[1px] shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)]">
-          <div className="relative rounded-[calc(1.5rem-1px)] bg-gradient-to-b from-white/[0.04] to-transparent px-8 py-14 sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.15]" />
-            <div className="relative text-center">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-accent/70">
-                Démarrer
-              </p>
-              <h2 className="text-[clamp(1.75rem,3.5vw,2.65rem)] font-bold leading-[1.1] tracking-[-0.03em]">
-                Parler à l&apos;équipe produit
-                <br />
-                <span className="text-white/35">ou tester sur un pilote.</span>
-              </h2>
-              <p className="mx-auto mt-5 max-w-[480px] text-[15px] leading-relaxed text-white/38">
-                Nous détaillons périmètre MQTT, intégrations et mise en service
-                selon votre site — démo ou atelier technique sur demande.
-              </p>
+        {/* Filets déco */}
+        <div className="absolute -left-8 top-0 h-full w-px bg-gradient-to-b from-transparent via-accent/15 to-transparent hidden lg:block" />
+        <div className="absolute -right-8 top-0 h-full w-px bg-gradient-to-b from-transparent via-accent/10 to-transparent hidden lg:block" />
 
-              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-                <a
-                  href="mailto:contact@fawd.be?subject=Démo Arcos"
-                  className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-[13px] font-semibold text-black transition-colors hover:bg-white/90"
-                >
-                  Demander une démo gratuite
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </a>
-                <a
-                  href="mailto:contact@fawd.be?subject=Question Arcos"
-                  className="inline-flex items-center rounded-full border border-white/[0.12] px-8 py-3.5 text-[13px] font-medium text-white/65 transition-colors hover:border-white/22 hover:bg-white/[0.04]"
-                >
-                  Nous contacter
-                </a>
-              </div>
+        <span className="tag-tech mb-8 block w-fit mx-auto">Contact</span>
 
-              <p className="mt-8 text-[12px] text-white/22">
-                Démo gratuite, sans engagement. Réponse sous 24h.
-              </p>
-            </div>
-          </div>
+        <h2 className="text-center text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.93] tracking-[-0.05em] text-white">
+          Parler à
+          <br />
+          <span className="text-accent-light">l&apos;équipe produit.</span>
+        </h2>
+
+        <p className="mx-auto mt-8 max-w-[520px] text-center text-[16px] leading-[1.7] text-white/35">
+          Démo technique, atelier MQTT ou simple échange sur votre périmètre —
+          on s&apos;adapte à votre contexte.
+        </p>
+
+        <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="mailto:contact@fawd.be?subject=Démo Arcos"
+            className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-8 py-4 text-[14px] font-semibold tracking-wide text-white transition-all hover:bg-accent-light hover:shadow-[0_0_40px_rgba(20,169,207,0.4)]"
+          >
+            Écrire à l&apos;équipe
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <a
+            href="mailto:contact@fawd.be?subject=Atelier technique Arcos"
+            className="inline-flex items-center rounded-full border border-white/[0.12] px-8 py-4 text-[14px] text-white/50 transition-all hover:border-white/22 hover:bg-white/[0.04] hover:text-white/80"
+          >
+            Atelier technique
+          </a>
         </div>
+
+        {/* Signature FAWD */}
+        <p className="mt-14 text-center font-mono text-[11px] text-white/18">
+          Développé par FAWD SRL · Charleroi, Belgique ·{" "}
+          <a href="https://fawd.be" target="_blank" rel="noopener noreferrer" className="text-white/28 underline underline-offset-2 transition-colors hover:text-white/45">
+            fawd.be
+          </a>
+        </p>
       </motion.div>
     </section>
   );

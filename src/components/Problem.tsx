@@ -1,145 +1,130 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  FileSpreadsheet,
-  Radar,
-  AlarmClock,
-  TimerOff,
-} from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const problems = [
+const LINES = [
   {
-    icon: FileSpreadsheet,
     n: "01",
-    text: "Les techniciens exportent encore des données à la main",
+    big: "Données",
+    rest: " manuelles.",
+    body: "Les techniciens exportent encore des CSV à la main. La data stagne dans des silos.",
     tag: "Productivité",
   },
   {
-    icon: Radar,
     n: "02",
-    text: "Aucune visibilité temps réel sur l'état des machines",
+    big: "Aveugle",
+    rest: " en temps réel.",
+    body: "Sans supervision live, la panne est découverte après l'arrêt.",
     tag: "Visibilité",
   },
   {
-    icon: AlarmClock,
     n: "03",
-    text: "Les alertes arrivent trop tard — après l'arrêt",
+    big: "Alertes",
+    rest: " trop tard.",
+    body: "Le signal existait. La règle manquait. La ligne s'est arrêtée.",
     tag: "Réactivité",
   },
-  {
-    icon: TimerOff,
-    n: "04",
-    text: "Les déploiements classiques imposent souvent cycles longs et forte dépendance projet",
-    tag: "Déploiement",
-  },
 ];
 
-const stats = [
-  { value: "40+", label: "h / semaine typiques sur des exports manuels" },
-  { value: "MQTT", label: "comme socle de lecture et d’alarmes côté Arcos" },
-  { value: "∞", label: "versions de fichiers hors outil commun" },
-];
+function EditorialLine({ n, big, rest, body, tag, i }: typeof LINES[number] & { i: number }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 border-b border-white/[0.06] py-10 first:pt-0 lg:grid-cols-[56px_1fr_auto] lg:items-end lg:gap-x-10 lg:py-12"
+    >
+      {/* Numéro */}
+      <span className="mt-1 font-mono text-[11px] text-white/18 lg:mt-0 lg:mb-1">{n}</span>
+
+      {/* Texte oversized */}
+      <div className="col-span-1">
+        <p className="text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[0.92] tracking-[-0.045em] text-white">
+          {big}
+          <span className="text-white/25">{rest}</span>
+        </p>
+        <p className="mt-4 max-w-[480px] text-[15px] leading-relaxed text-white/35">{body}</p>
+      </div>
+
+      {/* Tag + ligne déco droite */}
+      <div className="col-span-2 flex items-center gap-4 lg:col-span-1 lg:flex-col lg:items-end lg:gap-3">
+        <span className="tag-tech">{tag}</span>
+        <div className="arcos-line-h h-px w-12 lg:hidden" />
+      </div>
+
+      {/* Ligne accent verticale hover */}
+      <div className="pointer-events-none absolute left-0 top-0 h-0 w-[2px] bg-accent transition-all duration-500 group-hover:h-full" />
+    </motion.div>
+  );
+}
 
 export default function Problem() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
-    <section className="relative overflow-x-hidden border-t border-white/[0.06] px-6 py-24 sm:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.35]" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[min(90%,720px)] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(20,169,207,0.07)_0%,transparent_70%)]" />
+    <section className="relative overflow-x-hidden border-t border-white/[0.06] bg-section-slab px-6 py-20 sm:py-28">
+      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.3]" />
 
       <div className="relative z-10 mx-auto max-w-[1280px]">
-        <div className="overflow-hidden rounded-3xl border border-white/[0.08] bg-[#080808] card-inset">
-          <div className="grid gap-0 lg:grid-cols-12">
-            {/* Col gauche : contexte */}
-            <div className="border-b border-white/[0.06] p-8 sm:p-10 lg:col-span-5 lg:border-b-0 lg:border-r lg:p-12">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5 }}
-              >
-                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-accent/70">
-                  Le terrain
-                </p>
-                <h2 className="text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.03em] text-white">
-                  L&apos;industrie tourne vite.
-                  <br />
-                  <span className="text-white/35">Les outils, pas toujours.</span>
-                </h2>
-                <p className="mt-5 max-w-[400px] text-[15px] leading-relaxed text-white/38">
-                  Sans couche temps réel, les équipes compensent à la main —
-                  et les pannes deviennent des surprises.
-                </p>
-
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {stats.map((s) => (
-                    <div
-                      key={s.label}
-                      className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2.5"
-                    >
-                      <div className="font-mono text-[18px] font-semibold tracking-tight text-white/85">
-                        {s.value}
-                      </div>
-                      <div className="mt-0.5 max-w-[140px] text-[10px] leading-snug text-white/28">
-                        {s.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Ligne décorative */}
-                <div className="mt-10 hidden lg:block">
-                  <svg
-                    width="120"
-                    height="72"
-                    viewBox="0 0 120 72"
-                    className="text-white/[0.12]"
-                  >
-                    <path
-                      d="M4 4 L4 52 L100 52 L100 68"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      strokeDasharray="4 5"
-                    />
-                    <polygon points="96,64 100,72 104,64" fill="currentColor" />
-                  </svg>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Col droite : cartes */}
-            <div className="p-6 sm:p-8 lg:col-span-7 lg:p-10">
-              <div className="grid gap-3 sm:grid-cols-2">
-                {problems.map((p, i) => (
-                  <motion.div
-                    key={p.n}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.45, delay: i * 0.06 }}
-                    className="group relative flex flex-col rounded-2xl border border-white/[0.07] bg-[#0d0d0d] p-5 card-hover"
-                  >
-                    <div className="mb-4 flex items-start justify-between gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-white/40 transition-colors group-hover:border-white/[0.12] group-hover:text-white/55">
-                        <p.icon className="h-5 w-5" strokeWidth={1.5} />
-                      </div>
-                      <span className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-0.5 font-mono text-[10px] text-white/35">
-                        {p.n}
-                      </span>
-                    </div>
-                    <span className="mb-2 inline-flex w-fit rounded-md bg-accent/[0.12] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent-light/80">
-                      {p.tag}
-                    </span>
-                    <p className="text-[14px] leading-[1.55] text-white/42">
-                      {p.text}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+        {/* Header éditorial */}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55 }}
+          className="mb-16 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
+        >
+          <div>
+            <span className="tag-tech mb-5 block w-fit">Le terrain</span>
+            <p className="text-[clamp(1.6rem,3.5vw,2.5rem)] font-bold leading-[1.05] tracking-[-0.04em] text-white">
+              Ce que l&apos;industrie vit
+              <br />
+              <span className="text-white/28">sans couche temps réel.</span>
+            </p>
           </div>
+          <p className="max-w-[340px] text-[14px] leading-relaxed text-white/30">
+            Chaque ligne ci-dessous est un pattern terrain récurrent.
+            Pas une hypothèse.
+          </p>
+        </motion.div>
+
+        {/* Lignes éditoriales */}
+        <div>
+          {LINES.map((l, i) => (
+            <EditorialLine key={l.n} {...l} i={i} />
+          ))}
         </div>
+
+        {/* Réponse Arcos — bande horizontale */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55 }}
+          className="mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-2xl border border-accent/20 bg-[#081522] px-8 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-12 sm:py-10"
+        >
+          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_0%_50%,rgba(20,169,207,0.1),transparent_55%)]" />
+          <div className="relative">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent/60">La réponse Arcos</p>
+            <p className="mt-2 text-[clamp(1.25rem,2.5vw,1.7rem)] font-bold leading-[1.1] tracking-[-0.03em] text-white/90">
+              MQTT centralisé. Alertes. IA.
+              <br />
+              <span className="text-white/35">Déployé en jours.</span>
+            </p>
+          </div>
+          <a
+            href="#features"
+            className="relative shrink-0 inline-flex items-center gap-2 rounded-full border border-accent/35 bg-accent/10 px-6 py-3 text-[13px] font-semibold text-accent-light transition-all hover:bg-accent/20 hover:shadow-[0_0_24px_rgba(20,169,207,0.25)]"
+          >
+            Voir la plateforme →
+          </a>
+        </motion.div>
       </div>
     </section>
   );

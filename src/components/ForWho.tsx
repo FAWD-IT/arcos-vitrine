@@ -1,130 +1,137 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Factory, Wrench, Droplets, Zap } from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const audiences = [
+const PROFILES = [
   {
-    icon: Factory,
-    title: "PME industrielles",
-    description:
-      "Automates, capteurs, PLCs — votre data devient visible et actionnable.",
+    code: "TECH",
+    role: "Technicien terrain",
+    headline: "Ce qui se passe, maintenant.",
+    body: "Accès live aux tags, aux alertes et aux historiques récents. Plus besoin de demander un export.",
+    accent: true,
   },
   {
-    icon: Wrench,
-    title: "Bureaux techniques",
-    description:
-      "Planifiez, anticipez et réagissez plus vite grâce au temps réel.",
+    code: "MAINT",
+    role: "Responsable maintenance",
+    headline: "Planifier avant la panne.",
+    body: "Tendances comportementales, seuils personnalisés, rapports automatiques par machine.",
+    accent: false,
   },
   {
-    icon: Droplets,
-    title: "Eau, énergie, agro",
-    description:
-      "Process continus : tags, alarmes et historiques sur les boucles critiques.",
-  },
-  {
-    icon: Zap,
-    title: "Stack unifiée",
-    description:
-      "Moins d&apos;outils en parallèle : MQTT, vues et alertes au même endroit.",
+    code: "DIR",
+    role: "Direction technique",
+    headline: "Visibilité globale. Décisions rapides.",
+    body: "Uptime par site, KPIs agrégés, synthèse IA. La même donnée terrain, condensée.",
+    accent: false,
   },
 ];
 
+const SECTORS = [
+  "Eau & traitement",
+  "Agroalimentaire",
+  "Énergie & utilities",
+  "Métallurgie",
+  "Plasturgie",
+  "Pharmaceutique",
+];
+
 export default function ForWho() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
-    <section
-      id="for-who"
-      className="relative overflow-hidden border-t border-white/[0.06] px-6 py-24 sm:py-32"
-    >
+    <section id="for-who" className="relative overflow-hidden border-t border-white/[0.06] px-6 py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 bg-section-lift" />
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.2]" />
+      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.22]" />
 
       <div className="relative z-10 mx-auto max-w-[1280px]">
-        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
-          <motion.div
-            initial={{ opacity: 0, x: -16 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5 }}
-            className="lg:sticky lg:top-28 lg:col-span-5"
-          >
-            <div className="rounded-3xl border border-white/[0.08] bg-[#080808] p-8 sm:p-10 card-inset">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-accent/70">
-                Pour qui
-              </p>
-              <h2 className="text-[clamp(1.85rem,3.5vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.03em]">
-                Conçu pour les équipes
-                <br />
-                <span className="text-white/35">qui font tourner l&apos;usine.</span>
-              </h2>
-              <p className="mt-5 text-[15px] leading-relaxed text-white/38">
-                Techniciens, maintenance, direction industrielle — le même
-                cockpit, des vues adaptées à chaque rôle.
-              </p>
+        {/* Header */}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55 }}
+          className="mb-16"
+        >
+          <span className="tag-tech mb-6 block w-fit">Pour qui</span>
+          <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.045em] text-white">
+            Pensé pour ceux
+            <br />
+            <span className="text-white/28">qui font tourner l&apos;usine.</span>
+          </h2>
+        </motion.div>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="#demo"
-                  className="rounded-full bg-white px-6 py-2.5 text-[13px] font-semibold text-black transition-colors hover:bg-white/90"
-                >
-                  Demander une démo
-                </a>
-                <a
-                  href="#pricing"
-                  className="rounded-full border border-white/[0.12] px-6 py-2.5 text-[13px] font-medium text-white/65 transition-colors hover:border-white/20 hover:bg-white/[0.04]"
-                >
-                  Voir les tarifs
-                </a>
+        {/* Profils */}
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] lg:grid-cols-3">
+          {PROFILES.map((p, i) => (
+            <motion.div
+              key={p.code}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.07 }}
+              className={`group relative flex flex-col gap-5 p-8 transition-colors sm:p-10 ${p.accent ? "bg-[#081826]" : "bg-[#06090d]"} hover:bg-[#081522]`}
+            >
+              {/* accent top */}
+              <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent ${p.accent ? "via-accent/40" : "via-white/[0.06]"} to-transparent`} />
+
+              <div>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white/22">{p.code}</p>
+                <p className="mt-1 text-[12px] text-white/35">{p.role}</p>
               </div>
-            </div>
-          </motion.div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:col-span-7">
-            {audiences.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.45, delay: i * 0.06 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0c0c0c] p-6 card-hover"
-              >
-                <div className="absolute left-0 top-0 h-full w-[3px] bg-gradient-to-b from-accent/50 via-accent/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-accent/70">
-                  <item.icon className="h-5 w-5" strokeWidth={1.5} />
-                </div>
-                <h3 className="mb-2 text-[15px] font-semibold text-white/75">
-                  {item.title}
-                </h3>
-                <p className="text-[13px] leading-relaxed text-white/32">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+              <h3 className="text-[clamp(1.4rem,2.8vw,2rem)] font-bold leading-[1.1] tracking-[-0.035em] text-white/90 group-hover:text-white">
+                {p.headline}
+              </h3>
+
+              <p className="text-[14px] leading-relaxed text-white/32">{p.body}</p>
+
+              <div className="mt-auto h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+            </motion.div>
+          ))}
         </div>
 
+        {/* Secteurs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.55 }}
-          className="mt-16 sm:mt-20"
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="mt-16"
         >
-          <div className="relative overflow-hidden rounded-3xl border border-accent/20 bg-gradient-to-br from-accent/[0.08] via-[#0d0d0d] to-[#080808] p-[1px]">
-            <div className="relative rounded-[calc(1.5rem-1px)] bg-[#0a0a0a]/95 px-8 py-12 sm:px-14 sm:py-14">
-              <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-accent/10 blur-3xl" />
-              <p className="relative text-center text-[clamp(1.15rem,2.8vw,1.65rem)] font-semibold leading-[1.45] text-white/75">
-                &ldquo;La supervision industrielle repensée —
-                <br className="hidden sm:block" />
-                <span className="text-accent-light/85">
-                  {" "}
-                  déployée en jours, pas en mois.
-                </span>
-                &rdquo;
-              </p>
-            </div>
+          <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/22">Secteurs d&apos;application</p>
+          <div className="flex flex-wrap gap-3">
+            {SECTORS.map((s) => (
+              <span
+                key={s}
+                className="rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-[13px] text-white/40"
+              >
+                {s}
+              </span>
+            ))}
           </div>
+        </motion.div>
+
+        {/* Quote signature */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, delay: 0.1 }}
+          className="mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-2xl border border-accent/20 bg-[#081522] px-8 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-14"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_5%_50%,rgba(20,169,207,0.09),transparent_55%)]" />
+          <p className="relative max-w-[580px] text-[clamp(1.15rem,2.4vw,1.55rem)] font-semibold leading-[1.4] text-white/70">
+            &ldquo;Le même flux MQTT — exposé différemment selon qui regarde.
+            <span className="text-accent-light/80"> Technicien, maintenance ou direction.</span>&rdquo;
+          </p>
+          <a
+            href="#demo"
+            className="relative shrink-0 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-7 py-3 text-[13px] font-semibold text-accent-light transition-all hover:bg-accent/20 hover:shadow-[0_0_24px_rgba(20,169,207,0.2)]"
+          >
+            Parler à l&apos;équipe →
+          </a>
         </motion.div>
       </div>
     </section>

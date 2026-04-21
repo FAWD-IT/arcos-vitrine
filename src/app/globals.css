@@ -1,17 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  /* Palette issue du logo Arcos (logo-arcos.svg) */
   --brand-navy: #082d44;
   --accent: #14a9cf;
   --accent-light: #4dc8eb;
-  --background: #050a0f;
-  --foreground: #e8f2f7;
-  --card-bg: #0a1219;
-  --card-border: #132a38;
-  --muted: #7a9aad;
-  --section-alt: #070f16;
-  --surface-raised: #0c141c;
+  --background: #06090d;
+  --foreground: #ddeaf2;
+  --card-bg: #0b1520;
+  --card-border: #14293a;
+  --muted: #6a8fa5;
+  --section-alt: #08101a;
+  --surface-raised: #0e1e2c;
 }
 
 @theme inline {
@@ -28,9 +27,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -43,66 +40,150 @@ body {
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
+  font-feature-settings: "ss01", "ss03";
 }
 
 ::selection {
-  background: rgba(20, 169, 207, 0.35);
+  background: rgba(20, 169, 207, 0.3);
   color: white;
 }
 
-/* Noise overlay (hero + sections) */
+/* ── Scan line global (très subtil) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.025) 3px,
+    rgba(0, 0, 0, 0.025) 4px
+  );
+}
+
+/* ── Noise */
 .noise-bg::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 200px 200px;
 }
 
-/* Subtle dot grid */
+/* ── Grille de points */
 .bg-dot-grid {
-  background-image: radial-gradient(
-    rgba(20, 169, 207, 0.06) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
+  background-image: radial-gradient(rgba(20, 169, 207, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Section depth — halo cyan + fond légèrement marine */
+/* ── Fond section marine */
 .bg-section-lift {
-  background: radial-gradient(
-      ellipse 100% 80% at 50% -30%,
-      rgba(20, 169, 207, 0.06) 0%,
-      transparent 55%
-    ),
-    linear-gradient(180deg, #071018 0%, #050a0f 45%, #050a0f 100%);
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(20, 169, 207, 0.07) 0%, transparent 65%),
+    linear-gradient(180deg, #081320 0%, #06090d 60%);
 }
 
 .bg-section-slab {
-  background: linear-gradient(180deg, #081218 0%, #050a0f 100%);
+  background: linear-gradient(180deg, #0a1520 0%, #06090d 100%);
 }
 
-/* Inset highlight on cards */
+/* ── Ligne cyan : fine déco verticale ou horizontale */
+.arcos-line-v {
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, #14a9cf 40%, #14a9cf 60%, transparent 100%);
+  opacity: 0.25;
+}
+
+.arcos-line-h {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #14a9cf 40%, #14a9cf 60%, transparent 100%);
+  opacity: 0.18;
+}
+
+/* ── Étiquette technique */
+.tag-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(20, 169, 207, 0.2);
+  background: rgba(20, 169, 207, 0.06);
+  padding: 2px 10px 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(77, 200, 235, 0.75);
+}
+
+.tag-tech::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #14a9cf;
+  box-shadow: 0 0 6px #14a9cf;
+}
+
+/* ── Texte oversized (pour sections éditoriales) */
+.arcos-big {
+  font-size: clamp(5rem, 18vw, 14rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  font-feature-settings: "tnum";
+}
+
+/* ── Cards */
 .card-inset {
   box-shadow:
     inset 0 1px 0 rgba(20, 169, 207, 0.06),
-    0 24px 48px -32px rgba(0, 0, 0, 0.85);
+    0 24px 64px -32px rgba(0, 0, 0, 0.9);
 }
 
 .card-hover {
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+.card-hover:hover {
+  border-color: rgba(20, 169, 207, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 32px 64px -28px rgba(0,0,0,0.95);
+  transform: translateY(-1px);
 }
 
-.card-hover:hover {
-  border-color: rgba(20, 169, 207, 0.15);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 32px 64px -28px rgba(0, 0, 0, 0.9);
+/* ── Oscilloscope line animation */
+@keyframes scope-scan {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.scope-scan {
+  animation: scope-scan 3.5s ease-in-out infinite;
+}
+
+/* ── Pulse point */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.65; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-ring {
+  animation: pulse-ring 2.2s ease-out infinite;
+}
+
+/* ── Ticker scrolling */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 28s linear infinite;
 }
