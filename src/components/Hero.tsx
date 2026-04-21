@@ -1,6 +1,8 @@
 "use client";
+import Image from "next/image";
 import { HGButton } from "./TiltCard";
 
+/* Grille fantôme : mêmes bordures / padding que les stats d’origine pour conserver l’emprise exacte */
 const STATS = [
   { value: "99.7%", label: "Uptime garanti" },
   { value: "5j",    label: "Déploiement" },
@@ -41,16 +43,25 @@ export function Hero() {
           <span style={{ color: "var(--muted)" }}>Décidez vite.</span>
         </h1>
 
-        {/* Stats grid top-right */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+        {/* Même grille 2×2 que les stats ; photo par-dessus (même emprise totale) */}
+        <div
+          className="anim-load anim-load-2"
+          style={{
+            position: "relative",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 0,
+          }}
+        >
           {STATS.map((s, i) => (
             <div
               key={s.value}
-              className={`anim-load anim-load-${i + 2}`}
+              aria-hidden
               style={{
                 borderTop: "1px solid var(--border)",
                 borderLeft: i % 2 === 1 ? "1px solid var(--border)" : "none",
                 padding: "1.75rem 1.5rem",
+                visibility: "hidden",
               }}
             >
               <p className="stat-giant">{s.value}</p>
@@ -68,6 +79,23 @@ export function Hero() {
               </p>
             </div>
           ))}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 1,
+              pointerEvents: "none",
+            }}
+          >
+            <Image
+              src="/hero-technician.png"
+              alt="Technicien en intervention sur une armoire électrique industrielle"
+              fill
+              sizes="(max-width: 768px) 100vw, 42vw"
+              style={{ objectFit: "cover", objectPosition: "center center" }}
+              priority
+            />
+          </div>
         </div>
       </div>
 
