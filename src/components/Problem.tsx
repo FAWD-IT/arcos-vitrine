@@ -72,14 +72,12 @@ export function Problem() {
             {ACCORDION.map(item => (
               <TiltCard
                 key={item.key}
-                intensity={3}
                 className="hg-card"
                 style={{
                   cursor: "pointer",
-                  background: "rgb(21,22,21)",
-                  border: "1.5px solid rgb(28,30,28)",
-                  borderRadius: 3,
-                  paddingInline: "1rem",
+                  background: "transparent",
+                  border: "none",
+                  borderTop: "1px solid var(--border)",
                 }}
                 onClick={() => setOpen(open === item.key ? null : item.key)}
               >

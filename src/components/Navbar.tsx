@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef, MouseEvent } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { HGArrow } from "./TiltCard";
 
@@ -14,23 +14,6 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
-  const btnRef = useRef<HTMLAnchorElement>(null);
-
-  const onBtnMove = (e: MouseEvent<HTMLAnchorElement>) => {
-    const el = btnRef.current; if (!el) return;
-    const { left, top, width, height } = el.getBoundingClientRect();
-    const x = (e.clientX - left - width  / 2) / (width  / 2);
-    const y = (e.clientY - top  - height / 2) / (height / 2);
-    el.style.transform  = `perspective(400px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
-    el.style.borderColor = scrolled ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)";
-    el.style.transition = "border-color 0.1s";
-  };
-  const onBtnLeave = () => {
-    const el = btnRef.current; if (!el) return;
-    el.style.transform  = "";
-    el.style.borderColor = "";
-    el.style.transition = "transform 0.45s cubic-bezier(0.23,1,0.32,1), border-color 0.2s, color 0.35s";
-  };
 
   useEffect(() => {
     setMounted(true);
@@ -161,32 +144,43 @@ export function Navbar() {
           </span>
 
           <a
-            ref={btnRef}
             href="#demo"
-            onMouseMove={onBtnMove}
-            onMouseLeave={onBtnLeave}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
               fontSize: 14,
               fontWeight: 500,
-              color: scrolled ? "#131514" : "#f1f1f1",
-              background: scrolled ? "#f1f1f1" : "rgb(21,22,21)",
-              border: scrolled
-                ? "1.5px solid #d4d4d4"
-                : "1.5px solid rgb(36,38,36)",
+              color: scrolled ? "#131514" : "#131514",
+              background: scrolled ? "#131514" : "#f1f1f1",
+              border: scrolled ? "1.5px solid #131514" : "1.5px solid #f1f1f1",
               borderRadius: 3,
               padding: "10px 14px",
               textDecoration: "none",
               whiteSpace: "nowrap",
-              transition: "color 0.35s ease, background 0.35s ease, border-color 0.2s ease",
-              transformStyle: "preserve-3d",
-              willChange: "transform",
+              transition: "background 0.22s ease, color 0.22s ease, border-color 0.22s ease",
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget;
+              if (scrolled) {
+                el.style.background = "transparent";
+                el.style.color = "#131514";
+                el.style.borderColor = "rgba(0,0,0,0.3)";
+              } else {
+                el.style.background = "transparent";
+                el.style.color = "#f1f1f1";
+                el.style.borderColor = "rgba(255,255,255,0.35)";
+              }
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget;
+              el.style.background  = scrolled ? "#131514" : "#f1f1f1";
+              el.style.color       = scrolled ? "#f1f1f1" : "#131514";
+              el.style.borderColor = scrolled ? "#131514"  : "#f1f1f1";
             }}
           >
             Parler à l&apos;équipe
-            <HGArrow size={11} color={scrolled ? "#131514" : "#f1f1f1"} />
+            <HGArrow size={11} color="currentColor" />
           </a>
         </div>
 
