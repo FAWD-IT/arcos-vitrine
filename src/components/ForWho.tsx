@@ -3,105 +3,93 @@
 const PROFILES = [
   {
     role: "Responsable de production",
-    desc: "Vision temps réel de toute la ligne. Suivi des KPIs, alertes critiques, et rapports quotidiens en automatique.",
+    desc: "Vision temps réel de toute la ligne. Suivi des KPIs, alertes critiques et rapports quotidiens automatiques.",
     sectors: ["Automobile", "Agroalimentaire", "Énergie"],
-    accent: true,
   },
   {
     role: "Technicien de maintenance",
-    desc: "Historique complet des pannes, tendances machine, et alertes préventives avant que ça casse.",
+    desc: "Historique complet des pannes, tendances machine et alertes préventives avant que ça casse.",
     sectors: ["Mécanique", "Électrotechnique"],
-    accent: false,
   },
   {
     role: "Directeur technique",
-    desc: "Tableau de bord exécutif multi-sites, suivi OEE, et export des données pour reporting auprès du comité.",
+    desc: "Tableau de bord exécutif multi-sites, suivi OEE et export des données pour reporting dirigeant.",
     sectors: ["Industrie 4.0", "PME / ETI"],
-    accent: false,
   },
 ];
 
 export function ForWho() {
   return (
-    <section
-      id="for-who"
-      style={{ background: "var(--light-bg)", borderTop: "1px solid var(--bd-light)" }}
-    >
-      <div className="c sp">
-        <p className="kicker kicker--dark"><span className="kicker__sym">✦</span> Pour qui</p>
-        <h2 className="title-d" style={{ maxWidth: 560, marginBottom: "3.5rem" }}>
-          Pensé pour ceux<br />qui font tourner l&apos;usine.
-        </h2>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-            marginBottom: "4rem",
-          }}
-          className="forwho-grid"
-        >
-          {PROFILES.map(p => (
-            <div
-              key={p.role}
-              style={{
-                background: "var(--white)",
-                border: "1px solid var(--bd-light)",
-                borderTop: p.accent ? `3px solid var(--accent)` : "1px solid var(--bd-light)",
-                borderRadius: 16,
-                padding: "2rem",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.07)"; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}
-            >
-              <h3 style={{ fontSize: 17, fontWeight: 600, color: "var(--text-dark)", lineHeight: 1.3, margin: "0 0 0.75rem" }}>
-                {p.role}
-              </h3>
-              <p style={{ fontSize: 14, color: "var(--text-muted-d)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
-                {p.desc}
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {p.sectors.map(s => (
-                  <span
-                    key={s}
-                    style={{
-                      fontSize: 11, padding: "3px 10px",
-                      borderRadius: 999, background: "var(--white)",
-                      border: "1px solid var(--bd-light)",
-                      color: "var(--text-muted-d)", letterSpacing: "0.04em",
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+    <>
+      <div className="line" />
+      <section id="for-who" className="c sp">
+        {/* Header */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="forwho-header">
+          <h2 className="h-statement">
+            Pensé pour ceux <span className="dim">qui font tourner l&apos;usine.</span>
+          </h2>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
+              Qu&apos;il s&apos;agisse d&apos;un opérateur terrain ou d&apos;un DSI, Arcos adapte son niveau de détail et ses accès à chaque profil.
+            </p>
+          </div>
         </div>
 
-        {/* CTA */}
-        <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
-          <p style={{ fontSize: 15, color: "var(--text-muted-d)", margin: 0 }}>
-            Votre profil n&apos;est pas dans la liste ?
-          </p>
-          <a href="#demo" className="btn-ad" style={{ textDecoration: "none" }}>
-            <span className="btn-ad__t">Parlons-en</span>
-            <span className="btn-ad__i">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
+        {/* Profiles: row layout */}
+        {PROFILES.map(p => (
+          <div
+            key={p.role}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              gap: 40,
+              borderTop: "1px solid var(--border)",
+              paddingTop: "2rem",
+              paddingBottom: "2rem",
+              alignItems: "flex-start",
+              transition: "border-color 0.2s",
+            }}
+            className="profile-row"
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderTopColor = "var(--border-hover)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderTopColor = "var(--border)"; }}
+          >
+            <h3 className="h-section">{p.role}</h3>
+            <p style={{ fontSize: 14, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>{p.desc}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {p.sectors.map(s => (
+                <span
+                  key={s}
+                  style={{
+                    fontSize: 11, padding: "3px 10px",
+                    border: "1px solid var(--border)",
+                    borderRadius: 3,
+                    color: "var(--muted)",
+                    fontWeight: 500, letterSpacing: "0.04em",
+                    transition: "border-color 0.2s",
+                  }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div className="line" />
+
+        <div style={{ paddingTop: "2rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+          <p style={{ fontSize: 15.875, color: "var(--muted)", fontWeight: 500 }}>Votre profil n&apos;est pas listé ?</p>
+          <a href="#demo" className="btn-hg" style={{ textDecoration: "none" }}>
+            <span className="arr">→</span> Parlons-en
           </a>
         </div>
-      </div>
+      </section>
 
       <style>{`
         @media (max-width: 768px) {
-          .forwho-grid { grid-template-columns: 1fr !important; }
+          .forwho-header { grid-template-columns: 1fr !important; }
+          .profile-row { grid-template-columns: 1fr !important; gap: 1rem !important; }
         }
       `}</style>
-    </section>
+    </>
   );
 }

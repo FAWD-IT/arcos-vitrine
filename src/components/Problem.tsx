@@ -1,121 +1,120 @@
 "use client";
+import { useState } from "react";
 
-const LOGOS = [
-  { name: "Siemens",    abbr: "SIE" },
-  { name: "Schneider",  abbr: "SE"  },
-  { name: "Rockwell",   abbr: "ROK" },
-  { name: "Bosch",      abbr: "BSH" },
-  { name: "ABB",        abbr: "ABB" },
-  { name: "Mitsubishi", abbr: "MEL" },
-  { name: "Fanuc",      abbr: "FAN" },
+const ACCORDION = [
+  {
+    key: "dashboard",
+    label: "Dashboard temps réel",
+    body: "Tous vos KPIs machine centralisés dans une vue unifiée. Température, pression, débit — mis à jour en moins d'une seconde sans aucune configuration supplémentaire.",
+  },
+  {
+    key: "alertes",
+    label: "Alertes intelligentes",
+    body: "Seuils HIGH / LOW / NO_COMM configurables par machine. Acquittement depuis l'interface ou par e-mail. Journal d'audit complet pour chaque événement.",
+  },
+  {
+    key: "historique",
+    label: "Historique & analyse",
+    body: "Explorez n'importe quelle plage temporelle sur plusieurs tags simultanément. Export CSV, agrégation horaire ou mensuelle, et analyse post-incident en quelques secondes.",
+  },
+  {
+    key: "agent",
+    label: "Agent IA",
+    body: "Interrogez vos données en langage naturel. L'agent contextualise, analyse les anomalies, et génère un rapport PDF téléchargeable en quelques secondes.",
+  },
 ];
 
-const PROBLEMS = [
-  {
-    num: "01",
-    title: "Données dispersées",
-    desc: "Chaque machine parle son propre protocole. Il faut 3 outils différents pour avoir une vue globale — et encore, elle est déjà obsolète.",
-  },
-  {
-    num: "02",
-    title: "Alertes ignorées",
-    desc: "Les dépassements de seuil restent dans les logs. Sans système centralisé, une alerte critique se perd entre deux équipes.",
-  },
-  {
-    num: "03",
-    title: "Historique inaccessible",
-    desc: "L'analyse post-incident prend des jours. Les données sont là, mais personne ne sait où les trouver ni comment les lire.",
-  },
-  {
-    num: "04",
-    title: "Maintenance réactive",
-    desc: "On répare quand ça casse. Sans visibilité temps réel ni tendances, la maintenance préventive reste un vœu pieux.",
-  },
-];
+const BRANDS = ["Siemens", "Schneider", "Rockwell", "ABB", "Mitsubishi", "Bosch", "Fanuc"];
 
 export function Problem() {
+  const [open, setOpen] = useState<string | null>(null);
+
   return (
     <>
-      {/* Logo band */}
-      <section style={{ background: "var(--black-1)", borderTop: "1px solid var(--bd-dark)" }}>
-        <div className="c" style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 0, overflowX: "auto" }}>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.09em", textTransform: "uppercase", whiteSpace: "nowrap", marginRight: 32, flexShrink: 0 }}>
-              Compatible avec
+      {/* ── Logo band ── */}
+      <div className="line" />
+      <section className="c spm">
+        <div style={{ display: "flex", alignItems: "center", gap: 0, overflowX: "auto" }}>
+          <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap", marginRight: 36, flexShrink: 0, fontWeight: 500 }}>
+            Compatible avec
+          </p>
+          {BRANDS.map((b, i) => (
+            <span key={b} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+              {i > 0 && <span style={{ color: "rgba(255,255,255,0.08)", marginInline: 20 }}>|</span>}
+              <span style={{ fontSize: 13, fontWeight: 500, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{b}</span>
+            </span>
+          ))}
+        </div>
+      </section>
+      <div className="line" />
+
+      {/* ── Statement + accordion ── */}
+      <section id="features" className="c sp">
+        <div
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "flex-start" }}
+          className="stmt-grid"
+        >
+          {/* Left: big statement */}
+          <div>
+            <h2 className="h-statement">
+              Une couche temps réel <span className="dim">qui connecte vos machines,</span> vos équipes, <span className="dim">et vos décisions.</span>
+            </h2>
+            <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, marginTop: "2rem", fontWeight: 500 }}>
+              Sans Arcos, vos données restent dispersées entre machines, protocoles et feuilles Excel. Avec Arcos, tout remonte en temps réel dans une interface unique — de l&apos;atelier au comité de direction.
             </p>
-            {LOGOS.map((l, i) => (
-              <div key={l.name} style={{ display: "flex", alignItems: "center" }}>
-                {i > 0 && <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.08)", marginInline: 20 }} />}
-                <span
-                  style={{
-                    fontSize: 12, fontWeight: 600, letterSpacing: "0.08em",
-                    color: "rgba(255,255,255,0.45)", textTransform: "uppercase",
-                    whiteSpace: "nowrap", flexShrink: 0,
-                  }}
-                >
-                  {l.name}
-                </span>
-              </div>
-            ))}
+            <a href="#demo" className="btn-hg" style={{ marginTop: "2rem", textDecoration: "none", display: "inline-flex" }}>
+              <span className="arr">→</span> Voir la démo
+            </a>
           </div>
-        </div>
-      </section>
 
-      {/* Problem section */}
-      <section style={{ background: "var(--light-bg)", borderTop: "1px solid var(--bd-light)" }}>
-        <div className="c sp">
-          <p className="kicker kicker--dark"><span className="kicker__sym">✦</span> Le problème</p>
-          <h2 className="title-d" style={{ maxWidth: 560, marginBottom: "3.5rem" }}>
-            Ce que l&apos;industrie vit<br />sans couche temps réel.
-          </h2>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: 16,
-            }}
-          >
-            {PROBLEMS.map(p => (
+          {/* Right: accordion */}
+          <div>
+            {ACCORDION.map(item => (
               <div
-                key={p.num}
-                style={{
-                  background: "var(--white)",
-                  border: "1px solid var(--bd-light)",
-                  borderRadius: 16,
-                  padding: "2.5rem",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.06)"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}
+                key={item.key}
+                className="hg-card"
+                style={{ cursor: "pointer" }}
+                onClick={() => setOpen(open === item.key ? null : item.key)}
               >
-                <p
+                <div
                   style={{
-                    fontSize: 11, fontWeight: 600,
-                    color: "var(--accent)", letterSpacing: "0.1em",
-                    fontFamily: "'JetBrains Mono', monospace",
-                    margin: "0 0 1rem",
+                    display: "flex", alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
-                  {p.num}
-                </p>
-                <h3
-                  style={{
-                    fontSize: 20, fontWeight: 600,
-                    color: "var(--text-dark)", lineHeight: 1.3,
-                    margin: "0 0 0.75rem",
-                  }}
-                >
-                  {p.title}
-                </h3>
-                <p style={{ fontSize: 14, color: "var(--text-muted-d)", lineHeight: 1.7, margin: 0 }}>
-                  {p.desc}
-                </p>
+                  <span className="h-section">{item.label}</span>
+                  <span
+                    style={{
+                      fontSize: 20, color: "var(--muted)",
+                      transition: "transform 0.2s",
+                      transform: open === item.key ? "rotate(45deg)" : "none",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      width: 24, height: 24, flexShrink: 0,
+                    }}
+                  >
+                    +
+                  </span>
+                </div>
+                {open === item.key && (
+                  <p style={{
+                    fontSize: 14, color: "var(--text)", lineHeight: 1.65,
+                    marginTop: "0.85rem", fontWeight: 500,
+                  }}>
+                    {item.body}
+                  </p>
+                )}
               </div>
             ))}
+            <div className="line" style={{ marginTop: 0 }} />
           </div>
         </div>
       </section>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .stmt-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+        }
+      `}</style>
     </>
   );
 }

@@ -1,60 +1,63 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────
-   DESIGN SYSTEM ARCOS — style grafit.agency
+   AEONIKPRO — police locale
+   Fichiers à déposer dans /public/fonts/
+   ────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Aeonikpro';
+  src: url('/fonts/AeonikPro-Regular.woff2') format('woff2'),
+       url('/fonts/AeonikPro-Regular.woff')  format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonikpro';
+  src: url('/fonts/AeonikPro-Medium.woff2') format('woff2'),
+       url('/fonts/AeonikPro-Medium.woff')  format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonikpro';
+  src: url('/fonts/AeonikPro-Bold.woff2') format('woff2'),
+       url('/fonts/AeonikPro-Bold.woff')  format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ──────────────────────────────────────────────────────────
+   DESIGN SYSTEM — harrygeorge.design x Arcos
    ────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Fonds */
-  --black:      #0a0a0a;
-  --black-1:    #111111;
-  --black-2:    #161616;
-  --black-3:    #1e1e1e;
-  --light-bg:   #f5f5f0;   /* warm off-white like Grafit */
-  --white:      #ffffff;
+  --bg:          #131514;   /* fond quasi-noir warm */
+  --text:        #d5d6d5;   /* gris clair corps */
+  --white:       #f1f1f1;   /* blanc titres */
+  --muted:       #6b6c6b;   /* très gris, discret */
+  --border:      rgba(255,255,255,0.12);
+  --border-hover: rgba(255,255,255,0.30);
 
-  /* ── Texte */
-  --text-dark:    #111111;
-  --text-light:   #ffffff;
-  --text-muted-d: #666666;
-  --text-muted-l: #9a9a9a;
-
-  /* ── Bordures */
-  --bd-dark:  rgba(255,255,255,0.07);
-  --bd-dark2: rgba(255,255,255,0.12);
-  --bd-light: #e2e2dc;
-
-  /* ── Accent (uniquement éléments interactifs) */
-  --accent:       #14a9cf;
-  --accent-light: #4dc8eb;
-  --accent-dim:   rgba(20,169,207,0.10);
-
-  /* ── Radius */
-  --r:    12px;
-  --r-lg: 16px;
-
-  /* ── Transitions globales */
-  --t: all 0.3s ease;
+  /* accent teal gardé uniquement pour le badge status */
+  --teal: #14a9cf;
 }
 
-@theme inline {
-  --color-background: var(--light-bg);
-  --color-foreground: var(--text-dark);
-  --color-accent:     var(--accent);
-}
-
-/* ── Reset */
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
-  max-width: 100%; overflow-x: hidden;
-  background: var(--white);
-  color: var(--text-dark);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 16px; line-height: 1.65;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Aeonikpro', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 15.875px;
+  line-height: 1.35;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-::selection { background: var(--accent-dim); }
+::selection { background: rgba(255,255,255,0.08); }
 
 /* ── Container */
 .c {
@@ -64,146 +67,92 @@ body {
 }
 @media (max-width: 768px) { .c { padding-inline: 20px; } }
 
-/* ── Section padding */
-.sp    { padding-top: 8rem; padding-bottom: 8rem; }
-.sp-sm { padding-top: 5rem; padding-bottom: 5rem; }
+/* ── Section spacing */
+.sp  { padding-top: 7rem; padding-bottom: 7rem; }
+.spm { padding-top: 4rem; padding-bottom: 4rem; }
 
-/* ── Dividers */
-.hr-d { height: 1px; background: var(--bd-dark); }
-.hr-l { height: 1px; background: var(--bd-light); }
+/* ── Divider */
+.line { height: 1px; background: var(--border); }
 
-/* ── Kicker label */
-.kicker {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 500;
-  letter-spacing: 0.10em; text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
-.kicker--dark  { color: var(--text-muted-d); }
-.kicker--light { color: var(--text-muted-l); }
-.kicker__sym   { opacity: 0.5; font-size: 10px; }
-
-/* ── Titres section */
-.title-d {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: var(--text-dark);
-}
-.title-l {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: var(--text-light);
+/* ── Titre hero */
+.h-hero {
+  font-family: 'Aeonikpro', Arial, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
 }
 
-/* ── Bouton arrow split (text + icône teal) */
-.btn-a {
-  display: inline-flex; align-items: center;
-  font-size: 13px; font-weight: 500;
-  text-decoration: none; cursor: pointer; white-space: nowrap;
-  transition: var(--t);
+/* ── Titre statement (grand pleine largeur) */
+.h-statement {
+  font-family: 'Aeonikpro', Arial, sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
 }
-.btn-a__t {
-  padding: 9px 18px;
-  border: 1px solid rgba(255,255,255,0.18);
-  border-right: none;
-  border-radius: var(--r) 0 0 var(--r);
-  color: var(--text-light);
-  transition: var(--t);
-}
-.btn-a:hover .btn-a__t  { background: rgba(255,255,255,0.05); }
-.btn-a__i {
-  padding: 9px 13px;
-  background: var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
-  color: #fff; display: flex; align-items: center;
-  transition: var(--t);
-}
-.btn-a:hover .btn-a__i  { background: var(--accent-light); }
+.h-statement .dim { color: var(--muted); }
 
-/* Variante dark (sur fond clair) */
-.btn-ad {
-  display: inline-flex; align-items: center;
-  font-size: 13px; font-weight: 500;
-  text-decoration: none; cursor: pointer; white-space: nowrap;
-}
-.btn-ad__t {
-  padding: 9px 18px;
-  border: 1px solid var(--bd-light); border-right: none;
-  border-radius: var(--r) 0 0 var(--r);
-  color: var(--text-dark); transition: var(--t);
-}
-.btn-ad:hover .btn-ad__t { background: var(--light-bg); }
-.btn-ad__i {
-  padding: 9px 13px;
-  background: var(--black);
-  border-radius: 0 var(--r) var(--r) 0;
-  color: #fff; display: flex; align-items: center;
-  transition: var(--t);
-}
-.btn-ad:hover .btn-ad__i { background: var(--black-3); }
-
-/* ── Pill badge */
-.pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
-  padding: 3px 10px; border-radius: 999px;
-}
-.pill--teal {
-  border: 1px solid rgba(20,169,207,0.35);
-  color: var(--accent-light);
-  background: rgba(20,169,207,0.07);
-}
-.pill__dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--accent); box-shadow: 0 0 5px var(--accent);
+/* ── Titre section medium */
+.h-section {
+  font-family: 'Aeonikpro', Arial, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.3;
 }
 
-/* ── Bento tile */
-.bento {
-  border-radius: var(--r-lg);
-  border: 1px solid var(--bd-dark);
-  background: var(--black-1);
-  padding: 2rem;
-  transition: var(--t);
+/* ── Bouton arrow (→ texte) */
+.btn-hg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Aeonikpro', Arial, sans-serif;
+  font-size: 15.875px;
+  font-weight: 500;
+  color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 8px 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+  background: transparent;
 }
-.bento:hover { border-color: var(--bd-dark2); }
+.btn-hg:hover { border-color: var(--border-hover); }
+.btn-hg .arr { font-size: 13px; opacity: 0.7; }
 
-/* ── Service card sombre (remplace browser-frame) */
-.svc-card {
-  background: var(--black-1);
-  border: 1px solid var(--bd-dark);
-  border-radius: var(--r-lg);
-  padding: 2rem;
-  transition: var(--t);
+/* ── Status dot */
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 5px #4ade80;
+  margin-right: 4px;
 }
-.svc-card:hover { border-color: rgba(255,255,255,0.18); }
 
-/* ── Service card claire */
-.svc-card-l {
-  background: var(--white);
-  border: 1px solid var(--bd-light);
-  border-radius: var(--r-lg);
-  padding: 2rem;
-  transition: var(--t);
+/* ── Carte feature / service */
+.hg-card {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  transition: border-color 0.2s;
 }
-.svc-card-l:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+.hg-card:hover { border-top-color: var(--border-hover); }
 
-/* ── Check list item */
-.check-item {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 14px; color: var(--text-muted-l);
+/* ── Stat giant */
+.stat-giant {
+  font-family: 'Aeonikpro', Arial, sans-serif;
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
-.check-item__dot {
-  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(20,169,207,0.12);
-}
-.check-item--dark { color: var(--text-muted-d); }
-.check-item--dark .check-item__dot { background: var(--light-bg); }
 
 /* ── Prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {

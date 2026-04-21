@@ -1,144 +1,132 @@
 "use client";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const LINKS = {
-  "Produit":  [
-    { href: "#features",     label: "Fonctionnalités" },
-    { href: "#integrations", label: "Connectivité"    },
-    { href: "#pricing",      label: "Tarifs"          },
-  ],
-  "Équipe":  [
-    { href: "https://fawd.be",          label: "FAWD Studio"    },
-    { href: "https://github.com/FAWD-IT", label: "GitHub"       },
-    { href: "#demo",                    label: "Contact"         },
-  ],
-  "Légal":    [
-    { href: "#",  label: "Mentions légales"    },
-    { href: "#",  label: "Confidentialité"     },
-    { href: "#",  label: "CGU"                 },
-  ],
-};
+const LINKS = [
+  { href: "#features",      label: "Fonctionnalités" },
+  { href: "#integrations",  label: "Connectivité" },
+  { href: "#for-who",       label: "Pour qui" },
+  { href: "#pricing",       label: "Tarifs" },
+  { href: "#demo",          label: "Contact" },
+  { href: "https://fawd.be",label: "FAWD Studio" },
+  { href: "https://github.com/FAWD-IT", label: "GitHub" },
+];
 
 export function Footer() {
+  const [time, setTime] = useState("");
   const year = new Date().getFullYear();
 
+  useEffect(() => {
+    const fmt = () =>
+      new Intl.DateTimeFormat("fr-FR", {
+        hour: "2-digit", minute: "2-digit", second: "2-digit",
+        timeZone: "Europe/Brussels",
+      }).format(new Date());
+    setTime(fmt());
+    const id = setInterval(() => setTime(fmt()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <footer style={{ background: "var(--black)", borderTop: "1px solid var(--bd-dark)", position: "relative", overflow: "hidden" }}>
+    <footer style={{ position: "relative", overflow: "hidden" }}>
+      {/* Logo band - partenaires */}
+      <div className="line" />
+      <section className="c spm">
+        <div style={{ display: "flex", alignItems: "center", gap: 0, overflowX: "auto" }}>
+          {["Siemens", "Schneider Electric", "Rockwell", "ABB", "Mitsubishi Electric", "Bosch"].map((b, i) => (
+            <span key={b} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+              {i > 0 && <span style={{ color: "rgba(255,255,255,0.06)", marginInline: 24 }}>|</span>}
+              <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.18)", letterSpacing: "0.08em", textTransform: "uppercase" }}>{b}</span>
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Top footer info bar */}
+      <div className="line" />
+      <div
+        className="c"
+        style={{
+          paddingTop: "1.75rem",
+          paddingBottom: "1.75rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <p style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>
+          © {year} FAWD SRL — Arcos. Tous droits réservés.
+        </p>
+        <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+          {LINKS.map(l => (
+            <a
+              key={l.label} href={l.href}
+              target={l.href.startsWith("http") ? "_blank" : undefined}
+              rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              style={{ fontSize: 12, color: "var(--muted)", textDecoration: "none", fontWeight: 500, transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "var(--white)")}
+              onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Status + location bar */}
+      <div className="line" />
+      <div
+        className="c"
+        style={{
+          paddingTop: "1.5rem",
+          paddingBottom: "2rem",
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 20,
+        }}
+      >
+        <div>
+          <p style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500, marginBottom: 4 }}>
+            <span className="status-dot" />
+            (En ligne) &nbsp;{time} CET
+          </p>
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.12)", fontWeight: 500, lineHeight: 1.6 }}>
+            Lun–Ven, 9h – 18h<br />
+            Week-end sur RDV
+          </p>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <p style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>
+            Bruxelles, Belgique
+          </p>
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.15)", fontWeight: 500 }}>
+            50.8503° N, 4.3517° E
+          </p>
+        </div>
+      </div>
 
       {/* Giant ARCOS watermark */}
       <div
         aria-hidden="true"
         style={{
-          position: "absolute",
-          bottom: "3rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          fontSize: "clamp(6rem, 18vw, 14rem)",
-          fontWeight: 800,
-          letterSpacing: "-0.05em",
-          color: "#fff",
-          opacity: 0.04,
-          whiteSpace: "nowrap",
+          textAlign: "center",
+          fontSize: "clamp(8rem, 22vw, 18rem)",
+          fontFamily: "'Aeonikpro', Arial, sans-serif",
+          fontWeight: 500,
+          color: "var(--white)",
+          opacity: 0.045,
+          letterSpacing: "-0.04em",
+          lineHeight: 0.85,
           userSelect: "none",
-          lineHeight: 1,
           pointerEvents: "none",
+          overflow: "hidden",
+          paddingBottom: "0.5rem",
         }}
       >
         ARCOS
       </div>
-
-      <div className="c" style={{ paddingTop: "5rem", paddingBottom: "3rem", position: "relative", zIndex: 1 }}>
-
-        {/* Top row */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr repeat(3, 1fr)",
-            gap: "3rem",
-            paddingBottom: "3.5rem",
-            borderBottom: "1px solid var(--bd-dark)",
-          }}
-          className="footer-grid"
-        >
-          {/* Brand */}
-          <div>
-            <Image
-              src="/logo-arcos.svg"
-              alt="Arcos"
-              width={88}
-              height={26}
-              style={{ filter: "brightness(0) invert(1)", objectFit: "contain", marginBottom: "1rem", display: "block" }}
-            />
-            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.7, maxWidth: 240, margin: 0 }}>
-              Supervision industrielle temps réel — MQTT, alertes, historique et IA, en une seule plateforme.
-            </p>
-          </div>
-
-          {/* Link columns */}
-          {Object.entries(LINKS).map(([col, items]) => (
-            <div key={col}>
-              <h4 style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.35)", letterSpacing: "0.10em", textTransform: "uppercase", margin: "0 0 1.25rem" }}>
-                {col}
-              </h4>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-                {items.map(l => (
-                  <li key={l.label}>
-                    <a
-                      href={l.href}
-                      style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.2s" }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          style={{
-            paddingTop: "2rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
-          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", margin: 0 }}>
-            © {year} FAWD SRL — Arcos. Tous droits réservés.
-          </p>
-          <div style={{ display: "flex", gap: 20 }}>
-            {[
-              { href: "https://github.com/FAWD-IT", label: "GitHub" },
-              { href: "https://linkedin.com",       label: "LinkedIn" },
-            ].map(s => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}
-              >
-                {s.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
-          .footer-grid > *:first-child { grid-column: 1 / -1; }
-        }
-      `}</style>
     </footer>
   );
 }

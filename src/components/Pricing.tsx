@@ -10,11 +10,10 @@ const PLANS = [
       "Jusqu'à 5 appareils MQTT",
       "Historique 90 jours",
       "Alertes email",
-      "Support standard",
       "1 utilisateur",
+      "Support standard",
     ],
     cta: "Démarrer",
-    highlighted: false,
   },
   {
     name: "Pro",
@@ -28,10 +27,9 @@ const PLANS = [
       "Agent IA inclus",
       "5 utilisateurs",
       "Support prioritaire",
-      "Déploiement sous 5 jours",
     ],
     cta: "Choisir Pro",
-    highlighted: true,
+    highlight: true,
   },
   {
     name: "Entreprise",
@@ -44,130 +42,111 @@ const PLANS = [
       "SSO / LDAP",
       "SLA 99.7% contractuel",
       "Utilisateurs illimités",
-      "Déploiement on-premise",
       "Support dédié 24/7",
     ],
     cta: "Nous contacter",
-    highlighted: false,
   },
 ];
 
 export function Pricing() {
   return (
-    <section id="pricing" style={{ background: "var(--light-bg)", borderTop: "1px solid var(--bd-light)" }}>
-      <div className="c sp">
-        <p className="kicker kicker--dark"><span className="kicker__sym">✦</span> Tarifs</p>
-        <h2 className="title-d" style={{ maxWidth: 520, marginBottom: "3.5rem" }}>
-          Offres alignées<br />sur votre périmètre.
-        </h2>
+    <>
+      <div className="line" />
+      <section id="pricing" className="c sp">
+        {/* Header */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: "4rem" }} className="pricing-header">
+          <h2 className="h-statement">
+            Offres alignées <span className="dim">sur votre périmètre.</span>
+          </h2>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.6, fontWeight: 500 }}>
+              Du pilote terrain à la supervision multi-sites — chaque plan inclut un déploiement accompagné et un support réactif.
+            </p>
+          </div>
+        </div>
 
+        {/* Plans: 3 col row */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-            alignItems: "start",
-          }}
-          className="pricing-grid"
+          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", borderTop: "1px solid var(--border)" }}
+          className="plans-grid"
         >
           {PLANS.map(plan => (
             <div
               key={plan.name}
               style={{
-                background: plan.highlighted ? "var(--black)" : "var(--white)",
-                border: plan.highlighted ? "2px solid var(--accent)" : "1px solid var(--bd-light)",
-                borderRadius: 16,
-                padding: "2.5rem",
-                transition: "all 0.3s ease",
-                position: "relative",
+                borderRight: "1px solid var(--border)",
+                padding: "2.5rem 2rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: 0,
+                borderLeft: plan.highlight ? "1px solid rgba(255,255,255,0.18)" : "none",
               }}
             >
-              {plan.highlighted && (
-                <span
-                  className="pill pill--teal"
-                  style={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)", whiteSpace: "nowrap" }}
-                >
-                  Recommandé
-                </span>
+              {plan.highlight && (
+                <p style={{ fontSize: 11, color: "var(--teal)", letterSpacing: "0.10em", textTransform: "uppercase", fontWeight: 500, marginBottom: "1rem" }}>
+                  ● Recommandé
+                </p>
               )}
-
-              <p style={{ fontSize: 13, fontWeight: 500, color: plan.highlighted ? "rgba(255,255,255,0.5)" : "var(--text-muted-d)", margin: "0 0 0.75rem", letterSpacing: "0.05em" }}>
-                {plan.name}
-              </p>
+              {!plan.highlight && (
+                <p style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", fontWeight: 500, marginBottom: "1rem" }}>
+                  {plan.name}
+                </p>
+              )}
+              {plan.highlight && (
+                <p style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.10em", textTransform: "uppercase", fontWeight: 500, marginBottom: "0.5rem" }}>
+                  {plan.name}
+                </p>
+              )}
 
               <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: "0.5rem" }}>
                 <span
                   style={{
-                    fontSize: plan.price === "Sur devis" ? 26 : 42,
-                    fontWeight: 700,
-                    color: plan.highlighted ? "#fff" : "var(--text-dark)",
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1.1,
+                    fontSize: plan.price === "Sur devis" ? 22 : 36,
+                    fontWeight: 500,
+                    color: "var(--white)",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                    fontFamily: "'Aeonikpro', Arial, sans-serif",
                   }}
                 >
                   {plan.price}
                 </span>
                 {plan.period && (
-                  <span style={{ fontSize: 13, color: plan.highlighted ? "rgba(255,255,255,0.4)" : "var(--text-muted-d)" }}>
-                    {plan.period}
-                  </span>
+                  <span style={{ fontSize: 13, color: "var(--muted)", fontWeight: 500 }}>{plan.period}</span>
                 )}
               </div>
-              <p style={{ fontSize: 13, color: plan.highlighted ? "rgba(255,255,255,0.5)" : "var(--text-muted-d)", margin: "0 0 2rem", lineHeight: 1.5 }}>
+
+              <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: "2rem", lineHeight: 1.5, fontWeight: 500 }}>
                 {plan.desc}
               </p>
 
-              {/* CTA */}
-              {plan.highlighted ? (
-                <a href="#demo" className="btn-a" style={{ textDecoration: "none", marginBottom: "2rem", display: "inline-flex" }}>
-                  <span className="btn-a__t">{plan.cta}</span>
-                  <span className="btn-a__i">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                </a>
-              ) : (
-                <a href="#demo" className="btn-ad" style={{ textDecoration: "none", marginBottom: "2rem", display: "inline-flex" }}>
-                  <span className="btn-ad__t">{plan.cta}</span>
-                  <span className="btn-ad__i">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                </a>
-              )}
+              <div className="line" style={{ marginBottom: "2rem" }} />
 
-              <div style={{ height: 1, background: plan.highlighted ? "rgba(255,255,255,0.08)" : "var(--bd-light)", marginBottom: "2rem" }} />
-
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, marginBottom: "2.5rem", flex: 1 }}>
                 {plan.features.map(f => (
-                  <li key={f} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13 }}>
-                    <span
-                      style={{
-                        width: 16, height: 16, borderRadius: "50%", flexShrink: 0,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        background: plan.highlighted ? "rgba(20,169,207,0.15)" : "var(--light-bg)",
-                      }}
-                    >
-                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                        <path d="M1 4l2 2 4-4" stroke={plan.highlighted ? "#14a9cf" : "#14a9cf"} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                    <span style={{ color: plan.highlighted ? "rgba(255,255,255,0.7)" : "var(--text-muted-d)" }}>{f}</span>
+                  <li key={f} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ color: "var(--muted)", fontSize: 13, flexShrink: 0, marginTop: 2 }}>→</span>
+                    <span style={{ fontSize: 14, color: "var(--text)", fontWeight: 500 }}>{f}</span>
                   </li>
                 ))}
               </ul>
+
+              <a href="#demo" className="btn-hg" style={{ textDecoration: "none", display: "inline-flex", alignSelf: "flex-start" }}>
+                <span className="arr">→</span> {plan.cta}
+              </a>
             </div>
           ))}
+          {/* Last item right border off */}
         </div>
-      </div>
+      </section>
 
       <style>{`
-        @media (max-width: 900px) {
-          .pricing-grid { grid-template-columns: 1fr !important; max-width: 420px; margin-inline: auto; }
+        @media (max-width: 768px) {
+          .pricing-header { grid-template-columns: 1fr !important; }
+          .plans-grid { grid-template-columns: 1fr !important; }
+          .plans-grid > * { border-right: none !important; border-left: none !important; border-top: 1px solid var(--border) !important; }
         }
       `}</style>
-    </section>
+    </>
   );
 }

@@ -1,111 +1,123 @@
 "use client";
+import { useEffect, useState } from "react";
+
+const STATS = [
+  { value: "99.7%", label: "Uptime garanti" },
+  { value: "5j",    label: "Déploiement" },
+  { value: "48+",   label: "Sites live" },
+  { value: "<1s",   label: "Latence" },
+];
+
 export function Hero() {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const fmt = () =>
+      new Intl.DateTimeFormat("fr-FR", {
+        hour: "2-digit", minute: "2-digit", second: "2-digit",
+        timeZone: "Europe/Brussels",
+      }).format(new Date());
+    setTime(fmt());
+    const id = setInterval(() => setTime(fmt()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section
       style={{
-        position: "relative",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-end",
-        background: "var(--black)",
-        overflow: "hidden",
+        padding: "0 40px",
+        paddingTop: 56,
+        maxWidth: 1200,
+        margin: "0 auto",
+        width: "100%",
       }}
     >
-      {/* Subtle depth gradient */}
+      {/* Top: headline + stats */}
       <div
         style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background:
-            "radial-gradient(ellipse 80% 60% at 70% 30%, #1a1a1a 0%, transparent 60%)," +
-            "radial-gradient(ellipse 50% 40% at 20% 80%, rgba(20,169,207,0.03) 0%, transparent 60%)",
+          flex: 1,
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 40,
+          alignItems: "flex-start",
+          paddingTop: "6rem",
         }}
-      />
-
-      {/* Grain texture overlay */}
-      <div
-        style={{
-          position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.025,
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          backgroundRepeat: "repeat",
-          backgroundSize: "200px",
-        }}
-      />
-
-      {/* Content: positionné en bas-gauche */}
-      <div className="c" style={{ paddingBottom: "5rem", position: "relative", zIndex: 2 }}>
-
-        {/* Kicker */}
-        <p className="kicker kicker--light" style={{ marginBottom: "1.5rem" }}>
-          <span className="kicker__sym">✦</span>
-          Supervision industrielle MQTT
-        </p>
-
-        {/* H1 — pleine largeur, blanc */}
-        <h1
-          style={{
-            fontFamily: "Inter, system-ui, sans-serif",
-            fontSize: "clamp(3rem, 7vw, 6rem)",
-            fontWeight: 700,
-            lineHeight: 1.04,
-            letterSpacing: "-0.04em",
-            color: "#ffffff",
-            margin: 0,
-            maxWidth: "820px",
-          }}
-        >
-          Vos machines parlent.<br />Vous écoutez.
+        className="hero-top"
+      >
+        {/* H1 top-left */}
+        <h1 className="h-hero">
+          Supervision industrielle<br />
+          temps réel. Vos machines<br />
+          parlent. <span style={{ color: "var(--muted)" }}>Vous écoutez.</span>
         </h1>
 
-        {/* Sous-titre + CTA */}
-        <div
-          style={{
-            marginTop: "2.5rem",
-            display: "flex",
-            alignItems: "flex-end",
-            gap: "3rem",
-            flexWrap: "wrap",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)",
-              color: "rgba(255,255,255,0.50)",
-              lineHeight: 1.6,
-              maxWidth: 420,
-              margin: 0,
-            }}
-          >
-            Arcos centralise vos données MQTT en temps réel — alertes,
-            historique et IA — dans une interface pensée pour l&apos;atelier.
-          </p>
+        {/* Stats grid top-right */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+          {STATS.map((s, i) => (
+            <div
+              key={s.value}
+              style={{
+                borderTop: "1px solid var(--border)",
+                borderLeft: i % 2 === 1 ? "1px solid var(--border)" : "none",
+                padding: "1.75rem 1.5rem",
+              }}
+            >
+              <p className="stat-giant">{s.value}</p>
+              <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, fontWeight: 500, letterSpacing: "0.04em" }}>
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          <a href="#demo" className="btn-a" style={{ textDecoration: "none", flexShrink: 0 }}>
-            <span className="btn-a__t">Obtenir une démo</span>
-            <span className="btn-a__i">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
+      {/* Bottom: status + description + CTAs */}
+      <div
+        style={{
+          paddingBottom: "4rem",
+          paddingTop: "3rem",
+          borderTop: "1px solid var(--border)",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 60,
+          alignItems: "flex-end",
+        }}
+        className="hero-bottom"
+      >
+        {/* Left: status + description */}
+        <div>
+          <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: "1rem", fontWeight: 500 }}>
+            <span className="status-dot" />
+            (En ligne) &nbsp;{time} CET
+          </p>
+          <p style={{ fontSize: 15.875, color: "var(--text)", lineHeight: 1.55, maxWidth: 420, fontWeight: 500 }}>
+            Arcos centralise vos données MQTT en temps réel — alertes, historique et IA — dans une seule interface pensée pour les équipes terrain.
+          </p>
+        </div>
+
+        {/* Right: CTAs */}
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <a href="#demo" className="btn-hg" style={{ textDecoration: "none" }}>
+            <span className="arr">→</span> Obtenir une démo
+          </a>
+          <a href="#features" className="btn-hg" style={{ textDecoration: "none", borderColor: "rgba(255,255,255,0.06)", color: "var(--muted)" }}>
+            <span className="arr">→</span> Voir la plateforme
           </a>
         </div>
       </div>
 
-      {/* Scroll hint */}
-      <div
-        style={{
-          position: "absolute", bottom: "2rem", right: "2.5rem",
-          color: "rgba(255,255,255,0.2)", fontSize: 11,
-          letterSpacing: "0.15em", textTransform: "uppercase",
-          display: "flex", alignItems: "center", gap: 8, zIndex: 2,
-        }}
-      >
-        Défiler
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M7 2v10M3 9l4 4 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-top { grid-template-columns: 1fr !important; padding-top: 5rem !important; }
+          .hero-bottom { grid-template-columns: 1fr !important; gap: 2rem !important; }
+        }
+        @media (max-width: 480px) {
+          section { padding-inline: 20px !important; }
+        }
+      `}</style>
     </section>
   );
 }
